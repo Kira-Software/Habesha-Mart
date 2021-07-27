@@ -64,7 +64,7 @@ exports.signUp=catchAsync(async (req,res,next)=>{
     const salt=await bcrypt.genSalt();
     const passwordHash=await bcrypt.hash(password,salt);
     const newUser=new User({
-            email,passwordHash
+            userName,email,passwordHash
         })
     const savedUser=await newUser.save();
   

@@ -43,13 +43,23 @@ exports.findItem=catchAsync(async(req,res,next)=>{
 
         //ADVANCED FILTERING
         let queryStr=JSON.stringify(queryObj);
-        query=queryStr.replace(/\b(gte|gt|lte|lt) \b/g, match => `$${match}`); //this is for in ur query u put like duration[gte]=5 new emtelut keza
-                                                                                          // queryObj {duration :{gte:'5'}} hone but '$gte' neber mehon yalbet so ene gte eyflege $ mechemer
+        queryStr=queryStr.replace(/\b(gte|gt|lte|lt) \b/g, match => `$${match}`); //this is for in ur query u put like duration[gte]=5 new emtelut keza
+                                                                                       // queryObj {duration :{gte:'5'}} hone but '$gte' neber mehon yalbet so ene gte eyflege $ mechemer
+        let query=Item.find(JSON.parse(queryStr));
+
+        //SORTING
+        if(req.query.sort){
+           const sortBy=req.query.sort.split(',').join(' ');   //?sort('price','rating') belehe yelakewn price rating belo leyebehca simultinius execute yagal b sort
+           query=query.sort(sortBy)  
+        }else{
+           query=query.sort('-createdAt'); //yehe demo menem aynet sort kaltera b default adisochun kela jemero yedredral
+        }
         
+
         
         
        //EXECUTE A QUERY
-        const item=await Item.find(JSON.parse(queryStr)); // melseh wede object keyerena felega ketel
+        const item=await query; // melseh wede object keyerena felega ketel
 
         //SEND RESPONSE
 

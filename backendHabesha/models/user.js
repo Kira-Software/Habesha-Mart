@@ -6,7 +6,8 @@ const crypto=require('crypto');
 const userSchema=mongoose.Schema({
     userName:{
         type:String,
-        unique:true},
+        unique:true
+    },
     email:{type:String,
         Required:[true,'email is mandatory to signUp'],
         Unique:true},

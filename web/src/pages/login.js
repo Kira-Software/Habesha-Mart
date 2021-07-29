@@ -3,10 +3,11 @@ import {
   EyeOffIcon,
   LockClosedIcon,
   MailIcon,
+  UserIcon,
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-export default function Login() {
+export default function Register() {
   const [showPass, setShoWPass] = useState(false);
   const handleShowPass = () => {
     setShoWPass(!showPass);
@@ -19,13 +20,12 @@ export default function Login() {
         </Link>
 
         <div className="flex items-center h-5/6 py-10">
-          <img src="log.png" alt="sideImage" className="ml-48 h-96" />
+          <img src="reg.png" alt="sideImage" className="ml-48" />
         </div>
       </div>
-
       <div className=" h-screen w-3/4">
-        <div className="flex justify-end px-2 text-green-600 font-semibold text-sm">
-          don't have an account{" "}
+        <div className="flex justify-end px-2 text-green-800 font-semibold text-sm">
+        don't have an account{" "}
           <span className="ml-1 text-green-600">
             <Link to="/register">Sign Up</Link>
           </span>
@@ -33,7 +33,7 @@ export default function Login() {
         <div className="flex justify-center items-center h-5/6 py-10">
           <div>
             <div className="text-2xl font-bold text-green-600 mb-10">
-              Sign Up to Habesha Mart
+              Sign In to Habesha Mart
             </div>
             <div>
               <div className="text-sm font-bold text-green-600 mb-2">Email</div>
@@ -46,6 +46,7 @@ export default function Login() {
                 />
               </div>
 
+            
               <div className="text-sm font-bold text-green-600 mb-2 ">
                 Password
               </div>

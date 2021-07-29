@@ -3,11 +3,11 @@ import {
   EyeOffIcon,
   LockClosedIcon,
   MailIcon,
-  UserIcon,
+  UserIcon
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-export default function Register() {
+export default function Login() {
   const [showPass, setShoWPass] = useState(false);
   const handleShowPass = () => {
     setShoWPass(!showPass);
@@ -20,11 +20,12 @@ export default function Register() {
         </Link>
 
         <div className="flex items-center h-5/6 py-10">
-          <img src="reg.png" alt="sideImage" className="ml-48" />
+          <img src="log.png" alt="sideImage" className="ml-48 h-96" />
         </div>
       </div>
+
       <div className=" h-screen w-3/4">
-        <div className="flex justify-end px-2 text-green-800 font-semibold text-sm">
+        <div className="flex justify-end px-2 text-green-600 font-semibold text-sm">
           already have an account{" "}
           <span className="ml-1 text-green-600">
             <Link to="/login">Sign In</Link>
@@ -33,7 +34,7 @@ export default function Register() {
         <div className="flex justify-center items-center h-5/6 py-10">
           <div>
             <div className="text-2xl font-bold text-green-600 mb-10">
-              Sign In to Habesha Mart
+              Sign Up to Habesha Mart
             </div>
             <div>
               <div className="text-sm font-bold text-green-600 mb-2">Email</div>
@@ -57,6 +58,7 @@ export default function Register() {
                   className="outline-none bg-gray-100"
                 />
               </div>
+
               <div className="text-sm font-bold text-green-600 mb-2 ">
                 Password
               </div>
@@ -80,7 +82,7 @@ export default function Register() {
                 )}
               </div>
               <button className="text-center w-72 rounded-md text-white px-2 py-1 mt-6 font-semibold bg-green-600 hover:bg-green-700">
-                Sign In
+                Sign Up
               </button>
             </div>
           </div>

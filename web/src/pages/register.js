@@ -7,8 +7,39 @@ import {
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import {register} from "../Redux/Action/authentication"
+
+
 export default function Login() {
+
+const dispatch = useDispatch()
   const [showPass, setShoWPass] = useState(false);
+
+  const [formdata, setformdata] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const { email, username, password } = formdata;
+
+  const changer = (e) => {
+    setformdata({ ...formdata, [e.target.name]: e.target.value });
+   // console.log("the value of them respectively is " + email + username + password);
+
+  };
+
+  const handlesubmit = async (event) => {
+    event.preventDefault();
+    console.log("SUCCESS");
+    console.log("the value of them respectively is " + email + username + password);
+
+   // login(Id, Temppass, Newpass);
+   dispatch(register(email,username,password))
+  };
+
+
   const handleShowPass = () => {
     setShoWPass(!showPass);
   };
@@ -44,6 +75,9 @@ export default function Login() {
                   type="text"
                   placeholder="example@email.com"
                   className="outline-none bg-gray-100"
+                  onChange={(e) => changer(e)}
+                  value={email}
+                  name="email"
                 />
               </div>
 
@@ -56,6 +90,10 @@ export default function Login() {
                   type="text"
                   placeholder="John doe"
                   className="outline-none bg-gray-100"
+                  onChange={(e) => changer(e)}
+                  value={username}
+                  name="username"
+
                 />
               </div>
 
@@ -68,6 +106,10 @@ export default function Login() {
                   type={showPass ? "text" : "password"}
                   placeholder="********"
                   className="outline-none bg-gray-100"
+                  onChange={(e) => changer(e)}
+                  value={password}
+                  name="password"
+
                 />
                 {showPass ? (
                   <EyeIcon
@@ -81,7 +123,8 @@ export default function Login() {
                   />
                 )}
               </div>
-              <button className="text-center w-72 rounded-md text-white px-2 py-1 mt-6 font-semibold bg-green-600 hover:bg-green-700">
+              <button className="text-center w-72 rounded-md text-white px-2 py-1 
+                  mt-6 font-semibold bg-green-600 hover:bg-green-700" onClick={handlesubmit}>
                 Sign Up
               </button>
             </div>

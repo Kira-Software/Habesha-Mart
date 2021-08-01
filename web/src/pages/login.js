@@ -6,17 +6,15 @@ import {
   UserIcon,
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
-
-import { useDispatch,useSelector } from "react-redux";
-import {login} from "../Redux/Action/authentication"
+import React, { useContext, useState } from "react";
+import authContext from "../context/authContext";
+import axios from "axios";
 
 export default function Register() {
   const [showPass, setShoWPass] = useState(false);
-const dispatch =useDispatch()
-  
+  const { getLoggedIn } = useContext(authContext);
   const [formdata, setformdata] = useState({
-    email: "",
+    userName: "",
     password: "",
   });
 
@@ -24,20 +22,21 @@ const dispatch =useDispatch()
 
   const changer = (e) => {
     setformdata({ ...formdata, [e.target.name]: e.target.value });
-   // console.log("the value of them respectively is " + email + username + password);
-
+    // console.log("the value of them respectively is " + email + username + password);
   };
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    console.log("SUCCESS");
-    console.log("the value of them respectively is " + email  + password);
-
-   // login(Id, Temppass, Newpass);
-   dispatch(login(email,password))
+    axios
+      .post("http://localhost:9000/api/auth/login", formdata, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("someti", res);
+        getLoggedIn();
+      });
+    // login(Id, Temppass, Newpass);
   };
-
-
 
   const handleShowPass = () => {
     setShoWPass(!showPass);
@@ -55,7 +54,7 @@ const dispatch =useDispatch()
       </div>
       <div className=" h-screen w-3/4">
         <div className="flex justify-end px-2 text-green-800 font-semibold text-sm">
-        don't have an account{" "}
+          don't have an account{" "}
           <span className="ml-1 text-green-600">
             <Link to="/register">Sign Up</Link>
           </span>
@@ -73,13 +72,12 @@ const dispatch =useDispatch()
                   type="text"
                   placeholder="example@email.com"
                   className="outline-none bg-gray-100"
-                  onChange={e=> changer(e)}
-                  name="email"
+                  onChange={(e) => changer(e)}
+                  name="userName"
                   value={email}
                 />
               </div>
 
-            
               <div className="text-sm font-bold text-green-600 mb-2 ">
                 Password
               </div>
@@ -89,7 +87,7 @@ const dispatch =useDispatch()
                   type={showPass ? "text" : "password"}
                   placeholder="********"
                   className="outline-none bg-gray-100"
-                  onChange={e=> changer(e)}
+                  onChange={(e) => changer(e)}
                   name="password"
                   value={password}
                 />
@@ -105,8 +103,11 @@ const dispatch =useDispatch()
                   />
                 )}
               </div>
-              <button className="text-center w-72 rounded-md text-white px-2 py-1 mt-6 font-semibold
-                   bg-green-600 hover:bg-green-700" onClick={handlesubmit}>
+              <button
+                className="text-center w-72 rounded-md text-white px-2 py-1 mt-6 font-semibold
+                   bg-green-600 hover:bg-green-700"
+                onClick={handlesubmit}
+              >
                 Sign In
               </button>
             </div>

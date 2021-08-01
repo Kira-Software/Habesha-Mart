@@ -3,42 +3,42 @@ import {
   EyeOffIcon,
   LockClosedIcon,
   MailIcon,
-  UserIcon
+  UserIcon,
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
-import { useDispatch,useSelector } from "react-redux";
-import {register} from "../Redux/Action/authentication"
-
+import React, { useContext, useState } from "react";
+import authContext from "../context/authContext";
+import axios from "axios";
 
 export default function Login() {
-
-const dispatch = useDispatch()
   const [showPass, setShoWPass] = useState(false);
-
+  const { getLoggedIn } = useContext(authContext);
   const [formdata, setformdata] = useState({
     email: "",
-    username: "",
+    userName: "",
     password: "",
+    passwordConfirm: "",
   });
 
   const { email, username, password } = formdata;
 
   const changer = (e) => {
     setformdata({ ...formdata, [e.target.name]: e.target.value });
-   // console.log("the value of them respectively is " + email + username + password);
-
+    // console.log("the value of them respectively is " + email + username + password);
   };
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    console.log("SUCCESS");
-    console.log("the value of them respectively is " + email + username + password);
-
-   // login(Id, Temppass, Newpass);
-   dispatch(register(email,username,password))
+    console.log(formdata);
+    axios
+      .post("http://localhost:9000/api/auth/signup", formdata, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        getLoggedIn();
+      });
+    // login(Id, Temppass, Newpass);
   };
-
 
   const handleShowPass = () => {
     setShoWPass(!showPass);
@@ -92,8 +92,7 @@ const dispatch = useDispatch()
                   className="outline-none bg-gray-100"
                   onChange={(e) => changer(e)}
                   value={username}
-                  name="username"
-
+                  name="userName"
                 />
               </div>
 
@@ -109,7 +108,6 @@ const dispatch = useDispatch()
                   onChange={(e) => changer(e)}
                   value={password}
                   name="password"
-
                 />
                 {showPass ? (
                   <EyeIcon
@@ -123,8 +121,11 @@ const dispatch = useDispatch()
                   />
                 )}
               </div>
-              <button className="text-center w-72 rounded-md text-white px-2 py-1 
-                  mt-6 font-semibold bg-green-600 hover:bg-green-700" onClick={handlesubmit}>
+              <button
+                className="text-center w-72 rounded-md text-white px-2 py-1 
+                  mt-6 font-semibold bg-green-600 hover:bg-green-700"
+                onClick={handlesubmit}
+              >
                 Sign Up
               </button>
             </div>

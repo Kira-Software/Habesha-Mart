@@ -43,7 +43,7 @@ export default function Register() {
   };
   return (
     <div className="flex">
-      <div className="bg-green-50 w-1/4 h-screen">
+      <div className="bg-secondry w-1/4 h-screen">
         <Link href="/">
           <img className="h-14 cursor-pointer" src="logo.png" alt="logo" />
         </Link>
@@ -105,7 +105,7 @@ export default function Register() {
               </div>
               <button
                 className="text-center w-72 rounded-md text-white px-2 py-1 mt-6 font-semibold
-                   bg-green-600 hover:bg-green-700"
+                   bg-primary hover:bg-green-700"
                 onClick={handlesubmit}
               >
                 Sign In

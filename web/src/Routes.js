@@ -3,6 +3,13 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { Home, Login, ProtectedPage, Register } from "./pages";
 import React, { useContext } from "react";
 import authContext from "./context/authContext";
+import AddItem from "./pages/AddItem";
+import SearchResult from "./pages/SearchResult";
+import Item from "./pages/item";
+import Profile from "./pages/profile";
+import AboutSeller from "./pages/aboutSeller";
+import ItemListSeller from "./pages/itemListSeller";
+import AdminDashboard from "./pages/adminDashboard";
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const { loggedInState } = useContext(authContext);
 
@@ -48,6 +55,27 @@ const Routes = () => {
     <Switch>
       <Route exact path="/">
         <Home />
+      </Route>
+      <Route exact path="/additem">
+        <AddItem />
+      </Route>
+      <Route exact path="/item">
+        <Item />
+      </Route>
+      <Route exact path="/search">
+        <SearchResult />
+      </Route>
+      <Route exact path="/profile">
+        <Profile />
+      </Route>
+      <Route exact path="/about-seller">
+        <AboutSeller />
+      </Route>
+      <Route exact path="/item-list">
+        <ItemListSeller />
+      </Route>
+      <Route exact path="/dashboard">
+        <AdminDashboard />
       </Route>
       <RedirectWhenLoggedIn exact path="/register" component={Register} />
       <RedirectWhenLoggedIn exact path="/login" component={Login} />

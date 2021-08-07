@@ -91,14 +91,14 @@ exports.signUp = catchAsync(async (req, res, next) => {
   res.json({ status: "success", user: savedUser }); // sends cookie with sessionID automatically in response
 });
 exports.logIn = catchAsync(async (req, res, next) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
   console.log(req.body);
-  if (!userName || !password) {
+  if (!email || !password) {
     return res.json({ message: "please enter valid credentials" });
   }
 
   // const user=await User.findOne({email}).select('+passwordHash'); //use this for password field select value to be false ...password:{select:false}
-  const user = await User.findOne({ userName });
+  const user = await User.findOne({ email });
   console.log(user);
   const comp =
     user.passwordHash ===

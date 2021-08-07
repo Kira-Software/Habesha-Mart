@@ -1,4 +1,48 @@
+import React ,{useState} from 'react'
+import {postItem} from "../Redux/Action/itemstuff"
+//import {useDispatch} from "react-redux"
+
 export default function AddItem() {
+//const dispatch = useDispatch()
+  const [formdata, setformdata] = useState({
+    itemname: "",
+    category: "",
+    description: "",
+    price:"",
+    quantity: "",
+    location: "",
+    image: ""
+  });
+
+  const {itemname,category,description,price,quantity,location,image} =formdata;
+
+  const { email, password } = formdata;
+
+  const changer = (e) => {
+    //  console.log("the form value  is " + {...formdata})
+    //console.log("the event . target value is that "+e.target.type)
+    setformdata({
+      ...formdata,
+      [e.target.name]:
+        e.target.type === "file" ? e.target.files[0] : e.target.value,
+    });
+  };
+
+  const handlesubmit = async (event) => {
+    event.preventDefault();
+    console.log("the entered values are ",formdata)
+  //  dispatch(postItem(formdata))
+    // axios
+    //   .post("http://localhost:9000/api/auth/login", formdata, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     console.log("someti", res);
+    //     getLoggedIn();
+    //   });
+    // login(Id, Temppass, Newpass);
+  };
+
   return (
     <div className="flex h-screen px-4 py-4">
       <div
@@ -39,9 +83,14 @@ export default function AddItem() {
             type="text"
             placeholder="name..."
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="itemname"
+            value= {itemname}
+            onChange={e => changer(e)}
           />
           <div className="text-sm font-semibold mt-2">Category</div>
-          <select className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2">
+          <select className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+           name="category" value={category}   onChange={e => changer(e)}
+>
             <option aria-label="None" value="" />
             <option value={10}>Ten</option>
             <option value={20}>Twenty</option>
@@ -57,6 +106,10 @@ export default function AddItem() {
           <textarea
             rows={2}
             className="px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name = "description"
+            value={description}
+            onChange={e => changer(e)}
+
           ></textarea>
 
           <div className="flex justify-between mt-2 items-center">
@@ -66,6 +119,9 @@ export default function AddItem() {
                 type="text"
                 placeholder="price"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+                name = "price"
+                value={price}
+                onChange={e => changer(e)}
               />
             </div>
 
@@ -75,6 +131,9 @@ export default function AddItem() {
                 type="number"
                 placeholder="Quantitiy"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+                name = "quantity"
+                value={quantity}
+                onChange={e => changer(e)}
               />
             </div>
           </div>
@@ -84,15 +143,21 @@ export default function AddItem() {
             type="text"
             placeholder="Location"
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name = "location"
+            value={location}
+            onChange={e => changer(e)}
           />
           <div className="text-sm font-semibold mt-2">Image</div>
           <input
             type="File"
             placeholder="name..."
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name = "image"
+            onChange={e => changer(e)}
           />
         </div>
-        <button className="text-white  bg-gray-900 font-semibold w-full text-center mt-3 rounded-md px-2 py-2">
+        <button className="text-white  bg-gray-900 font-semibold w-full text-center mt-3 rounded-md px-2 py-2"
+        onClick={handlesubmit}>
           Submit
         </button>
         {/* category

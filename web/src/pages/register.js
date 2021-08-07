@@ -6,13 +6,16 @@ import {
   UserIcon,
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import authContext from "../context/authContext";
 import axios from "axios";
+import { register, getLoggedIn } from "../Redux/Action/authentication";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const [showPass, setShoWPass] = useState(false);
-  const { getLoggedIn } = useContext(authContext);
+  //const { getLoggedIn } = useContext(authContext);
   const [formdata, setformdata] = useState({
     email: "",
     userName: "",
@@ -20,7 +23,7 @@ export default function Login() {
     passwordConfirm: "",
   });
 
-  const { email, username, password } = formdata;
+  const { email, userName, password } = formdata;
 
   const changer = (e) => {
     setformdata({ ...formdata, [e.target.name]: e.target.value });
@@ -29,20 +32,24 @@ export default function Login() {
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    console.log(formdata);
-    axios
-      .post("http://localhost:9000/api/auth/signup", formdata, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        getLoggedIn();
-      });
-    // login(Id, Temppass, Newpass);
+    console.log("the value of the formdata is", formdata);
+    // axios
+    //   .post("http://localhost:9000/api/auth/signup", formdata, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     getLoggedIn();
+    //   });
+    dispatch(register(email, userName, password));
   };
 
   const handleShowPass = () => {
     setShoWPass(!showPass);
   };
+
+  useEffect(() => {
+    dispatch(getLoggedIn());
+  }, []);
   return (
     <div className="flex">
       <div className="bg-green-50 w-1/4 h-screen">
@@ -91,7 +98,7 @@ export default function Login() {
                   placeholder="John doe"
                   className="outline-none bg-gray-100"
                   onChange={(e) => changer(e)}
-                  value={username}
+                  value={userName}
                   name="userName"
                 />
               </div>

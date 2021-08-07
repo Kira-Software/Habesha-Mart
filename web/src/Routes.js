@@ -10,44 +10,50 @@ import Profile from "./pages/profile";
 import AboutSeller from "./pages/aboutSeller";
 import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
-function ProtectedRoute({ component: Component, ...restOfProps }) {
-  const { loggedInState } = useContext(authContext);
 
-  if (loggedInState.isLoading) {
-    return <div>Loading...</div>;
-  }
+import {useSelector,useDispatch} from "react-redux"
+
+function ProtectedRoute({ component: Component, ...restOfProps }) {
+  const isAuthenticated = useSelector((state) => state.authreducer.isAuthenticated);
+  const isLoading = useSelector((state) => state.authreducer.isLoading);
+
+
+  //const { loggedInState } = useContext(authContext);
+
+  // if (isAuthenticated.isLoading) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <Route
-      {...restOfProps}
-      render={(props) =>
-        loggedInState.isLoggedIn === false ? (
-          <Redirect to="/login" />
-        ) : loggedInState.isLoggedIn === true ? (
-          <Component {...props} />
-        ) : (
-          <div></div>
-        )
-      }
-    />
+    {...restOfProps}
+    render={props =>
+      !isAuthenticated && ! isLoading  ? (
+        <Redirect to="/login" />
+      ) : (
+        <Component {...props} />
+      )
+    }
+  />
   );
 }
 
 const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
-  const { loggedInState } = useContext(authContext);
+  const isAuthenticated = useSelector((state) => state.authreducer.isAuthenticated);
+  const isLoading = useSelector((state) => state.authreducer.isLoading);
+
+  //const { isAuthenticated } = useContext(authContext);
 
   return (
     <Route
-      {...restOfProps}
-      render={(props) =>
-        loggedInState.isLoggedIn === true ? (
-          <Redirect to="/protected" />
-        ) : loggedInState.isLoggedIn === false ? (
-          <Component {...props} />
-        ) : (
-          <></>
-        )
-      }
-    />
+    {...restOfProps}
+    render={props =>
+      isAuthenticated && ! isLoading ? (
+        <Redirect to="/protected" />
+      ) : (
+        <Component {...props} />
+      )
+    }
+  />
   );
 };
 const Routes = () => {

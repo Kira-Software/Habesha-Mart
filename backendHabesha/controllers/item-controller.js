@@ -28,7 +28,8 @@ exports.addItem = catchAsync(async (req, res, next) => {
     qunatity,
     price,
     description,
-    location,
+    city,
+    subCity,
     itemStatus,
     itemFor,
   } = req.body;
@@ -41,6 +42,8 @@ const postedBy=req.user._id;
     qunatity,
     price,
     description,
+    city,
+    subCity,
     postedBy,
     image,
     location,

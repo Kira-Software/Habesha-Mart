@@ -12,11 +12,8 @@ const itemSchema=mongoose.Schema({
         default:Date.now(),
     },
     image:{type:Buffer},
-    location:{
-        city:{type:String},
-        subCity:{type:String},
-        village:{type:String}
-    },
+    city:{type:String},
+    subCity:{type:String},
     itemStatus:{type:String,
         enum:['new','used','slightlyUsed']},
     itemFor:{

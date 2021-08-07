@@ -67,6 +67,7 @@ exports.findItem=catchAsync(async(req,res,next)=>{
         query=query.skip(skip).limit(limit);
         
         if(req.query.page){
+
             const numOfItems=await Item.countDocuments();
             if(skip >= numOfItems){
                return new AppError("No More items are available !")
@@ -75,7 +76,7 @@ exports.findItem=catchAsync(async(req,res,next)=>{
         
         
        //EXECUTE A QUERY
-        const item=await Item.find(JSON.parse(queryStr)); // melseh wede object keyerena felega ketel
+        const item=await Item.find(JSON.parse(query)); // melseh wede object keyerena felega ketel
 
         //SEND RESPONSE
         res.status(200).json({status:'success',

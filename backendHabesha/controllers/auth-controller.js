@@ -17,10 +17,11 @@ const signToken = async (userId) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   //1)check if there is a user from session store
+ 
+  const token = req.session.token;
+  const verify = await jwt.verify(token, process.env.SECRET)
 
-  const userId = req.session.user.id;
-
-  const currentUser = await User.findById(userId);
+  const currentUser = await User.findById(verify.id);
 
   if (!currentUser) {
     return next(
@@ -41,8 +42,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.roles)) {
-      console.log(req.user.roles);
+    if (!roles.includes(req.user.role)) {
+      console.log(req.user.role);
 
       return next(
         res.json({ message: "you didnt have permission to this Action" })

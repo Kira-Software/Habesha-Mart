@@ -3,14 +3,17 @@ const mongoose=require('mongoose')
 const itemSchema=mongoose.Schema({
     name:{type:String},
     categoryId:{type:String},
-    quantity:{type:String},
-    price:{type:String},
+    quantity:{type:Number},
+    price:{type:Number},
     description:{type:String},
     postedBy:{type:String},
-    date:{type:Date,default:Date.now()},
-    image:{type:String},
+    createdAt:{
+        type:Date,
+        default:Date.now(),
+    },
+    image:{type:Buffer},
     location:{
-        city:{type:String,required:true},
+        city:{type:String},
         subCity:{type:String},
         village:{type:String}
     },
@@ -20,7 +23,7 @@ const itemSchema=mongoose.Schema({
         type:String,
         enum:['sell','rent']},
     isAvailable:{type:Boolean,default:true},
-    rate:{type:String}
+    rate:{type:Number,default:1.0}
 
 });
 

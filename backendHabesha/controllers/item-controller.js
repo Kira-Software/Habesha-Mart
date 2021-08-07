@@ -32,7 +32,7 @@ exports.addItem = catchAsync(async (req, res, next) => {
     itemStatus,
     itemFor,
   } = req.body;
-const image=req.file.image;
+const image=req.file.buffer;
 const postedBy=req.user._id;
 
   const addedItem = new Item({

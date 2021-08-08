@@ -17,11 +17,12 @@ const signToken = async (userId) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   //1)check if there is a user from session store
- 
+ console.log("inside of the protect middleware")
+ console.log("the session value is ", req.session)
   const token = req.session.token;
   const verify = await jwt.verify(token, process.env.SECRET)
 
-  const currentUser = await User.findById(verify.id);
+  const currentUser = await User.findById(verify.id); 
 
   if (!currentUser) {
     return next(
@@ -36,11 +37,14 @@ exports.protect = catchAsync(async (req, res, next) => {
   //   return next(res.json({status:"fail",message:"user changed password! Login Again!"}));
 
   // }
+  console.log("user found")
   req.user = currentUser; //gives users info for next middle ware after protect lalew middlware yestewal
   next();
 });
 
 exports.restrictTo = (...roles) => {
+  //console.log("inside of the restrictTo middleware")
+
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       console.log(req.user.role);

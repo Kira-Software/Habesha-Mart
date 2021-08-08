@@ -1,24 +1,46 @@
-import React ,{useState} from 'react'
-import {postItem} from "../Redux/Action/itemstuff"
-//import {useDispatch} from "react-redux"
+import React, { useState,useEffect } from "react";
+import { postItem } from "../Redux/Action/itemstuff";
+import {getLoggedIn} from "../Redux/Action/authentication"
+import { useDispatch } from "react-redux";
 
 export default function AddItem() {
-//const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [formdata, setformdata] = useState({
     itemname: "",
     category: "",
+    itemstatus: "",
+    itemtype: "",
     description: "",
-    price:"",
+    price: "",
     quantity: "",
-    location: "",
-    image: ""
+    locationcity: "",
+    locationsubcity: "",
+    image1: "",
+    image2: "",
+    image3: "",
+    image4: "",
   });
 
-  const {itemname,category,description,price,quantity,location,image} =formdata;
-
-  const { email, password } = formdata;
+  const {
+    itemname,
+    category,
+    itemstatus,
+    itemtype,
+    description,
+    price,
+    quantity,
+    locationcity,
+    locationsubcity,
+    image1,
+    image2,
+    image3,
+    image4,
+  } = formdata;
 
   const changer = (e) => {
+    if (e.target.type === "file") {
+      console.log("the image value is", e.target.files);
+    }
     //  console.log("the form value  is " + {...formdata})
     //console.log("the event . target value is that "+e.target.type)
     setformdata({
@@ -30,8 +52,10 @@ export default function AddItem() {
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    console.log("the entered values are ",formdata)
-  //  dispatch(postItem(formdata))
+    console.log("the entered values are ", formdata);
+    dispatch(postItem(formdata));
+
+    //  dispatch(postItem(formdata))
     // axios
     //   .post("http://localhost:9000/api/auth/login", formdata, {
     //     withCredentials: true,
@@ -42,6 +66,10 @@ export default function AddItem() {
     //   });
     // login(Id, Temppass, Newpass);
   };
+
+  useEffect(() => {
+    dispatch(getLoggedIn());
+  }, []);
 
   return (
     <div className="flex h-screen px-4 py-4">
@@ -78,23 +106,51 @@ export default function AddItem() {
           viverra evariu.
         </div>
         <div className="mt-8   ">
-          <div className="text-sm font-semibold mt-2">Name</div>
-          <input
+           <div className="text-sm font-semibold mt-2">Name</div>
+         <input
             type="text"
             placeholder="name..."
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
             name="itemname"
-            value= {itemname}
-            onChange={e => changer(e)}
+            value={itemname}
+            onChange={(e) => changer(e)}
           />
           <div className="text-sm font-semibold mt-2">Category</div>
-          <select className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
-           name="category" value={category}   onChange={e => changer(e)}
->
+          <select
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="category"
+            value={category}
+            onChange={(e) => changer(e)}
+          >
             <option aria-label="None" value="" />
-            <option value={10}>Ten</option>
-            <option value={20}>Twenty</option>
-            <option value={30}>Thirty</option>
+            <option value="House">House</option>
+            <option value="Cloth">Cloth</option>
+            <option value="Shoes">Shoes</option>
+          </select>
+
+          <div className="text-sm font-semibold mt-2">Item Status</div>
+          <select
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="itemstatus"
+            value={itemstatus}
+            onChange={(e) => changer(e)}
+          >
+            <option aria-label="None" value="" />
+            <option value="New">New</option>
+            <option value="Old">Old</option>
+            <option value="Used">Used</option>
+          </select>
+
+          <div className="text-sm font-semibold mt-2">Item Type</div>
+          <select
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="itemtype"
+            value={itemtype}
+            onChange={(e) => changer(e)}
+          >
+            <option aria-label="None" value="" />
+            <option value="For Sell">For Sell</option>
+            <option value="For Rent">For Rent</option>
           </select>
           {/* <input
             type="text"
@@ -102,16 +158,13 @@ export default function AddItem() {
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
           /> */}
           <div className="text-sm font-semibold mt-2">Description</div>
-
           <textarea
             rows={2}
             className="px-2 py-1 rounded-md border shadow-sm w-full mt-2"
-            name = "description"
+            name="description"
             value={description}
-            onChange={e => changer(e)}
-
+            onChange={(e) => changer(e)}
           ></textarea>
-
           <div className="flex justify-between mt-2 items-center">
             <div>
               <div className="text-sm font-semibold">Price</div>
@@ -119,9 +172,9 @@ export default function AddItem() {
                 type="text"
                 placeholder="price"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
-                name = "price"
+                name="price"
                 value={price}
-                onChange={e => changer(e)}
+                onChange={(e) => changer(e)}
               />
             </div>
 
@@ -131,33 +184,59 @@ export default function AddItem() {
                 type="number"
                 placeholder="Quantitiy"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
-                name = "quantity"
+                name="quantity"
                 value={quantity}
-                onChange={e => changer(e)}
+                onChange={(e) => changer(e)}
               />
             </div>
           </div>
-
           <div className="text-sm font-semibold mt-2">Location</div>
           <input
             type="text"
-            placeholder="Location"
+            placeholder="City Location"
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
-            name = "location"
-            value={location}
-            onChange={e => changer(e)}
+            name="locationcity"
+            value={locationcity}
+            onChange={(e) => changer(e)}
+          />
+          <input
+            type="text"
+            placeholder="Sub-city Location"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="locationsubcity"
+            value={locationsubcity}
+            onChange={(e) => changer(e)}
           />
           <div className="text-sm font-semibold mt-2">Image</div>
           <input
             type="File"
-            placeholder="name..."
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
-            name = "image"
-            onChange={e => changer(e)}
+            name="image1"
+            onChange={(e) => changer(e)}
+          />
+          <input
+            type="File"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image2"
+            onChange={(e) => changer(e)}
+          />{" "}
+          <input
+            type="File"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image3"
+            onChange={(e) => changer(e)}
+          />{" "}
+          <input
+            type="File"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image4"
+            onChange={(e) => changer(e)}
           />
         </div>
-        <button className="text-white  bg-gray-900 font-semibold w-full text-center mt-3 rounded-md px-2 py-2"
-        onClick={handlesubmit}>
+        <button
+          className="text-white  bg-gray-900 font-semibold w-full text-center mt-3 rounded-md px-2 py-2"
+          onClick={handlesubmit}
+        >
           Submit
         </button>
         {/* category

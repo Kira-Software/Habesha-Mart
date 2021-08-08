@@ -14,7 +14,6 @@ const itemSchema = mongoose.Schema({
   image2: { type: String },
   image3: { type: String },
   image4: { type: String },
-
   postedBy: { type: String },
   createdAt: {
     type: Date,

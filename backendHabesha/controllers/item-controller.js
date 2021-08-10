@@ -3,12 +3,13 @@ const express = require("express");
 const Item = require("../models/item");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-const multer=require('multer');
+const multer = require("multer");
 
 exports.checkBody = (req, res, next) => {
   if (
     !req.body.name ||
     !req.body.categoryId ||
+
     !req.body.price ||
     !req.body.postedBy ||
     !req.body.location
@@ -18,43 +19,63 @@ exports.checkBody = (req, res, next) => {
   next();
 };
 
-
-
 exports.addItem = catchAsync(async (req, res, next) => {
-  
+  //console.log("an item is here to be added");
+  console.log("the comming datas are ",req.body)
+  console.log("the req.user value is ", req.user)
   const {
-    name,
-    categoryId,
-    qunatity,
-    price,
+    itemname,
+    category,
+    itemstatus,
+    itemtype,
     description,
-    city,
-    subCity,
-    itemStatus,
-    itemFor,
+    price,
+    quantity,
+    locationcity,
+    locationsubcity,
+    image1,
+    image2,
+    image3,
+    image4,
   } = req.body;
-// const image=req.file.buffer;
-const postedBy=req.user._id;
 
-  const addedItem = new Item({
-    name,
-    categoryId,
-    qunatity,
-    price,
+  const obj = {
+    itemname,
+    category,
+    itemstatus,
+    itemtype,
     description,
-    city,
-    subCity,
-    postedBy,
-    city,
-    subCity, 
-    itemStatus,
-    itemFor,
-  });
+    price,
+    quantity,
+    locationcity,
+    locationsubcity,
+  };
+if(req.files[0]){
+  obj.image1 = req.files[0].path;
+}
+if(req.files[1]){
+  obj.image2 = req.files[1].path;
+}
+if(req.files[2]){
+  obj.image3 = req.files[2].path;
+}
+if(req.files[3]){
+  obj.image4 = req.files[3].path;
+}
+  // obj.image1 = req.files[0].path;
+  // obj.image2 = req.files[1].path;
+  // obj.image3 = req.files[2].path;
+  // obj.image4 = req.files[3].path;
+  //const image = req.file.buffer;
+  obj.postedBy = req.user._id;
+console.log("the obj total value is ",obj)
+  const addedItem = new Item(obj);
   await addedItem.save();
-  res.status(200).json({message:"Seccessfuly added !"});
+  res.status(200).json({ message: "Successfuly added !" });
 });
 
 exports.deleteItem = (req, res, next) => {};
+
 
 
 exports.findItem=catchAsync(async(req,res,next)=>{
@@ -112,6 +133,5 @@ exports.findItem=catchAsync(async(req,res,next)=>{
                               results:item.length,
                               data:item});
         
+  });
 
-
-});

@@ -24,7 +24,7 @@ const upload=multer({
 
 router.route('/')
         .post(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,upload.single('image'),itemController.addItem)
-        // .get(itemController.getItem)
+        .get(itemController.findItem)
         .delete(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.deleteItem)
         // .patch(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.updateItem)
  

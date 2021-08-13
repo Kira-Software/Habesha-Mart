@@ -8,8 +8,8 @@ const userProfileSchema=mongoose.Schema({
     birthDate:{type:Date},
     address:{type:String},
     gender:{type:String},
-    phoneNo:{type:String},
-    rate:{type:Number,defalut:1}
+    phoneNo:{type:String}
+  
 
 })
 

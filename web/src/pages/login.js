@@ -6,15 +6,18 @@ import {
   UserIcon,
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import authContext from "../context/authContext";
 import axios from "axios";
+import { login, getLoggedIn } from "../Redux/Action/authentication";
+import { useDispatch } from "react-redux";
 
 export default function Register() {
+  const dispatch = useDispatch();
   const [showPass, setShoWPass] = useState(false);
-  const { getLoggedIn } = useContext(authContext);
+  // const { getLoggedIn } = useContext(authContext);
   const [formdata, setformdata] = useState({
-    userName: "",
+    email: "",
     password: "",
   });
 
@@ -27,20 +30,26 @@ export default function Register() {
 
   const handlesubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:9000/api/auth/login", formdata, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log("someti", res);
-        getLoggedIn();
-      });
-    // login(Id, Temppass, Newpass);
+    console.log("button is clicked");
+    // axios
+    //   .post("http://localhost:9000/api/auth/login", formdata, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     console.log("someti", res);
+    //     getLoggedIn();
+    //   });
+    dispatch(login(email, password));
   };
 
   const handleShowPass = () => {
     setShoWPass(!showPass);
   };
+
+  useEffect(() => {
+    console.log("inside of use effect");
+    dispatch(getLoggedIn());
+  }, []);
   return (
     <div className="flex">
       <div className="bg-secondry w-1/4 h-screen">
@@ -73,7 +82,7 @@ export default function Register() {
                   placeholder="example@email.com"
                   className="outline-none bg-gray-100"
                   onChange={(e) => changer(e)}
-                  name="userName"
+                  name="email"
                   value={email}
                 />
               </div>

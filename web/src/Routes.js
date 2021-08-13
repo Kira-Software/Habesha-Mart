@@ -10,24 +10,28 @@ import Profile from "./pages/profile";
 import AboutSeller from "./pages/aboutSeller";
 import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
-import classC from "./pages/ClassC";
-import ClassC from "./pages/ClassC";
-function ProtectedRoute({ component: Component, ...restOfProps }) {
-  const { loggedInState } = useContext(authContext);
 
-  if (loggedInState.isLoading) {
-    return <div>Loading...</div>;
-  }
+import { useSelector, useDispatch } from "react-redux";
+
+function ProtectedRoute({ component: Component, ...restOfProps }) {
+  const isAuthenticated = useSelector(
+    (state) => state.authreducer.isAuthenticated
+  );
+  const isLoading = useSelector((state) => state.authreducer.isLoading);
+
+  //const { loggedInState } = useContext(authContext);
+
+  // if (isAuthenticated.isLoading) {
+  //   return <div>Loading...</div>;
+  // }
   return (
     <Route
       {...restOfProps}
       render={(props) =>
-        loggedInState.isLoggedIn === false ? (
+        !isAuthenticated && !isLoading ? (
           <Redirect to="/login" />
-        ) : loggedInState.isLoggedIn === true ? (
-          <Component {...props} />
         ) : (
-          <div></div>
+          <Component {...props} />
         )
       }
     />
@@ -35,18 +39,21 @@ function ProtectedRoute({ component: Component, ...restOfProps }) {
 }
 
 const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
-  const { loggedInState } = useContext(authContext);
+  const isAuthenticated = useSelector(
+    (state) => state.authreducer.isAuthenticated
+  );
+  const isLoading = useSelector((state) => state.authreducer.isLoading);
+
+  //const { isAuthenticated } = useContext(authContext);
 
   return (
     <Route
       {...restOfProps}
       render={(props) =>
-        loggedInState.isLoggedIn === true ? (
+        isAuthenticated && !isLoading ? (
           <Redirect to="/protected" />
-        ) : loggedInState.isLoggedIn === false ? (
-          <Component {...props} />
         ) : (
-          <></>
+          <Component {...props} />
         )
       }
     />
@@ -55,9 +62,10 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path="/additem">
-        <AddItem />
+      <Route exact path="/">
+        <Home />
       </Route>
+
       <Route exact path="/item">
         <Item />
       </Route>
@@ -67,9 +75,7 @@ const Routes = () => {
       <Route exact path="/profile">
         <Profile />
       </Route>
-      <Route exact path="/">
-        <ClassC />
-      </Route>
+
       <Route exact path="/about-seller">
         <AboutSeller />
       </Route>
@@ -82,6 +88,7 @@ const Routes = () => {
       <RedirectWhenLoggedIn exact path="/register" component={Register} />
       <RedirectWhenLoggedIn exact path="/login" component={Login} />
       <ProtectedRoute exact path="/protected" component={ProtectedPage} />
+      <Route exact path="/additem" component={AddItem} />
     </Switch>
   );
 };

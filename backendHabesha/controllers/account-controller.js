@@ -51,7 +51,7 @@ exports.updateProfilePicture=catchAsync(async(req,res,next)=>{
     
     const update = { avatar: req.file.buffer };
     const profilePicture=await UserProfile.findOneAndUpdate(filter, update);
-//        await profilePicture.save();
+    //await profilePicture.save();
     // req.userProfile.avatar=req.file.buffer  //stores binary image in to user profile try to learn how to get user from session
     
     res.json({message:"your picture has been set successfuly !"})

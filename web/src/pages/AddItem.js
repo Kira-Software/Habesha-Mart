@@ -1,4 +1,165 @@
+import React, { useState, useEffect, useRef } from "react";
+import { postItem } from "../Redux/Action/itemstuff";
+import { getLoggedIn } from "../Redux/Action/authentication";
+import { useDispatch } from "react-redux";
+
 export default function AddItem() {
+  const dispatch = useDispatch();
+  const [formdata, setformdata] = useState({
+    itemname: "",
+    category: "",
+    itemstatus: "",
+    itemtype: "",
+    description: "",
+    price: "",
+    quantity: "",
+    locationcity: "",
+    locationsubcity: "",
+    image1: "",
+    image2: "",
+    image3: "",
+    image4: "",
+  });
+
+  const [imgPreview1, setImgPreview1] = useState(null);
+  const [imgPreview2, setImgPreview2] = useState(null);
+  const [imgPreview3, setImgPreview3] = useState(null);
+  const [imgPreview4, setImgPreview4] = useState(null);
+
+  const [error1, setError1] = useState(null);
+  const [error2, setError2] = useState(null);
+  const [error3, setError3] = useState(null);
+  const [error4, setError4] = useState(null);
+
+  const {
+    itemname,
+    category,
+    itemstatus,
+    itemtype,
+    description,
+    price,
+    quantity,
+    locationcity,
+    locationsubcity,
+    image1,
+    image2,
+    image3,
+    image4,
+  } = formdata;
+
+  let url;
+
+  //const fileInputRef = useRef();
+  const changer = (e) => {
+    if (e.target.type === "file") {
+      console.log("the image value is", e.target.files);
+    }
+    //  console.log("the form value  is " + {...formdata})
+    //console.log("the event . target value is that "+e.target.type)
+    if (e.target.type !== "file") {
+      setformdata({
+        ...formdata,
+        [e.target.name]: e.target.value,
+      });
+    }
+
+    if (e.target.type === "file") {
+      const selected = e.target.files[0];
+      const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+      if (selected && ALLOWED_TYPES.includes(selected.type)) {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          if (e.target.name === "image1") {
+            setImgPreview1(reader.result);
+          }
+          if (e.target.name === "image2") {
+            setImgPreview2(reader.result);
+          }
+          if (e.target.name === "image3") {
+            setImgPreview3(reader.result);
+          }
+          if (e.target.name === "image4") {
+            setImgPreview4(reader.result);
+          }
+        };
+        reader.readAsDataURL(selected);
+
+        setformdata({
+          ...formdata,
+          [e.target.name]: e.target.files[0],
+        });
+      } else {
+        if (e.target.name === "image1") {
+          setError1(true);
+        }
+        if (e.target.name === "image2") {
+          setError2(true);
+        }
+        if (e.target.name === "image3") {
+          setError3(true);
+        }
+        if (e.target.name === "image4") {
+          setError4(true);
+        }
+      }
+      //   const fileReader = new FileReader()
+
+      //   fileReader.onload = () => {
+      //     url = fileReader.result;
+      //     console.log("the value of url is",url)
+      //   }
+      //   fileReader.readAsDataURL(e.target.files[0])
+    }
+  };
+
+  const removeImage = (e) => {
+    if (e.target.name === "buttonimage1") {
+      setImgPreview1(null);
+    } else if (e.target.name === "buttonimage2") {
+      setImgPreview2(null);
+    }
+    if (e.target.name === "buttonimage3") {
+      setImgPreview3(null);
+    }
+    if (e.target.name === "buttonimage4") {
+      setImgPreview4(null);
+    }
+  };
+
+  const handlesubmit = async (event) => {
+    event.preventDefault();
+    console.log("the entered values are ", formdata);
+    dispatch(postItem(formdata));
+
+    //  dispatch(postItem(formdata))
+    // axios
+    //   .post("http://localhost:9000/api/auth/login", formdata, {
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     console.log("someti", res);
+    //     getLoggedIn();
+    //   });
+    // login(Id, Temppass, Newpass);
+  };
+
+  useEffect(() => {
+    dispatch(getLoggedIn());
+  }, []);
+
+  const Button = () => {
+    return (
+      <button
+        className="text-white  bg-red-900 font-semibold w-1/2 text-center mt-3 ml-8 rounded-md px-2 py-2"
+        name="buttonimage1"
+        onClick={removeImage}
+      >
+        Remove Image
+      </button>
+    );
+  };
+
+  const mystyle = { height: 200, width: 300 };
   return (
     <div className="flex h-screen px-4 py-4">
       <div
@@ -39,13 +200,44 @@ export default function AddItem() {
             type="text"
             placeholder="name..."
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="itemname"
+            value={itemname}
+            onChange={(e) => changer(e)}
           />
           <div className="text-sm font-semibold mt-2">Category</div>
-          <select className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2">
+          <select
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="category"
+            value={category}
+            onChange={(e) => changer(e)}
+          >
             <option aria-label="None" value="" />
-            <option value={10}>Ten</option>
-            <option value={20}>Twenty</option>
-            <option value={30}>Thirty</option>
+            <option value="House">House</option>
+            <option value="Cloth">Cloth</option>
+            <option value="Shoes">Shoes</option>
+          </select>
+          <div className="text-sm font-semibold mt-2">Item Status</div>
+          <select
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="itemstatus"
+            value={itemstatus}
+            onChange={(e) => changer(e)}
+          >
+            <option aria-label="None" value="" />
+            <option value="New">New</option>
+            <option value="Old">Old</option>
+            <option value="Used">Used</option>
+          </select>
+          <div className="text-sm font-semibold mt-2">Item Type</div>
+          <select
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="itemtype"
+            value={itemtype}
+            onChange={(e) => changer(e)}
+          >
+            <option aria-label="None" value="" />
+            <option value="For Sell">For Sell</option>
+            <option value="For Rent">For Rent</option>
           </select>
           {/* <input
             type="text"
@@ -53,12 +245,13 @@ export default function AddItem() {
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
           /> */}
           <div className="text-sm font-semibold mt-2">Description</div>
-
           <textarea
             rows={2}
             className="px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="description"
+            value={description}
+            onChange={(e) => changer(e)}
           ></textarea>
-
           <div className="flex justify-between mt-2 items-center">
             <div>
               <div className="text-sm font-semibold">Price</div>
@@ -66,6 +259,9 @@ export default function AddItem() {
                 type="text"
                 placeholder="price"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+                name="price"
+                value={price}
+                onChange={(e) => changer(e)}
               />
             </div>
 
@@ -75,24 +271,119 @@ export default function AddItem() {
                 type="number"
                 placeholder="Quantitiy"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+                name="quantity"
+                value={quantity}
+                onChange={(e) => changer(e)}
               />
             </div>
           </div>
-
           <div className="text-sm font-semibold mt-2">Location</div>
           <input
             type="text"
-            placeholder="Location"
+            placeholder="City Location"
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="locationcity"
+            value={locationcity}
+            onChange={(e) => changer(e)}
+          />
+          <input
+            type="text"
+            placeholder="Sub-city Location"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="locationsubcity"
+            value={locationsubcity}
+            onChange={(e) => changer(e)}
           />
           <div className="text-sm font-semibold mt-2">Image</div>
           <input
             type="File"
-            placeholder="name..."
             className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image1"
+            onChange={(e) => changer(e)}
+            accept="image/*"
+          />
+          <div>
+            <div>
+              {error1 && (
+                <p style={{ color: "red" }}>
+                  Unsupported Format (use png,jpg or jpeg images instead)
+                </p>
+              )}
+            </div>
+            <div style={{ display: imgPreview1 ? "block" : "none" }}>
+              <img src={imgPreview1} style={mystyle} />
+              <Button />
+            </div>
+          </div>
+          <input
+            type="File"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image2"
+            onChange={(e) => changer(e)}
+            accept="image/*"
+          />{" "}
+          <div>
+            {error2 && (
+              <p style={{ color: "red" }}>
+                Unsupported Format (use png,jpg or jpeg images instead)
+              </p>
+            )}
+          </div>
+          <div>
+            {/* {error && <p>File Not Supported</p>} */}
+            <div style={{ display: imgPreview2 ? "block" : "none" }}>
+              <img src={imgPreview2} alt="image2 placeholder" style={mystyle} />
+              <Button />
+            </div>
+          </div>
+          <input
+            type="File"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image3"
+            onChange={(e) => changer(e)}
+            accept="image/*"
+          />{" "}
+          <div>
+            {error3 && (
+              <p style={{ color: "red" }}>
+                Unsupported Format (use png,jpg or jpeg images instead)
+              </p>
+            )}
+          </div>
+          <div>
+            {/* {error && <p>File Not Supported</p>} */}
+            <div style={{ display: imgPreview3 ? "block" : "none" }}>
+              <img src={imgPreview3} alt="image2 placeholder" style={mystyle} />
+              <Button />
+            </div>
+          </div>
+          <input
+            type="File"
+            className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
+            name="image4"
+            onChange={(e) => changer(e)}
+            accept="image/*"
           />
         </div>
-        <button className="text-white  bg-gray-900 font-semibold w-full text-center mt-3 rounded-md px-2 py-2">
+
+        <div>
+          {error4 && (
+            <p style={{ color: "red" }}>
+              Unsupported Format (use png,jpg or jpeg images instead)
+            </p>
+          )}
+        </div>
+        <div>
+          {/* {error && <p>File Not Supported</p>} */}
+          <div style={{ display: imgPreview4 ? "block" : "none" }}>
+            <img src={imgPreview4} alt="image2 placeholder" style={mystyle} />
+            <Button />
+          </div>
+        </div>
+        <button
+          className="text-white  bg-gray-900 font-semibold w-full text-center mt-3 rounded-md px-2 py-2"
+          onClick={handlesubmit}
+        >
           Submit
         </button>
         {/* category

@@ -17,10 +17,12 @@ const signToken = async (userId) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   //1)check if there is a user from session store
+ console.log("inside of the protect middleware")
+ console.log("the session value is ", req.session)
+  const token = req.session.token;
+  const verify = await jwt.verify(token, process.env.SECRET)
 
-  const userId = req.session.user.id;
-
-  const currentUser = await User.findById(userId);
+  const currentUser = await User.findById(verify.id); 
 
   if (!currentUser) {
     return next(
@@ -35,14 +37,17 @@ exports.protect = catchAsync(async (req, res, next) => {
   //   return next(res.json({status:"fail",message:"user changed password! Login Again!"}));
 
   // }
+  console.log("user found")
   req.user = currentUser; //gives users info for next middle ware after protect lalew middlware yestewal
   next();
 });
 
 exports.restrictTo = (...roles) => {
+  //console.log("inside of the restrictTo middleware")
+
   return (req, res, next) => {
-    if (!roles.includes(req.user.roles)) {
-      console.log(req.user.roles);
+    if (!roles.includes(req.user.role)) {
+      console.log(req.user.role);
 
       return next(
         res.json({ message: "you didnt have permission to this Action" })
@@ -91,14 +96,14 @@ exports.signUp = catchAsync(async (req, res, next) => {
   res.json({ status: "success", user: savedUser }); // sends cookie with sessionID automatically in response
 });
 exports.logIn = catchAsync(async (req, res, next) => {
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
   console.log(req.body);
-  if (!userName || !password) {
+  if (!email || !password) {
     return res.json({ message: "please enter valid credentials" });
   }
 
   // const user=await User.findOne({email}).select('+passwordHash'); //use this for password field select value to be false ...password:{select:false}
-  const user = await User.findOne({ userName });
+  const user = await User.findOne({ email });
   console.log(user);
   const comp =
     user.passwordHash ===

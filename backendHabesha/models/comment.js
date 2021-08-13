@@ -8,4 +8,5 @@ const commentSchema=mongoose.Schema({
     commentFor:{type:String}
 
 })
+
 module.exports=mongoose.model("Comment",commentSchema);

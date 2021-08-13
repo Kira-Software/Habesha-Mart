@@ -6,7 +6,7 @@ const requestController=require('../controllers/request-controller');
 const authController=require('../controllers/auth-controller');
 
 router.route('/sendItemRequest')
-        .post(authController.restrictTo('classCustomer'),requestController.sendItemRequest)
+        .post(authController.protect,authController.restrictTo('classCustomer'),requestController.sendItemRequest)
         .delete(requestController.deleteItemRequest)  //for classCustomers optional for implmentaion
         .patch(requestController.updateItemRequest)   //for classCustomers   optional for implementaion
 router.route('/replyItemrequest')

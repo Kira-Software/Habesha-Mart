@@ -13,15 +13,15 @@ const initialstate = {
 
 export default function (state = initialstate, action) {
   const { type, payload } = action;
-  // console.log("the value of payload now is " + payload);
+   console.log("inside the reducer the value of payload now is " + payload);
 
   switch (type) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isAuthenticated: true,
+        isAuthenticated: payload.isLoggedIn,
         loading: false,
-        user: payload,
+        user: payload.user,
       };
     case REGISTER_FAIL:
       return {};

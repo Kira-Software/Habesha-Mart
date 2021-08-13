@@ -10,6 +10,8 @@ import Profile from "./pages/profile";
 import AboutSeller from "./pages/aboutSeller";
 import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
+import classC from "./pages/ClassC";
+import ClassC from "./pages/ClassC";
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const { loggedInState } = useContext(authContext);
 
@@ -53,9 +55,6 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
       <Route exact path="/additem">
         <AddItem />
       </Route>
@@ -67,6 +66,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/profile">
         <Profile />
+      </Route>
+      <Route exact path="/">
+        <ClassC />
       </Route>
       <Route exact path="/about-seller">
         <AboutSeller />

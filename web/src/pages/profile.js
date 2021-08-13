@@ -5,6 +5,7 @@ import {
   PhoneIcon,
   MailIcon,
 } from "@heroicons/react/solid";
+import ItemLS from "../components/ItemLC";
 import Items from "../components/ItemS";
 
 export default function Profile() {
@@ -18,7 +19,7 @@ export default function Profile() {
       <div className="flex">
         <div className="w-1/5"> </div>
         <div className="mt-4 w-4/5 ">
-          <div className="text-xl font-bold text-gray-800">Nahom Balcha</div>
+          <div className="text-xl font-bold text-primary">Nahom Balcha</div>
           <div className="text-sm font-semibold text-gray-600">
             web designer and front end developer at my dorm
           </div>
@@ -78,6 +79,7 @@ export default function Profile() {
                 <img src="star.png" alt="rate" />
               </div>
             </div>
+
             <div className="border px-5 hover:shadow-md rounded-xl py-2 space-y-1">
               <img src="jacket3.jpg" alt="item-one" className="h-24" />
               <div className="text-gray-700   font-semibold">Jacket De_9</div>

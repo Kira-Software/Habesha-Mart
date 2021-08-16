@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, req.user._id+file.originalname);
+    cb(null, req.user._id + file.originalname);
   },
 });
 
@@ -42,7 +42,7 @@ router
     upload.any("itemImage"),
     itemController.addItem
   )
-  // .get(itemController.getItem)
+  .get(itemController.findItem)
   .delete(
     authController.protect,
     authController.restrictTo("seller", "broker"),
@@ -51,15 +51,12 @@ router
   );
 // .patch(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.updateItem)
 
-<<<<<<< HEAD
-router.route('/')
-        .post(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,upload.single('image'),itemController.addItem)
-        .get(itemController.findItem)
-        .delete(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.deleteItem)
-        // .patch(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.updateItem)
- 
-=======
->>>>>>> b71f8a2ec826b9646e0bac5c1597610ad4e919f2
+// router.route('/')
+//         .post(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,upload.single('image'),itemController.addItem)
+//         .get(itemController.findItem)
+//         .delete(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.deleteItem)
+//         // .patch(authController.protect,authController.restrictTo('seller','broker'),authController.isSuspended,itemController.updateItem)
+
 // router.route('/findItemByPriceRange')
 //         .get(itemController.findItemById)
 // router.route('/findItemByCategory')

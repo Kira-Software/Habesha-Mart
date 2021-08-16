@@ -12,6 +12,7 @@ import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
 
 import { useSelector, useDispatch } from "react-redux";
+import ClassC from "./pages/ClassC";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const isAuthenticated = useSelector(
@@ -63,7 +64,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <ClassC />
       </Route>
 
       <Route exact path="/item">

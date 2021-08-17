@@ -10,7 +10,7 @@ import Profile from "./pages/profile";
 import AboutSeller from "./pages/aboutSeller";
 import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
-
+import ClassC from "./pages/ClassC";
 import { useSelector, useDispatch } from "react-redux";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
@@ -63,7 +63,7 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <ClassC />
       </Route>
 
       <Route exact path="/item">

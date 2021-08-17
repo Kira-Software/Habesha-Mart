@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const itemSchema = mongoose.Schema({
-  itemname:{type:String},
+  itemname: { type: String },
   category: { type: String },
-  itemstatus: { type: String, enum: ["New", "Old", "Used"] },
+  itemstatus: { type: String, enum: ["New", "Slightly Used", "Used"] },
   itemtype: { type: String, enum: ["For Sell", "For Rent"] },
   description: { type: String },
-  price: { type: String },//////////////later to be changed to number type with quantity
+  price: { type: String }, //////////////later to be changed to number type with quantity
   quantity: { type: String },
   locationcity: { type: String },
   locationsubcity: { type: String },

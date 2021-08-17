@@ -33,6 +33,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyparser.json());
 
+app.use("/uploads", express.static("uploads"));
+
 // Connecting to Database
 mongoose
   .connect(process.env.MONGO_URI, {

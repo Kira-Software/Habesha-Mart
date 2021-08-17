@@ -3,6 +3,7 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  GET_ITEM,
 } from "../Type/type";
 
 import axios from "axios";
@@ -81,4 +82,27 @@ export const postItem = (formdata) => async (dispatch) => {
   } catch (err) {
     console.error("the error is ", err.message);
   }
+};
+
+export const getItem = () => async (dispatch) => {
+  console.log("i am in action find item function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get("http://localhost:9000/api/item", {
+    withCredentials: true,
+  });
+
+  console.log("inside the getItem the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_ITEM,
+    payload: res.data,
+  });
+
+  // setLoggedInState({
+  //   ...loggedInState,
+  //   isLoading: false,
+  //   isLoggedIn: loggedInStateRes.data.isLoggedIn,
+  //   user: loggedInStateRes.data.user,
+  // });
+  // }, [loggedInState]);
 };

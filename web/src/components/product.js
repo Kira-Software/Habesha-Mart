@@ -9,10 +9,13 @@ export default function Product(props) {
         />
         <div className="px-4 py-2 space-y-2 ">
           <div className="text-lg font-bold text-center text-gray-800">
-            Head phone x-40
+            {props.name}
           </div>
           <div className="text-sm font-semibold text-center text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis,
+            {props.description}
+          </div>
+          <div className="text-sm font-semibold text-center text-gray-800">
+            {props.itemtype}
           </div>
           <div className="flex justify-center">
             {" "}

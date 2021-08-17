@@ -22,7 +22,7 @@ exports.checkBody = (req, res, next) => {
 exports.addItem = catchAsync(async (req, res, next) => {
   //console.log("an item is here to be added");
   console.log("the comming datas are ",req.body)
-  console.log("the req.user value is ", req.user)
+ // console.log("the req.user value is ", req.user)
   const {
     itemname,
     category,

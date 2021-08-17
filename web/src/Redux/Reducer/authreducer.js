@@ -13,7 +13,6 @@ const initialstate = {
 
 export default function (state = initialstate, action) {
   const { type, payload } = action;
-   console.log("inside the reducer the value of payload now is " + payload);
 
   switch (type) {
     case REGISTER_SUCCESS:

@@ -10,7 +10,7 @@ import Profile from "./pages/profile";
 import AboutSeller from "./pages/aboutSeller";
 import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
-
+import ClassC from "./pages/ClassC";
 import { useSelector, useDispatch } from "react-redux";
 import ClassC from "./pages/ClassC";
 

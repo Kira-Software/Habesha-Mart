@@ -4,6 +4,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   GET_ITEM,
+  GET_SELECTED_ITEM,
 } from "../Type/type";
 
 import axios from "axios";
@@ -97,12 +98,27 @@ export const getItem = () => async (dispatch) => {
     type: GET_ITEM,
     payload: res.data,
   });
+};
 
-  // setLoggedInState({
-  //   ...loggedInState,
-  //   isLoading: false,
-  //   isLoggedIn: loggedInStateRes.data.isLoggedIn,
-  //   user: loggedInStateRes.data.user,
-  // });
-  // }, [loggedInState]);
+export const getIndividualItem = (id) => async (dispatch) => {
+  console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get(`http://localhost:9000/api/item?postedBy=${id}`, {
+    withCredentials: true,
+  });
+
+  console.log("inside the getindividual item the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_ITEM,
+    payload: res.data,
+  });
+};
+
+export const getSelectedItem = (id) => async (dispatch) => {
+  console.log("id is ",id)
+  dispatch({
+    type: GET_SELECTED_ITEM,
+    payload: id,
+  });
 };

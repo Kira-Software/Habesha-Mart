@@ -8,8 +8,33 @@ import ItemLS from "../components/ItemLC";
 import ItemListCat from "../components/ItemListCat";
 import Items from "../components/ItemS";
 import Navbar from "../components/Navbar";
+import { getLoggedIn } from "../Redux/Action/authentication";
+import { getIndividualItem } from "../Redux/Action/itemstuff";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ItemListSeller() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authreducer.user);
+  const items = useSelector((state) => state.item.items);
+  const isLoading = useSelector((state) => state.authreducer.isLoading);
+
+  let myitemcount = 0;
+  let categoryarray = [];
+
+  useEffect(() => {
+    dispatch(getLoggedIn());
+    //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
+    // dispatch(getIndividualItem(user._id))
+  }, []);
+  useEffect(() => {
+    // dispatch(getLoggedIn())
+    //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
+    if (user !== null) {
+      dispatch(getIndividualItem(user._id));
+    }
+  }, [user]);
   return (
     <div>
       <Navbar />
@@ -57,17 +82,43 @@ export default function ItemListSeller() {
         </div>
         <div className="w-4/5 pt-4 ">
           <div className="border-b flex py-4 space-x-8">
-            <ItemListCat img="home_three.jpg" label="Home" />
+            {items.length !== 0 && !isLoading
+              ? items.data.map((item, idx) => {
+                  if (!categoryarray.includes(item.category)) {
+                    categoryarray.push(item.category);
+                    return (
+                      <ItemListCat
+                        img={`http://localhost:9000/${item.image1}`}
+                        label={item.category}
+                      />
+                    );
+                  }
+                })
+              : null}
+            {/* <ItemListCat img="home_three.jpg" label="Home" />
             <ItemListCat img="car_one.jpg" label="Car" />
             <ItemListCat img="six.jpg" label="phone" />
-            <ItemListCat img="bg_0.jpg" label="Head Phone" />
+            <ItemListCat img="bg_0.jpg" label="Head Phone" /> */}
           </div>
           <div className="flex flex-wrap ">
-            <ItemLS img="home_one.jpeg" />
+            {items.length !== 0 && !isLoading
+              ? items.data.map((item, idx) => {
+                  return (
+                    <ItemLS
+                      img={`http://localhost:9000/${item.image1}`}
+                      name={item.itemname}
+                      id={item._id}
+                      category={item.category}
+                    />
+                  );
+                })
+              : null}
+
+            {/* <ItemLS img="home_one.jpeg" />
             <ItemLS img="home_two.jpg" />
 
             <ItemLS img="home_three.jpg" />
-            <ItemLS img="home_four.jpg" />
+            <ItemLS img="home_four.jpg" /> */}
           </div>
         </div>
       </div>

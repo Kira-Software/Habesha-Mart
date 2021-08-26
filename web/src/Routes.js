@@ -12,7 +12,7 @@ import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
 import ClassC from "./pages/ClassC";
 import { useSelector, useDispatch } from "react-redux";
-import ClassC from "./pages/ClassC";
+//import ClassC from "./pages/ClassC";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const isAuthenticated = useSelector(

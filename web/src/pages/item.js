@@ -38,8 +38,6 @@ export default function Item() {
     }
   }, [user]);
 
-
-
   return (
     <div>
       <Navbar />
@@ -173,37 +171,39 @@ export default function Item() {
       )}
 
       <div className="px-8 mb-10 flex">
-        <div className="w-4/6">
-          <div className="w-full  flex  justify-center">
-            <div className="flex w-full ml-24 space-x-5">
-              <img
-                src="pro3.jpg"
-                alt="propic"
-                className="h-14 w-14 rounded-full "
-              />
-              <div className="w-full">
-                <textarea
-                  rows={3}
-                  placeholder="Write Comment..."
-                  className=" rounded-lg w-2/3 px-4 py-2 outline-none border-2   border-gray-300"
+        {!isLoading && items.length !== 0 ? (
+          <div className="w-4/6">
+            <div className="w-full  flex  justify-center">
+              <div className="flex w-full ml-24 space-x-5">
+                <img
+                  src="pro3.jpg"
+                  alt="propic"
+                  className="h-14 w-14 rounded-full "
                 />
-                <button className="px-8 block py-1 text-white font-semibold mt-2 bg-primary rounded-3xl">
-                  Post comment
-                </button>
+                <div className="w-full">
+                  <textarea
+                    rows={3}
+                    placeholder="Write Comment..."
+                    className=" rounded-lg w-2/3 px-4 py-2 outline-none border-2   border-gray-300"
+                  />
+                  <button className="px-8 block py-1 text-white font-semibold mt-2 bg-primary rounded-3xl">
+                    Post comment
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="px-16">
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
+            <div className="px-16">
+              <Comment />
+              <Comment />
+              <Comment />
+              <Comment />
 
-            <button className="px-12 py-1 mt-6 ml-72  bg-primary text-white font-semibold rounded-3xl">
-              more
-            </button>
+              <button className="px-12 py-1 mt-6 ml-72  bg-primary text-white font-semibold rounded-3xl">
+                more
+              </button>
+            </div>
           </div>
-        </div>
+        ) : null}
 
         <div className="w-2/6 px-4   rounded-l-xl">
           <div className="flex items-center space-x-4">

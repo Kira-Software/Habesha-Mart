@@ -5,6 +5,7 @@ import {
   REGISTER_FAIL,
   GET_ITEM,
   GET_SELECTED_ITEM,
+  GET_SEARCH_ITEM
 } from "../Type/type";
 
 import axios from "axios";
@@ -120,5 +121,20 @@ export const getSelectedItem = (id) => async (dispatch) => {
   dispatch({
     type: GET_SELECTED_ITEM,
     payload: id,
+  });
+};
+
+export const getSearchItem = (category) => async (dispatch) => {
+ // console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get(`http://localhost:9000/api/item?category=${category}`, {
+    withCredentials: true,
+  });
+
+ // console.log("inside the getindividual item the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_SEARCH_ITEM,
+    payload: res.data,
   });
 };

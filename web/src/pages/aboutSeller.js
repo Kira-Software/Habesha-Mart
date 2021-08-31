@@ -4,6 +4,7 @@ import {
   ShieldCheckIcon,
   StarIcon,
 } from "@heroicons/react/solid";
+
 import Navbar from "../components/Navbar";
 
 export default function AboutSeller() {
@@ -24,7 +25,7 @@ export default function AboutSeller() {
             <div className="flex items-baseline space-x-3">
               <div className="text-xl font-semibold text-gray-500">
                 Nahom Balcha
-              </div>
+              </div>{" "}
               <div className="flex items-baseline space-x-1">
                 <LocationMarkerIcon className="h-4 text-gray-300" />{" "}
                 <span className="text-gray-300 text-sm font-semibold">
@@ -32,6 +33,7 @@ export default function AboutSeller() {
                 </span>
               </div>
             </div>
+
             <div className="text-sm text-yellow-400 font-semibold">
               product manager
             </div>

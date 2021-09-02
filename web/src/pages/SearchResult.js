@@ -2,7 +2,31 @@ import { ArrowDownIcon, SearchIcon, XIcon } from "@heroicons/react/solid";
 import Navbar from "../components/Navbar";
 import Items from "../components/ItemS";
 import Product from "../components/product";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getItem, getSearchItem } from "../Redux/Action/itemstuff";
+
 export default function SearchResult() {
+  const dispatch = useDispatch();
+  const searchItem = useSelector((state) => state.item.searchItem);
+  const [searchWord, setSearchWord] = useState("");
+
+  const changer = (e) => {
+    setSearchWord(e.target.value);
+    console.log("the search word is ", searchWord);
+  };
+
+  const clearSearch = () => {
+    setSearchWord("");
+  };
+
+  const handleSearch = () => {
+    
+  }
+
+  useEffect(() => {
+    dispatch(getSearchItem(localStorage.getItem("moreCategory")));
+  }, []);
   return (
     <div className="h-screen ">
       <Navbar />
@@ -69,13 +93,16 @@ export default function SearchResult() {
         </div>
         <div className=" w-3/5     px-14 py-8 " style={{ marginLeft: "20%" }}>
           <div className="flex bg-gray-50 px-4 py-2 rounded-xl items-center">
-            <SearchIcon className="h-5 text-gray-400 mr-4" />
+            
             <input
               type="text"
               placeholder="Search..."
               className="bg-gray-50 w-full outline-none"
+              value={searchWord}
+              onChange={(e) => changer(e)}
             />
-            <XIcon className="h-5 text-gray-400" />
+            <SearchIcon className="h-5 text-gray-400 mr-4" />
+            <XIcon className="h-5 text-gray-400" onClick={clearSearch} />
           </div>
           <div className="my-2 text-sm font-semibold text-gray-300">
             Search Result for ....
@@ -93,13 +120,25 @@ export default function SearchResult() {
             </button>
           </div>
           <div className="flex flex-wrap justify-between">
-            <Product img="j_one.jpg" />
-
+            {searchItem.length !== 0
+              ? searchItem.data.map((item, idx) => {
+                  if (item.category === localStorage.getItem("moreCategory")) {
+                    return (
+                      <Product
+                        img={`http://localhost:9000/${item.image1}`}
+                        name={item.itemname}
+                        id={item._id}
+                      />
+                    );
+                  }
+                })
+              : null}
+            {/* <Product img="j_one.jpg" />
             <Product img="j_two.jpg" />
             <Product img="j_three.jpg" />
             <Product img="j_four.jpg" />
             <Product img="j_five.jpg" />
-            <Product img="j_six.jpg" />
+            <Product img="j_six.jpg" /> */}
           </div>
         </div>
         <div
@@ -108,59 +147,79 @@ export default function SearchResult() {
         >
           {" "}
           <div className="flex">
-            <div>
-              <div className="flex justify-around">
-                <img src="jacket.jpg" alt="desc" className="h-56" />
-              </div>
-              <div className="flex justify-between mt-4">
-                <div className="rounded-full border px-2 py-2">
-                  <img
-                    src="jacket.jpg"
-                    alt="one"
-                    className="h-12 rounded-full"
-                  />
-                </div>
-                <div className="rounded-full border px-2 py-2">
-                  <img
-                    src="jacket2.jpg"
-                    alt="one"
-                    className="h-12 rounded-full"
-                  />
-                </div>
+            {searchItem.length !== 0 ? (
+              searchItem.data.map((item, idx) => {
+                if (item._id === localStorage.getItem("detailId")) {
+                  return (
+                    <div>
+                      <div className="flex justify-around">
+                        <img
+                          src={`http://localhost:9000/${item.image1}`}
+                          alt="desc"
+                          className="h-56"
+                        />
+                      </div>
+                      <div className="flex justify-between mt-4">
+                        {item.image2 ? (
+                          <div className="rounded-full border px-2 py-2">
+                            <img
+                              src={`http://localhost:9000/${item.image2}`}
+                              alt="two"
+                              className="h-12 rounded-full"
+                            />
+                          </div>
+                        ) : null}
+                        {item.image3 ? (
+                          <div className="rounded-full border px-2 py-2">
+                            <img
+                              src={`http://localhost:9000/${item.image3}`}
+                              alt="three"
+                              className="h-12 rounded-full"
+                            />
+                          </div>
+                        ) : null}
 
-                <div className="rounded-full border px-2 py-2" rounded-lg>
-                  <img
-                    src="jacket3.jpg"
-                    alt="one"
-                    className="h-12 rounded-full"
-                  />
-                </div>
-              </div>{" "}
-              <div className="mt-4 text-2xl font-bold text-gray-800">
-                Monstera Dk Var (L)
-              </div>
-              <div className="mt-2 font-semibold text-sm text-gray-500">
-                Lorem ipsum dolor sit amet consectr adipisicing elit es possis
-                exe tionem ex. Aperiam cumque veniam soluta reiciendis, commodi
-                perspiciatis magni. Adipisci tempore quos ipsam ut dolorem
-                tempora, aliquid illum.
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="mt-4 ">
-                  <div className="font-semibold text-xl text-gray-800">
-                    Price
-                  </div>
-                  <div className="text-sm font-semibold text-gray-800">
-                    $ 400.00
-                  </div>
-                </div>
-                <div>
-                  <button className=" px-4 py-1 rounded-3xl bg-primary text-white font-semibold">
-                    Get Contact
-                  </button>
-                </div>
-              </div>
-            </div>
+                        {item.image4 ? (
+                          <div
+                            className="rounded-full border px-2 py-2"
+                            rounded-lg
+                          >
+                            <img
+                              src={`http://localhost:9000/${item.image4}`}
+                              alt="four"
+                              className="h-12 rounded-full"
+                            />
+                          </div>
+                        ) : null}
+                      </div>{" "}
+                      <div className="mt-4 text-2xl font-bold text-gray-800">
+                        {item.itemname}
+                      </div>
+                      <div className="mt-2 font-semibold text-sm text-gray-500">
+                        {item.description}
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="mt-4 ">
+                          <div className="font-semibold text-xl text-gray-800">
+                            Price
+                          </div>
+                          <div className="text-sm font-semibold text-gray-800">
+                            Br. {item.price}
+                          </div>
+                        </div>
+                        <div>
+                          <button className=" px-4 py-1 rounded-3xl bg-primary text-white font-semibold">
+                            Get Contact
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </div>
       </div>

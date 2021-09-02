@@ -12,8 +12,13 @@ import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
 import ClassC from "./pages/ClassC";
 import { useSelector, useDispatch } from "react-redux";
+<<<<<<< HEAD
 import EditProfile from "./pages/editProfile";
 import EditItem from "./pages/editItem";
+=======
+//import ClassC from "./pages/ClassC";
+
+>>>>>>> 1c5e89f667baccc6599d35c80718b717f7a6505d
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const isAuthenticated = useSelector(
     (state) => state.authreducer.isAuthenticated

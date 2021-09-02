@@ -1,10 +1,12 @@
 import {
-  GET_ITEM
+  GET_ITEM,GET_SELECTED_ITEM,GET_SEARCH_ITEM
   } from "../Type/type";
   
   const initialstate = {
     loading: true,
     items: [],
+    selectedItem: null,
+    searchItem: []
   };
   
   export default function (state = initialstate, action) {
@@ -17,8 +19,16 @@ import {
           loading: false,
           items: payload,
         };
-    //   case REGISTER_FAIL:
-    //     return {};
+      case GET_SELECTED_ITEM:
+        return {
+          ...state,
+          selectedItem: payload
+        };
+        case GET_SEARCH_ITEM:
+          return {
+            ...state,
+            searchItem: payload
+          };
     //   case LOGIN_SUCCESS:
     //     return {
     //       ...state,

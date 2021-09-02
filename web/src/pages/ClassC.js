@@ -5,6 +5,7 @@ import Product from "../components/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getItem } from "../Redux/Action/itemstuff";
+import { Link } from "react-router-dom";
 
 export default function ClassC() {
   const dispatch = useDispatch();
@@ -22,6 +23,10 @@ export default function ClassC() {
     dispatch(getItem());
     console.log("the value of items is ", items);
   }, []);
+
+  const handleShowMore = (e, cat) => {
+    localStorage.setItem("moreCategory", cat);
+  };
   return (
     <div>
       <Navbar />
@@ -62,10 +67,14 @@ export default function ClassC() {
           {/* <Product img="two.jpg" />
           <Product img="three.jpg" />
           <Product img="four.jpg" /> */}
-
-          <button className="border rounded-full self-center px-5 py-5">
-            <ArrowRightIcon className="h-5" />
-          </button>
+          <Link to="/search">
+            <button
+              className="border rounded-full self-center px-5 py-5"
+              onClick={(e) => handleShowMore(e, "Electronics")}
+            >
+              <ArrowRightIcon className="h-5" />
+            </button>
+          </Link>
         </div>
         <div className="text-2xl text-gray-900 font-bold">Cloth</div>
         <div className="flex justify-around py-4   space-x-3   ">
@@ -87,9 +96,13 @@ export default function ClassC() {
           ) : (
             <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
           )}
-          <button className="border rounded-full self-center px-5 py-5">
+           <Link to="/search">
+          <button
+            className="border rounded-full self-center px-5 py-5"
+            onClick={(e) => handleShowMore(e, "Cloth")}
+          >
             <ArrowRightIcon className="h-5" />
-          </button>
+          </button></Link>
         </div>
 
         {/* <Product img="" />
@@ -144,9 +157,13 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-              <button className="border rounded-full self-center px-5 py-5">
+               <Link to="/search">
+              <button
+                className="border rounded-full self-center px-5 py-5"
+                onClick={(e) => handleShowMore(e, "Car")}
+              >
                 <ArrowRightIcon className="h-5" />
-              </button>
+              </button></Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Home</div>
             <div className="flex justify-around py-4   space-x-3   ">
@@ -167,9 +184,13 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-              <button className="border rounded-full self-center px-5 py-5">
+               <Link to="/search">
+              <button
+                className="border rounded-full self-center px-5 py-5"
+                onClick={(e) => handleShowMore(e, "House")}
+              >
                 <ArrowRightIcon className="h-5" />
-              </button>
+              </button></Link>
             </div>
 
             <div className="text-2xl text-gray-900 font-bold">Accessories</div>
@@ -191,9 +212,13 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-              <button className="border rounded-full self-center px-5 py-5">
+               <Link to="/search">
+              <button
+                className="border rounded-full self-center px-5 py-5"
+                onClick={(e) => handleShowMore(e, "Accessories")}
+              >
                 <ArrowRightIcon className="h-5" />
-              </button>
+              </button></Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Shoes</div>
             <div className="flex justify-around py-4   space-x-3   ">
@@ -214,9 +239,13 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-              <button className="border rounded-full self-center px-5 py-5">
+               <Link to="/search">
+              <button
+                className="border rounded-full self-center px-5 py-5"
+                onClick={(e) => handleShowMore(e, "Shoes")}
+              >
                 <ArrowRightIcon className="h-5" />
-              </button>
+              </button></Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Other</div>
             <div className="flex justify-around py-4   space-x-3   ">
@@ -237,7 +266,11 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-              <button className="border rounded-full self-center px-5 py-5">
+               <Link to="/search"></Link>
+              <button
+                className="border rounded-full self-center px-5 py-5"
+                onClick={(e) => handleShowMore(e, "Other")}
+              >
                 <ArrowRightIcon className="h-5" />
               </button>
             </div>

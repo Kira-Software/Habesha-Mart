@@ -1,3 +1,8 @@
+const handleItemChange = (id) => {
+  localStorage.setItem("detailId", id);
+  window.location.reload(false);
+};
+
 export default function Product(props) {
   return (
     <div className=" w-56 mt-6 hover:shadow-sm  flex justify-center">
@@ -16,7 +21,15 @@ export default function Product(props) {
           </div>
           <div className="text-sm font-semibold text-center text-gray-800">
             {props.itemtype}
-          </div>
+          </div>{" "}
+          {props.id ? (
+            <button
+              className="bg-red-900 text-white font-semibold rounded-3xl border px-4 py-1"
+              onClick={() => handleItemChange(props.id)}
+            >
+              Detail
+            </button>
+          ) : null}
           <div className="flex justify-center">
             {" "}
             <img src="star.png" alt="star" />

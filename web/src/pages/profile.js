@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import {
   LocationMarkerIcon,
   ChatIcon,
@@ -7,8 +9,31 @@ import {
 } from "@heroicons/react/solid";
 import ItemLS from "../components/ItemLC";
 import Items from "../components/ItemS";
-
+import { getLoggedIn } from "../Redux/Action/authentication";
+import { getIndividualItem } from "../Redux/Action/itemstuff";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 export default function Profile() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authreducer.user);
+  const items = useSelector((state) => state.item.items);
+  const isLoading = useSelector((state) => state.authreducer.isLoading);
+
+  let myitemcount = 0;
+
+  useEffect(() => {
+    dispatch(getLoggedIn());
+    //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
+    // dispatch(getIndividualItem(user._id))
+  }, []);
+  useEffect(() => {
+    // dispatch(getLoggedIn())
+    //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
+    if (user !== null) {
+      dispatch(getIndividualItem(user._id));
+    }
+  }, [user]);
+
   return (
     <div className="h-screen">
       <img src="phones.jpg" alt="bg" className="w-full max-h-60" />
@@ -72,24 +97,47 @@ export default function Profile() {
         <div className="w-2/5 mx-2 bg-white rounded-lg px-4 py-2 shadow-md ">
           <div className="font-semibold text-lg text-gray-700">Items</div>
           <div className="py-2 flex justify-around">
-            <div className="border px-5 hover:shadow-md rounded-xl py-2 space-y-1">
-              <img src="jacket2.jpg" alt="item-one" className="h-24" />
-              <div className="text-gray-700   font-semibold">Jacket De_9</div>
-              <div>
-                <img src="star.png" alt="rate" />
-              </div>
-            </div>
+            {items.length !== 0 && !isLoading ? (
+              items.data.map((item, idx) => {
+                myitemcount++;
+                if (myitemcount < 3) {
+                  return (
+                    <div
+                      className="border px-5 hover:shadow-md rounded-xl py-2 space-y-1"
+                      key={idx}
+                    >
+                      <img
+                        src={`http://localhost:9000/${item.image1}`}
+                        alt="item-one"
+                        className="h-24"
+                      />
+                      <div className="text-gray-700   font-semibold">
+                        {item.name}
+                      </div>
+                      <div>
+                        <img src="star.png" alt="rate" />
+                      </div>
+                    </div>
+                  );
+                }
+              })
+            ) : (
+              <p>Loading ...</p>
+            )}
+            {/* <div className="border px-5 hover:shadow-md rounded-xl py-2 space-y-1">
+                  <img src="jacket2.jpg" alt="item-one" className="h-24" />
+                  <div className="text-gray-700   font-semibold">Jacket De_9</div>
+                  <div>
+                    <img src="star.png" alt="rate" />
+                  </div>
+                </div> */}
 
-            <div className="border px-5 hover:shadow-md rounded-xl py-2 space-y-1">
-              <img src="jacket3.jpg" alt="item-one" className="h-24" />
-              <div className="text-gray-700   font-semibold">Jacket De_9</div>
-              <div>
-                <img src="star.png" alt="rate" />
-              </div>
-            </div>
-            <button className="font-semibold border rounded-md self-center px-2 py-1 hover:bg-gray-100">
+            <Link
+              className="font-semibold border rounded-md self-center px-2 py-1 hover:bg-gray-100"
+              to="item-list"
+            >
               See More
-            </button>
+            </Link>
           </div>
         </div>
         <div className="w-2/5 mx-2 bg-white rounded-lg px-4 py-2 shadow-md h-56">

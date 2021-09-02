@@ -5,6 +5,9 @@ import Product from "../components/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getItem, getSearchItem } from "../Redux/Action/itemstuff";
+import { getSelectedItem } from "../Redux/Action/itemstuff";
+
+import { Link } from "react-router-dom";
 
 export default function SearchResult() {
   const dispatch = useDispatch();
@@ -20,9 +23,13 @@ export default function SearchResult() {
     setSearchWord("");
   };
 
-  const handleSearch = () => {
-    
-  }
+  const handleSearch = () => {};
+
+  const setId = (id, category) => {
+    dispatch(getSelectedItem(id));
+    localStorage.setItem("S_Id", id);
+    localStorage.setItem("Category", category);
+  };
 
   useEffect(() => {
     dispatch(getSearchItem(localStorage.getItem("moreCategory")));
@@ -93,7 +100,6 @@ export default function SearchResult() {
         </div>
         <div className=" w-3/5     px-14 py-8 " style={{ marginLeft: "20%" }}>
           <div className="flex bg-gray-50 px-4 py-2 rounded-xl items-center">
-            
             <input
               type="text"
               placeholder="Search..."
@@ -207,11 +213,14 @@ export default function SearchResult() {
                             Br. {item.price}
                           </div>
                         </div>
-                        <div>
-                          <button className=" px-4 py-1 rounded-3xl bg-primary text-white font-semibold">
-                            Get Contact
+                        <Link to="/item">
+                          <button
+                            className=" px-4 py-1 rounded-3xl bg-primary text-white font-semibold"
+                            onClick={() => setId(item._id, item.category)}
+                          >
+                            Detail Info
                           </button>
-                        </div>
+                        </Link>
                       </div>
                     </div>
                   );

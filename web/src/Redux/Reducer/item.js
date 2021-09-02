@@ -5,7 +5,7 @@ import {
   const initialstate = {
     loading: true,
     items: [],
-    selectedItem: null,
+    selectedItem: [],
     searchItem: []
   };
   

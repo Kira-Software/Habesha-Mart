@@ -41,130 +41,124 @@ export default function Item() {
   return (
     <div>
       <Navbar />
-      {items.length !== 0 && !isLoading ? (
-        items.data.map((item, idx) => {
-          if (item._id === localStorage.getItem("S_Id")) {
-            return (
-              <div className="mt-14 flex px-8 py-16">
-                <div className="w-1/2     ">
-                  <div className="  flex justify-center items-center h-full">
-                    <div>
-                      <div className=" bg-secondary  ">
+      {selectedItem.length !== 0 && !isLoading ? (
+        selectedItem.data.map((item, idx) => {
+          return (
+            <div className="mt-14 flex px-8 py-16">
+              <div className="w-1/2     ">
+                <div className="  flex justify-center items-center h-full">
+                  <div>
+                    <div className=" bg-secondary  ">
+                      <img
+                        src={`http://localhost:9000/${item.image1}`}
+                        alt="main item image"
+                        className="h-96"
+                      />
+                    </div>{" "}
+                    <div className="w-full mt-2 flex justify-between  ">
+                      {item.image2 ? (
                         <img
-                          src={`http://localhost:9000/${item.image1}`}
-                          alt="main item image"
-                          className="h-96"
+                          src={`http://localhost:9000/${item.image2}`}
+                          alt="image2"
+                          className="h-20 "
                         />
-                      </div>{" "}
-                      <div className="w-full mt-2 flex justify-between  ">
-                        {item.image2 ? (
-                          <img
-                            src={`http://localhost:9000/${item.image2}`}
-                            alt="image2"
-                            className="h-20 "
-                          />
-                        ) : null}
-                        {item.image3 ? (
-                          <img
-                            src={`http://localhost:9000/${item.image3}`}
-                            alt="image3"
-                            className="h-20 "
-                          />
-                        ) : null}
-                        {item.image4 ? (
-                          <img
-                            src={`http://localhost:9000/${item.image4}`}
-                            alt="image4"
-                            className="h-20 "
-                          />
-                        ) : null}
-                        {/* <img src="j_two.jpg" alt="2" className="h-20 " />
+                      ) : null}
+                      {item.image3 ? (
+                        <img
+                          src={`http://localhost:9000/${item.image3}`}
+                          alt="image3"
+                          className="h-20 "
+                        />
+                      ) : null}
+                      {item.image4 ? (
+                        <img
+                          src={`http://localhost:9000/${item.image4}`}
+                          alt="image4"
+                          className="h-20 "
+                        />
+                      ) : null}
+                      {/* <img src="j_two.jpg" alt="2" className="h-20 " />
                         <img src="j_three.jpg" alt="2" className="h-20 " />
                         <img src="j_four.jpg" alt="2" className="h-20 " /> */}
-                      </div>
                     </div>
                   </div>
-                </div>{" "}
-                <div className="w-1/2 pr-8 ">
-                  <div className="space-y-5 border-b pb-16">
-                    <div className="text-4xl font-bold text-primary">
-                      {item.itemname}
+                </div>
+              </div>{" "}
+              <div className="w-1/2 pr-8 ">
+                <div className="space-y-5 border-b pb-16">
+                  <div className="text-4xl font-bold text-primary">
+                    {item.itemname}
+                  </div>
+                  <div className="flex   space-x-4">
+                    <div className="flex items-center px-2 py-1 bg-yellow-500 rounded-lg">
+                      <StarIcon className="h-4 text-white " />{" "}
+                      <span className="text-white text-sm font-semibold">
+                        4.6
+                      </span>
                     </div>
-                    <div className="flex   space-x-4">
-                      <div className="flex items-center px-2 py-1 bg-yellow-500 rounded-lg">
-                        <StarIcon className="h-4 text-white " />{" "}
-                        <span className="text-white text-sm font-semibold">
-                          4.6
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-400 font-semibold">
-                        lorem ipsum
-                      </div>
-                      <div className="text-sm text-gray-400 font-semibold">
-                        34K lorem ipsum
-                      </div>
+                    <div className="text-sm text-gray-400 font-semibold">
+                      lorem ipsum
                     </div>
-                    <div className=" pr-24 text-gray-500 text-sm font-semibold">
-                      <div>{item.description}</div>
-                      <div>{item.itemstatus}</div>
-                      <div>{item.itemtype}</div>
+                    <div className="text-sm text-gray-400 font-semibold">
+                      34K lorem ipsum
                     </div>
                   </div>
-                  <div className="flex mt-5 pb-6 space-x-5 border-b items-center">
-                    <div className="space-y-1">
-                      <div className="font-semibold text-gray-500">
-                        Location
-                      </div>
-                      <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
-                        <LocationMarkerIcon className="h-5 text-gray-500" />{" "}
-                        <span className="text-gray-500 font-semibold text-sm">
-                          {item.locationcity}
-                        </span>
-                        <span className="text-gray-500 font-semibold text-sm ml-3">
-                          {item.locationsubcity}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="font-semibold text-gray-500">
-                        Quantity
-                      </div>
-                      <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
-                        <ShoppingBagIcon className="h-5 text-gray-500" />{" "}
-                        <span className="text-gray-500 font-semibold text-sm">
-                          {item.quantity}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <div className="font-semibold text-gray-500">Color</div>
-                      <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
-                        <ColorSwatchIcon className="h-5 text-gray-500" />{" "}
-                        <span className="text-gray-500 font-semibold text-sm">
-                          Original
-                        </span>
-                      </div>
+                  <div className=" pr-24 text-gray-500 text-sm font-semibold">
+                    <div>{item.description}</div>
+                    <div>{item.itemstatus}</div>
+                    <div>{item.itemtype}</div>
+                  </div>
+                </div>
+                <div className="flex mt-5 pb-6 space-x-5 border-b items-center">
+                  <div className="space-y-1">
+                    <div className="font-semibold text-gray-500">Location</div>
+                    <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
+                      <LocationMarkerIcon className="h-5 text-gray-500" />{" "}
+                      <span className="text-gray-500 font-semibold text-sm">
+                        {item.locationcity}
+                      </span>
+                      <span className="text-gray-500 font-semibold text-sm ml-3">
+                        {item.locationsubcity}
+                      </span>
                     </div>
                   </div>
-                  <div className="py-5 mt-2">
-                    <div className="flex justify-between">
-                      <div className="text-3xl font-semibold text-primary">
-                        Br. {item.price}
-                      </div>
-                      <div className="flex items-center space-x-5">
-                        <button className="px-6 py-1 rounded-3xl text-white font-semibold bg-primary">
-                          Get Contact
-                        </button>
-                        <button className="px-1 py-1 rounded-lg border">
-                          <HeartIcon className="h-5 text-gray-400" />
-                        </button>
-                      </div>
+                  <div className="space-y-1">
+                    <div className="font-semibold text-gray-500">Quantity</div>
+                    <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
+                      <ShoppingBagIcon className="h-5 text-gray-500" />{" "}
+                      <span className="text-gray-500 font-semibold text-sm">
+                        {item.quantity}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="font-semibold text-gray-500">Color</div>
+                    <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
+                      <ColorSwatchIcon className="h-5 text-gray-500" />{" "}
+                      <span className="text-gray-500 font-semibold text-sm">
+                        Original
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="py-5 mt-2">
+                  <div className="flex justify-between">
+                    <div className="text-3xl font-semibold text-primary">
+                      Br. {item.price}
+                    </div>
+                    <div className="flex items-center space-x-5">
+                      <button className="px-6 py-1 rounded-3xl text-white font-semibold bg-primary">
+                        Get Contact
+                      </button>
+                      <button className="px-1 py-1 rounded-lg border">
+                        <HeartIcon className="h-5 text-gray-400" />
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-            );
-          }
+            </div>
+          );
         })
       ) : (
         <p>Loading...</p>

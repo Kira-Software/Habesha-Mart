@@ -5,11 +5,14 @@ import Product from "../components/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getItem } from "../Redux/Action/itemstuff";
+import { getLoggedIn } from "../Redux/Action/authentication";
+
 import { Link } from "react-router-dom";
 
 export default function ClassC() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.item.items);
+  const user = useSelector((state) => state.authreducer.user);
 
   let clothcount = 0;
   let electronicscount = 0;
@@ -20,6 +23,7 @@ export default function ClassC() {
   let othercount = 0;
 
   useEffect(() => {
+    dispatch(getLoggedIn());
     dispatch(getItem());
     console.log("the value of items is ", items);
   }, []);
@@ -96,13 +100,14 @@ export default function ClassC() {
           ) : (
             <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
           )}
-           <Link to="/search">
-          <button
-            className="border rounded-full self-center px-5 py-5"
-            onClick={(e) => handleShowMore(e, "Cloth")}
-          >
-            <ArrowRightIcon className="h-5" />
-          </button></Link>
+          <Link to="/search">
+            <button
+              className="border rounded-full self-center px-5 py-5"
+              onClick={(e) => handleShowMore(e, "Cloth")}
+            >
+              <ArrowRightIcon className="h-5" />
+            </button>
+          </Link>
         </div>
 
         {/* <Product img="" />
@@ -120,7 +125,13 @@ export default function ClassC() {
       >
         <div className="w-3/4 space-y-3">
           <div className="text-4xl font-bold text-white">
-            Upgrade Your Account
+            {user === null ? (
+              <>Sign Up Now</>
+            ) : user.role === "seller" || "broker" ? (
+              <>Visit Your Profile</>
+            ) : (
+              <>Upgrade Your Account</>
+            )}
           </div>
           <div className="text-white text-sm font-semibold w-2/3">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod sequi
@@ -131,7 +142,13 @@ export default function ClassC() {
         </div>
         <div className="w-1/4 flex justify-center items-center">
           <button className="text-white px-8 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
-            Upgrade Now!
+            {user === null ? (
+              <>Sign Up</>
+            ) : user.role === "seller" || "broker" ? (
+              <Link to="profile">My Profile</Link>
+            ) : (
+              <>Upgrade</>
+            )}
           </button>
         </div>
       </div>
@@ -157,13 +174,14 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-               <Link to="/search">
-              <button
-                className="border rounded-full self-center px-5 py-5"
-                onClick={(e) => handleShowMore(e, "Car")}
-              >
-                <ArrowRightIcon className="h-5" />
-              </button></Link>
+              <Link to="/search">
+                <button
+                  className="border rounded-full self-center px-5 py-5"
+                  onClick={(e) => handleShowMore(e, "Car")}
+                >
+                  <ArrowRightIcon className="h-5" />
+                </button>
+              </Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Home</div>
             <div className="flex justify-around py-4   space-x-3   ">
@@ -184,13 +202,14 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-               <Link to="/search">
-              <button
-                className="border rounded-full self-center px-5 py-5"
-                onClick={(e) => handleShowMore(e, "House")}
-              >
-                <ArrowRightIcon className="h-5" />
-              </button></Link>
+              <Link to="/search">
+                <button
+                  className="border rounded-full self-center px-5 py-5"
+                  onClick={(e) => handleShowMore(e, "House")}
+                >
+                  <ArrowRightIcon className="h-5" />
+                </button>
+              </Link>
             </div>
 
             <div className="text-2xl text-gray-900 font-bold">Accessories</div>
@@ -212,13 +231,14 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-               <Link to="/search">
-              <button
-                className="border rounded-full self-center px-5 py-5"
-                onClick={(e) => handleShowMore(e, "Accessories")}
-              >
-                <ArrowRightIcon className="h-5" />
-              </button></Link>
+              <Link to="/search">
+                <button
+                  className="border rounded-full self-center px-5 py-5"
+                  onClick={(e) => handleShowMore(e, "Accessories")}
+                >
+                  <ArrowRightIcon className="h-5" />
+                </button>
+              </Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Shoes</div>
             <div className="flex justify-around py-4   space-x-3   ">
@@ -239,13 +259,14 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-               <Link to="/search">
-              <button
-                className="border rounded-full self-center px-5 py-5"
-                onClick={(e) => handleShowMore(e, "Shoes")}
-              >
-                <ArrowRightIcon className="h-5" />
-              </button></Link>
+              <Link to="/search">
+                <button
+                  className="border rounded-full self-center px-5 py-5"
+                  onClick={(e) => handleShowMore(e, "Shoes")}
+                >
+                  <ArrowRightIcon className="h-5" />
+                </button>
+              </Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Other</div>
             <div className="flex justify-around py-4   space-x-3   ">
@@ -266,7 +287,7 @@ export default function ClassC() {
               ) : (
                 <p style={{ font: "Algerian bold red 20px" }}>Loading ...</p>
               )}
-               <Link to="/search"></Link>
+              <Link to="/search"></Link>
               <button
                 className="border rounded-full self-center px-5 py-5"
                 onClick={(e) => handleShowMore(e, "Other")}

@@ -12,13 +12,12 @@ import ItemListSeller from "./pages/itemListSeller";
 import AdminDashboard from "./pages/adminDashboard";
 import ClassC from "./pages/ClassC";
 import { useSelector, useDispatch } from "react-redux";
-<<<<<<< HEAD
+
 import EditProfile from "./pages/editProfile";
 import EditItem from "./pages/editItem";
-=======
+
 //import ClassC from "./pages/ClassC";
 
->>>>>>> 1c5e89f667baccc6599d35c80718b717f7a6505d
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const isAuthenticated = useSelector(
     (state) => state.authreducer.isAuthenticated
@@ -57,7 +56,7 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
       {...restOfProps}
       render={(props) =>
         isAuthenticated && !isLoading ? (
-          <Redirect to="/protected" />
+          <Redirect to="/profile" />
         ) : (
           <Component {...props} />
         )
@@ -75,15 +74,12 @@ const Routes = () => {
       <Route exact path="/item">
         <Item />
       </Route>
-      <Route exact path="/edit-item">
-        <EditItem />
-      </Route>
+      <ProtectedRoute exact path="/edit-item" component={EditItem} />
+
       <Route exact path="/search">
         <SearchResult />
       </Route>
-      <Route exact path="/profile">
-        <Profile />
-      </Route>
+      <ProtectedRoute exact path="/profile" component={Profile} />
 
       <Route exact path="/about-seller">
         <AboutSeller />

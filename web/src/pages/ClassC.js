@@ -143,7 +143,7 @@ export default function ClassC() {
         <div className="w-1/4 flex justify-center items-center">
           <button className="text-white px-8 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
             {user === null ? (
-              <>Sign Up</>
+              <Link to="register">Sign Up</Link>
             ) : user.role === "seller" || "broker" ? (
               <Link to="profile">My Profile</Link>
             ) : (
@@ -234,7 +234,7 @@ export default function ClassC() {
               <Link to="/search">
                 <button
                   className="border rounded-full self-center px-5 py-5"
-                  onClick={(e) => handleShowMore(e, "Accessories")}
+                  onClick={(e) => handleShowMore(e, "Accessory")}
                 >
                   <ArrowRightIcon className="h-5" />
                 </button>

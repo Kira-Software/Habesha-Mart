@@ -134,6 +134,7 @@ export default function SearchResult() {
                         img={`http://localhost:9000/${item.image1}`}
                         name={item.itemname}
                         id={item._id}
+                        category={item.category}
                       />
                     );
                   }
@@ -213,14 +214,6 @@ export default function SearchResult() {
                             Br. {item.price}
                           </div>
                         </div>
-                        <Link to="/item">
-                          <button
-                            className=" px-4 py-1 rounded-3xl bg-primary text-white font-semibold"
-                            onClick={() => setId(item._id, item.category)}
-                          >
-                            Detail Info
-                          </button>
-                        </Link>
                       </div>
                     </div>
                   );

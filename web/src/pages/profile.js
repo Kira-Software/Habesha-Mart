@@ -44,7 +44,9 @@ export default function Profile() {
       <div className="flex">
         <div className="w-1/5"> </div>
         <div className="mt-4 w-4/5 ">
-          <div className="text-xl font-bold text-primary">Nahom Balcha</div>
+          <div className="text-xl font-bold text-primary">
+            {user !== null ? user.userName : null}
+          </div>
           <div className="text-sm font-semibold text-gray-600">
             web designer and front end developer at my dorm
           </div>
@@ -65,6 +67,14 @@ export default function Profile() {
               <PaperAirplaneIcon className="h-4 text-gray-500" />
               <div className="text-sm text-gray-500 font-semibold">@nah_n1</div>
             </div>
+            <div>
+              <Link
+                className="font-bold border rounded-md self-center px-2 py-1 hover:bg-gray-500 bg-gray-300 "
+                to="/edit-profile"
+              >
+                Update Profile
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +89,7 @@ export default function Profile() {
           <div className="flex items-center ">
             <MailIcon className="h-4 text-gray-500 mr-2" />
             <span className="text-sm font-semibold text-gray-500">
-              nahom@gmail.com
+              {user !== null ? user.email : null}
             </span>
           </div>
           <div className="flex items-center ">
@@ -91,6 +101,23 @@ export default function Profile() {
             <div>
               <img src="star.png" alt="star" />
             </div>
+          </div>
+          <div>
+            <Link
+              className="font-bold border rounded-md self-center px-2 py-1 hover:bg-gray-500 bg-gray-300 "
+              to="/"
+            >
+              Home Page
+            </Link>
+          </div>
+
+          <div>
+            <Link
+              className="font-bold border rounded-md self-center px-2 py-1 hover:bg-gray-500 bg-gray-300  "
+              to="/additem"
+            >
+              Add Item
+            </Link>
           </div>
         </div>
 

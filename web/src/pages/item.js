@@ -14,7 +14,7 @@ import Navbar from "../components/Navbar";
 import Product from "../components/product";
 import SideItemShow from "../components/sideItemShow";
 import { getLoggedIn } from "../Redux/Action/authentication";
-import { getIndividualItem } from "../Redux/Action/itemstuff";
+import { getIndividualItem, getSelectedItem } from "../Redux/Action/itemstuff";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -24,9 +24,11 @@ export default function Item() {
   const items = useSelector((state) => state.item.items);
   const isLoading = useSelector((state) => state.authreducer.isLoading);
   const selectedItem = useSelector((state) => state.item.selectedItem);
+  const searchItem = useSelector((state) => state.item.searchItem);
 
   useEffect(() => {
     dispatch(getLoggedIn());
+    dispatch(getSelectedItem(localStorage.getItem("S_Id")));
     //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
     // dispatch(getIndividualItem(user._id))
   }, []);
@@ -37,6 +39,8 @@ export default function Item() {
       dispatch(getIndividualItem(user._id));
     }
   }, [user]);
+
+  let relatedCount = 0;
 
   return (
     <div>
@@ -245,7 +249,13 @@ export default function Item() {
       >
         <div className="w-3/4 space-y-3">
           <div className="text-4xl font-bold text-white">
-            Upgrade Your Account
+            {user === null ? (
+              <>Sign Up Now</>
+            ) : user.role === "seller" || "broker" ? (
+              <>Visit Your Profile </>
+            ) : (
+              <>Upgrade Your Account</>
+            )}
           </div>
           <div className="text-white text-sm font-semibold w-2/3">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod sequi
@@ -256,17 +266,43 @@ export default function Item() {
         </div>
         <div className="w-1/4 flex justify-center items-center">
           <button className="text-white px-8 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
-            Upgrade Now!
+            {user === null ? (
+              <Link to="/register">Sign Up </Link>
+            ) : user.role === "seller" || "broker" ? (
+              <Link to="/profile">My Profile </Link>
+            ) : (
+              <>Upgrade Account</>
+            )}
           </button>
         </div>
       </div>
       <div className="px-32 mt-4 ">
         <div className="text-2xl text-gray-900 font-bold">Related Items</div>
         <div className="flex justify-around py-4   space-x-3   ">
-          <Product img="j_one.jpg" />
-          <Product img="j_two.jpg" />
+          {searchItem.length !== 0 && !isLoading
+            ? searchItem.data.map((item, idx) => {
+                if (
+                  item.category === localStorage.getItem("Category") &&
+                  item._id !== localStorage.getItem("S_Id") &&
+                  relatedCount < 4
+                ) {
+                  relatedCount++;
+                  return (
+                    <Product
+                      name={item.itemname}
+                      description={item.description}
+                      img={`http://localhost:9000/${item.image1}`}
+                      id={item._id}
+                      category={item.category}
+                    />
+                  );
+                }
+              })
+            : null}
+          {/* <Product img="j_one.jpg" />
+           <Product img="j_two.jpg" />
           <Product img="j_three.jpg" />
-          <Product img="j_four.jpg" />
+          <Product img="j_four.jpg" /> */}
           <button className="border rounded-full self-center px-5 py-5">
             <ArrowRightIcon className="h-5" />
           </button>

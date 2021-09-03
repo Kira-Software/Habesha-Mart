@@ -144,3 +144,21 @@ export const getSearchItem = (category) => async (dispatch) => {
     payload: res.data,
   });
 };
+
+export const getMainSearchItems = (category) => async (dispatch) => {
+  // console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get(
+    `http://localhost:9000/api/item?category=${category}`,
+    {
+      withCredentials: true,
+    }
+  );
+
+  // console.log("inside the getindividual item the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_SEARCH_ITEM,
+    payload: res.data,
+  });
+};

@@ -1,14 +1,26 @@
+import { useEffect } from "react";
 
-const handleItemChange = (id, category) => {
-  localStorage.setItem("S_Id", id);
-  localStorage.setItem("Category", category);
-  window.location.reload(false);
- // window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-  //}
-};
+import { getSelectedItem } from "../Redux/Action/itemstuff";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SideItemShow(props) {
+  const dispatch = useDispatch();
+
+  const handleItemChange = (id, category) => {
+    console.log(
+      "the comming id and category respectively are",
+      id,
+      "and ",
+      category
+    );
+    dispatch(getSelectedItem(id));
+    localStorage.setItem("S_Id", id);
+    localStorage.setItem("Category", category);
+    //window.location.reload(false);
+    // window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+    //}
+  };
   return (
     <div className="flex shadow-sm hover:shadow-md space-x-3">
       <div className="h-32 w-32  bg-secondary">

@@ -17,20 +17,69 @@ export default function EditProfile() {
     userName: "",
     gender: "Male",
     phoneNo: "",
+    telegramlink: "",
+    facebooklink: "",
+    instagramlink: "",
+    whatsapplink: "",
     birthDate: "",
     address: "",
     legaldocument: "",
+    profilepicture: "",
   });
 
+  const [ppPreview, setppPreview] = useState(null);
+  const [legalDocumentPreview, setlegalDocumentPreview] = useState(null);
+
   const changer = (e) => {
-    setformdata({ ...formdata, [e.target.name]: e.target.value });
+    if (e.target.type === "file") {
+      console.log("the image value is", e.target.files);
+    }
+    //  console.log("the form value  is " + {...formdata})
+    //console.log("the event . target value is that "+e.target.type)
+    if (e.target.type !== "file") {
+      setformdata({
+        ...formdata,
+        [e.target.name]: e.target.value,
+      });
+    }
+
+    if (e.target.type === "file") {
+      const selected = e.target.files[0];
+      const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+      if (selected && ALLOWED_TYPES.includes(selected.type)) {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          if (e.target.name === "profilepicture") {
+            setppPreview(reader.result);
+          }
+          if (e.target.name === "legaldocument") {
+            setlegalDocumentPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(selected);
+
+        setformdata({
+          ...formdata,
+          [e.target.name]: e.target.files[0],
+        });
+      } else {
+        // if (e.target.name === "pp") {
+        //   setError1(true);
+        // }
+        // if (e.target.name === "image2") {
+        //   setError2(true);
+        // }
+      }
+    }
   };
 
   const handleSubmit = () => {
     console.log("the submitted formdata value is ", formdata);
-    dispatch(editProfile(formdata))
+    dispatch(editProfile(formdata));
     // console.log("the file values are", legaldocument[0], legaldocument[1]);
   };
+
+  const mystyle = { height: 200, width: 300 };
 
   const {
     firstName,
@@ -38,9 +87,14 @@ export default function EditProfile() {
     userName,
     gender,
     phoneNo,
+    telegramlink,
+    facebooklink,
+    instagramlink,
+    whatsapplink,
     birthDate,
     address,
     legaldocument,
+    profilepicture,
   } = formdata;
   return (
     <div>
@@ -66,14 +120,24 @@ export default function EditProfile() {
             <div>
               <div className=" rounded-full   px-1 py-1 bg-white  ">
                 <img
-                  src="pro3.jpg"
+                  src={ppPreview === null ? "pro3.jpg" : ppPreview}
                   alt="propic"
                   className="h-28 w-28 rounded-full"
                 />
               </div>
               <div className="relative left-20 bottom-9 ">
                 <button className="bg-primary rounded-full ring-2 ring-white px-1 py-1">
-                  <PencilIcon className="h-5 text-white" />
+                  <label for="pp">
+                    {" "}
+                    <PencilIcon className="h-5 text-white" cursor="pointer" />
+                  </label>
+                  <input
+                    type="file"
+                    hidden
+                    id="pp"
+                    name="profilepicture"
+                    onChange={(e) => changer(e)}
+                  />
                 </button>
               </div>
             </div>
@@ -180,6 +244,63 @@ export default function EditProfile() {
                   />
                 </div>
               </div>
+
+              <div className="flex space-x-8 ">
+                <div>
+                  <label className="text-sm font-semibold text-gray-800">
+                    Telegram
+                  </label>
+                  <input
+                    type="text"
+                    name="telegramlink"
+                    value={telegramlink}
+                    onChange={(e) => changer(e)}
+                    placeholder="t.me/urlink"
+                    className="flex w-60 bg-gray-100 outline-none px-2 py-1 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-800">
+                    Facebook
+                  </label>
+                  <input
+                    type="text"
+                    name="facebooklink"
+                    value={facebooklink}
+                    onChange={(e) => changer(e)}
+                    placeholder="www.facebook.com"
+                    className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-8 ">
+                <div>
+                  <label className="text-sm font-semibold text-gray-800">
+                    Instagram
+                  </label>
+                  <input
+                    type="text"
+                    name="instagramlink"
+                    value={instagramlink}
+                    onChange={(e) => changer(e)}
+                    placeholder="www.instagram.com"
+                    className="flex w-60 bg-gray-100 outline-none px-2 py-1 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-gray-800">
+                    Whatsapp
+                  </label>
+                  <input
+                    type="text"
+                    name="whatsapplink"
+                    value={whatsapplink}
+                    onChange={(e) => changer(e)}
+                    placeholder="www.whatsapp.com"
+                    className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
+                  />
+                </div>
+              </div>
               <div className="flex  space-x-8">
                 {/* <div>
                   <label className="text-sm font-semibold text-gray-800">
@@ -193,17 +314,24 @@ export default function EditProfile() {
                 </div> */}
                 <div>
                   <label className="text-sm font-semibold text-gray-800">
-                    Legal Documents
+                    Legal Document
                   </label>
                   <input
                     type="file"
                     name="legaldocument"
-                    value={legaldocument}
+                    //value={legaldocument}
                     onChange={(e) => changer(e)}
-                    multiple
-                    placeholder="Addis Ababa"
+                    //multiple
                     className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
+                  <div style={{ display: legalDocumentPreview ? "block" : "none" }}>
+                    <img
+                      src={legalDocumentPreview}
+                      alt="image2 placeholder"
+                      style={mystyle}
+                    />
+                    
+                  </div>
                 </div>
               </div>
             </div>

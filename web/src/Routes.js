@@ -90,9 +90,8 @@ const Routes = () => {
       <Route exact path="/dashboard">
         <AdminDashboard />
       </Route>
-      <Route exact path="/edit-profile">
-        <EditProfile />
-      </Route>
+      <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
+
       <RedirectWhenLoggedIn exact path="/register" component={Register} />
       <RedirectWhenLoggedIn exact path="/login" component={Login} />
       <ProtectedRoute exact path="/protected" component={ProtectedPage} />

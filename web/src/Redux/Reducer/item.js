@@ -3,7 +3,7 @@ import {
   } from "../Type/type";
   
   const initialstate = {
-    loading: true,
+    loadingitem: true,
     items: [],
     selectedItem: [],
     searchItem: []

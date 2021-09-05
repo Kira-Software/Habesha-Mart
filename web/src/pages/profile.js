@@ -7,17 +7,21 @@ import {
   PhoneIcon,
   MailIcon,
 } from "@heroicons/react/solid";
+import { SocialIcon } from "react-social-icons";
 import ItemLS from "../components/ItemLC";
 import Items from "../components/ItemS";
 import { getLoggedIn } from "../Redux/Action/authentication";
 import { getIndividualItem } from "../Redux/Action/itemstuff";
+import { getAccount } from "../Redux/Action/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authreducer.user);
+  const profile = useSelector((state) => state.authreducer.profile);
   const items = useSelector((state) => state.item.items);
-  const isLoading = useSelector((state) => state.authreducer.isLoading);
+  const loadingitem = useSelector((state) => state.authreducer.loadingitem);
+  const loading = useSelector((state) => state.authreducer.loading);
 
   let myitemcount = 0;
 
@@ -31,6 +35,7 @@ export default function Profile() {
     //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
     if (user !== null) {
       dispatch(getIndividualItem(user._id));
+      dispatch(getAccount());
     }
   }, [user]);
 
@@ -39,13 +44,17 @@ export default function Profile() {
       <img src="phones.jpg" alt="bg" className="w-full max-h-60" />
 
       <div className=" rounded-full w-36 flex container px-1 py-1 bg-white absolute top-40 left-28 items-center">
-        <img src="pro3.jpg" alt="propic" className="h-36 w-36 rounded-full" />
+        <img
+          src={`http://localhost:9000/${profile.profilepicture}`}
+          alt="propic"
+          className="h-36 w-36 rounded-full"
+        />
       </div>
       <div className="flex">
         <div className="w-1/5"> </div>
         <div className="mt-4 w-4/5 ">
           <div className="text-xl font-bold text-primary">
-            {user !== null ? user.userName : null}
+            {!loading? profile.firstName:null} {profile.lastName}
           </div>
           <div className="text-sm font-semibold text-gray-600">
             web designer and front end developer at my dorm
@@ -54,17 +63,18 @@ export default function Profile() {
             <div className="flex items-center space-x-2">
               <LocationMarkerIcon className="h-4 text-gray-500" />
               <div className="text-sm text-gray-500 font-semibold">
-                Addis Ababa
+                {profile.address}
               </div>
             </div>
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <ChatIcon className="h-4 text-gray-500" />
               <div className="text-sm text-gray-500 font-semibold">
                 nahom101-fb
               </div>
-            </div>
+            </div> */}
             <div className="flex items-center space-x-2">
               <PaperAirplaneIcon className="h-4 text-gray-500" />
+              <SocialIcon />
               <div className="text-sm text-gray-500 font-semibold">@nah_n1</div>
             </div>
             <div>
@@ -83,7 +93,7 @@ export default function Profile() {
           <div className="flex items-center  ">
             <PhoneIcon className="h-4 text-gray-500 mr-2" />
             <span className="text-sm font-semibold text-gray-500">
-              +251942104459
+              {profile.phoneNo}
             </span>
           </div>
           <div className="flex items-center ">
@@ -124,7 +134,7 @@ export default function Profile() {
         <div className="w-2/5 mx-2 bg-white rounded-lg px-4 py-2 shadow-md ">
           <div className="font-semibold text-lg text-gray-700">Items</div>
           <div className="py-2 flex justify-around">
-            {items.length !== 0 && !isLoading ? (
+            {items.length !== 0 && !loadingitem ? (
               items.data.map((item, idx) => {
                 myitemcount++;
                 if (myitemcount < 3) {

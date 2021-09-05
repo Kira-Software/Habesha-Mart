@@ -4,7 +4,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
 } from "../Type/type";
-
+import { getAccount } from "./profile";
 import axios from "axios";
 
 export const register = (email, userName, password) => async (dispatch) => {
@@ -62,8 +62,9 @@ export const getLoggedIn = () => async (dispatch) => {
 
   dispatch({
     type: REGISTER_SUCCESS,
-    payload: loggedInStateRes.data
-  })
+    payload: loggedInStateRes.data,
+  });
+  //dispatch(getAccount());
 
   // setLoggedInState({
   //   ...loggedInState,

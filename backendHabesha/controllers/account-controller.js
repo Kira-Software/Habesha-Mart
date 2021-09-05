@@ -1,6 +1,7 @@
 const express = require("express");
-
+const multer = require("multer");
 const User = require("../models/user");
+const userProfile = require("../models/user-profile");
 const UserProfile = require("../models/user-profile");
 const catchAsync = require("../utils/catchAsync");
 
@@ -24,34 +25,96 @@ exports.upgradeAccount = catchAsync(async (req, res, next) => {
   });
   res.json({ message: "Account has been Upgraded Successfuly", upgradedUser });
 });
+
 exports.getAccount = catchAsync(async (req, res, next) => {
+  console.log("inside getaccount");
   const { userIdForAccount } = req.body;
   const userDetail = await User.findById(userIdForAccount);
   res.json(userDetail);
 });
 
+exports.getProfile = catchAsync(async (req, res, next) => {
+  console.log("inside getprofile");
+  const { userIdForAccount } = req.user._id;
+  const userDetail = await userProfile.findOne(userIdForAccount);
+  res.json(userDetail);
+});
 // exports.getProfile=async(req,res,next)=>{
 
 // }
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.user._id + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
 exports.updateProfile = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
-  const { firstName, lastName, userName, birthDate, address, gender, phoneNo } =
-    req.body;
+  // const {
+  //   firstName,
+  //   lastName,
+  //   userName,
+  //   birthDate,
+  //   address,
+  //   gender,
+  //   phoneNo,
+  //   telegramlink,
+  //   facebooklink,
+  //   instagramlink,
+  //   whatsapplink,
+  //   legaldocument,
+  //   profilepicture,
+  // } = req.body;
   console.log("the req.body value is ", req.body);
-  console.log("the user id value is", userId);
-  const user = await UserProfile.findOne({userId});
-  console.log("the searched user value is ", user);
-  await UserProfile.findOneAndUpdate(userId, {
-    firstName,
-    lastName,
-    userName,
-    birthDate,
-    address,
-    gender,
-    phoneNo,
-  });
+  // let obj;
+  // if (firstName !== "") {
+  //   obj.firstName = firstName;
+  // }
+  // if (lastName !== "") {
+  //   obj.lastName = lastName;
+  // }
+  // if (userName !== "") {
+  //   obj.userName = userName;
+  // }
+  // if (birthDate !== "") {
+  //   obj.birthDate = birthDate;
+  // }
+  // if (address !== "") {
+  //   obj.address = address;
+  // }
+  // if (gender !== "") {
+  //   obj.gender = gender;
+  // }
+  // if (phoneNo !== "") {
+  //   obj.phoneNo = phoneNo;
+  // }
+  // if (telegramlink !== "") {
+  //   obj.telegramlink = telegramlink;
+  // }
+  // if (facebooklink !== "") {
+  //   obj.facebooklink = facebooklink;
+  // }
+  // if (instagramlink !== "") {
+  //   obj.instagramlink = instagramlink;
+  // }
+  // if (whatsapplink !== "") {
+  //   obj.whatsapplink = whatsapplink;
+  // }
+  // if (req.files[0]) {
+  //   obj.legaldocument = req.files[0].path;
+  // }
+  // if (req.files[1]) {
+  //   obj.profilepicture = req.files[1].path;
+  // }
+
+  await UserProfile.findOneAndUpdate(userId, req.body);
   res.json({ message: "successfuly updated your account !!" });
 });
 // exports.updateProfilePicture=async(req,res,next)=>{

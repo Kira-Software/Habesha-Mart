@@ -10,7 +10,12 @@ const userProfileSchema = mongoose.Schema({
   address: { type: String },
   gender: { type: String },
   phoneNo: { type: String },
+  telegramlink: { type: String },
+  facebooklink: { type: String },
+  instagramlink: { type: String },
+  whatsapplink: { type: String },
   legaldocument: { type: String },
+  profilepicture: { type: String },
 });
 
 module.exports = mongoose.model("UserProfile", userProfileSchema);

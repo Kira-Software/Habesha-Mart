@@ -1,5 +1,6 @@
 import { LockClosedIcon, MenuIcon } from "@heroicons/react/solid";
 import { useHistory } from "react-router-dom";
+import ExploreDropdown from "./Dropdowns/exploreDropdown";
 export default function Navbar() {
   const history = useHistory();
   return (
@@ -10,10 +11,9 @@ export default function Navbar() {
       <div className="px-14 border    flex justify-between items-center">
         <img src="logo.png" alt="logo" className="h-14" />
         <div className="flex">
-          <button className="flex items-center">
-            <MenuIcon className="h-6 mr-1 text-gray-800" />
-            <span className="font-semibold">Explore</span>
-          </button>
+          <ul>
+            <ExploreDropdown />
+          </ul>
           <button className="ml-6" onClick={() => history.push("/login")}>
             <LockClosedIcon className="h-6 text-gray-800" />
           </button>

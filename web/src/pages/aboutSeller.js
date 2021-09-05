@@ -4,6 +4,7 @@ import {
   ShieldCheckIcon,
   StarIcon,
 } from "@heroicons/react/solid";
+import ReportDropdown from "../components/Dropdowns/reportDropDown";
 
 import Navbar from "../components/Navbar";
 
@@ -59,12 +60,15 @@ export default function AboutSeller() {
                   Rate Nahom{" "}
                 </span>
               </button>
-              <button className="flex px-8 py-1  space-x-2 items-center">
+              {/* <button className="flex px-8 py-1  space-x-2 items-center">
                 <ShieldCheckIcon className="h-4 text-gray-400" />{" "}
                 <span className="text-gray-400 font-semibold text-sm">
-                  Rate Nahom{" "}
+                  Report{" "}
                 </span>
-              </button>
+              </button> */}
+              <ul>
+                <ReportDropdown />
+              </ul>
             </div>
             <div className="mt-4  flex ">
               <div className="w-1/2 space-y-3">

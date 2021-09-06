@@ -3,17 +3,18 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  GET_ACCOUNT
 } from "../Type/type";
 
 const initialstate = {
   loading: true,
   user: null,
   isAuthenticated: false,
+  profile: []
 };
 
 export default function (state = initialstate, action) {
   const { type, payload } = action;
-   console.log("inside the reducer the value of payload now is " + payload);
 
   switch (type) {
     case REGISTER_SUCCESS:
@@ -34,6 +35,12 @@ export default function (state = initialstate, action) {
       };
     case LOGIN_FAIL:
       return {};
+      case GET_ACCOUNT:
+        return {
+          ...state,
+          loading: false,
+          profile: payload,
+        };
     default:
       return state;
   }

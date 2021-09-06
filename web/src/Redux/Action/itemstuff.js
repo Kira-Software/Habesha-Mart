@@ -3,6 +3,9 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  GET_ITEM,
+  GET_SELECTED_ITEM,
+  GET_SEARCH_ITEM,
 } from "../Type/type";
 
 import axios from "axios";
@@ -81,4 +84,81 @@ export const postItem = (formdata) => async (dispatch) => {
   } catch (err) {
     console.error("the error is ", err.message);
   }
+};
+
+export const getItem = () => async (dispatch) => {
+  console.log("i am in action find item function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get("http://localhost:9000/api/item", {
+    withCredentials: true,
+  });
+
+  console.log("inside the getItem the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_ITEM,
+    payload: res.data,
+  });
+};
+
+export const getIndividualItem = (id) => async (dispatch) => {
+  console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get(`http://localhost:9000/api/item?postedBy=${id}`, {
+    withCredentials: true,
+  });
+
+  console.log("inside the getindividual item the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_ITEM,
+    payload: res.data,
+  });
+};
+
+export const getSelectedItem = (id) => async (dispatch) => {
+  // console.log("id is ",id)
+  const res = await axios.get(`http://localhost:9000/api/item?_id=${id}`, {
+    withCredentials: true,
+  });
+  dispatch({
+    type: GET_SELECTED_ITEM,
+    payload: res.data,
+  });
+};
+
+export const getSearchItem = (category) => async (dispatch) => {
+  // console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get(
+    `http://localhost:9000/api/item?category=${category}`,
+    {
+      withCredentials: true,
+    }
+  );
+
+  // console.log("inside the getindividual item the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_SEARCH_ITEM,
+    payload: res.data,
+  });
+};
+
+export const getMainSearchItems = (category) => async (dispatch) => {
+  // console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.get(
+    `http://localhost:9000/api/item?category=${category}`,
+    {
+      withCredentials: true,
+    }
+  );
+
+  // console.log("inside the getindividual item the res.data value is ", res.data);
+
+  dispatch({
+    type: GET_SEARCH_ITEM,
+    payload: res.data,
+  });
 };

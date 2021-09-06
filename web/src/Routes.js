@@ -9,9 +9,18 @@ import Item from "./pages/item";
 import Profile from "./pages/profile";
 import AboutSeller from "./pages/aboutSeller";
 import ItemListSeller from "./pages/itemListSeller";
-import AdminDashboard from "./pages/adminDashboard";
-
+import Dashboard from "./pages/Dashboard";
+import ClassC from "./pages/ClassC";
 import { useSelector, useDispatch } from "react-redux";
+
+import EditProfile from "./pages/editProfile";
+import EditItem from "./pages/editItem";
+
+import Admin from "./layouts/Admin.js";
+import Auth from "./layouts/Auth.js";
+import UpgradeAccount from "./pages/upgradeAccount";
+import RequestItems from "./pages/requestItem";
+//import ClassC from "./pages/ClassC";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const isAuthenticated = useSelector(
@@ -51,7 +60,7 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
       {...restOfProps}
       render={(props) =>
         isAuthenticated && !isLoading ? (
-          <Redirect to="/protected" />
+          <Redirect to="/profile" />
         ) : (
           <Component {...props} />
         )
@@ -63,18 +72,24 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <ClassC />
       </Route>
-
+      <Route exact path="/upgrade-account">
+        <UpgradeAccount />
+      </Route>
+      <Route exact path="/request-item">
+        <RequestItems />
+      </Route>
       <Route exact path="/item">
         <Item />
       </Route>
+      <ProtectedRoute exact path="/edit-item" component={EditItem} />
+
       <Route exact path="/search">
         <SearchResult />
       </Route>
-      <Route exact path="/profile">
-        <Profile />
-      </Route>
+      <ProtectedRoute exact path="/profile" component={Profile} />
+
       <Route exact path="/about-seller">
         <AboutSeller />
       </Route>
@@ -82,8 +97,10 @@ const Routes = () => {
         <ItemListSeller />
       </Route>
       <Route exact path="/dashboard">
-        <AdminDashboard />
+        <Dashboard />
       </Route>
+      <ProtectedRoute exact path="/edit-profile" component={EditProfile} />
+
       <RedirectWhenLoggedIn exact path="/register" component={Register} />
       <RedirectWhenLoggedIn exact path="/login" component={Login} />
       <ProtectedRoute exact path="/protected" component={ProtectedPage} />

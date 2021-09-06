@@ -113,16 +113,32 @@ export default function AddItem() {
   };
 
   const removeImage = (e) => {
-    if (e.target.name === "buttonimage1") {
+    if (e.target.name === "image1") {
       setImgPreview1(null);
-    } else if (e.target.name === "buttonimage2") {
+      setformdata({
+        ...formdata,
+        [e.target.name]: null,
+      });
+    } else if (e.target.name === "image2") {
       setImgPreview2(null);
+      setformdata({
+        ...formdata,
+        [e.target.name]: null,
+      });
     }
-    if (e.target.name === "buttonimage3") {
+    if (e.target.name === "image3") {
       setImgPreview3(null);
+      setformdata({
+        ...formdata,
+        [e.target.name]: null,
+      });
     }
-    if (e.target.name === "buttonimage4") {
+    if (e.target.name === "image4") {
       setImgPreview4(null);
+      setformdata({
+        ...formdata,
+        [e.target.name]: null,
+      });
     }
   };
 
@@ -147,12 +163,13 @@ export default function AddItem() {
     dispatch(getLoggedIn());
   }, []);
 
-  const Button = () => {
+  const Button = (props) => {
     return (
       <button
         className="text-white  bg-red-900 font-semibold w-1/2 text-center mt-3 ml-8 rounded-md px-2 py-2"
-        name="buttonimage1"
+        //name="image1"
         onClick={removeImage}
+        name={props.name}
       >
         Remove Image
       </button>
@@ -212,9 +229,13 @@ export default function AddItem() {
             onChange={(e) => changer(e)}
           >
             <option aria-label="None" value="" />
-            <option value="House">House</option>
+            <option value="Accessory">Accessory</option>
+            <option value="Car">Car</option>
             <option value="Cloth">Cloth</option>
+            <option value="Electronics">Electronics</option>
+            <option value="House">House</option>
             <option value="Shoes">Shoes</option>
+            <option value="Other">Other</option>
           </select>
           <div className="text-sm font-semibold mt-2">Item Status</div>
           <select
@@ -225,7 +246,7 @@ export default function AddItem() {
           >
             <option aria-label="None" value="" />
             <option value="New">New</option>
-            <option value="Old">Old</option>
+            <option value="Slightly Used">Slightly Used</option>
             <option value="Used">Used</option>
           </select>
           <div className="text-sm font-semibold mt-2">Item Type</div>
@@ -254,10 +275,10 @@ export default function AddItem() {
           ></textarea>
           <div className="flex justify-between mt-2 items-center">
             <div>
-              <div className="text-sm font-semibold">Price</div>
+              <div className="text-sm font-semibold">Price </div>
               <input
                 type="text"
-                placeholder="price"
+                placeholder="price in Birr"
                 className=" px-2 py-1 rounded-md border shadow-sm w-full mt-2"
                 name="price"
                 value={price}
@@ -312,7 +333,7 @@ export default function AddItem() {
             </div>
             <div style={{ display: imgPreview1 ? "block" : "none" }}>
               <img src={imgPreview1} style={mystyle} />
-              <Button />
+              <Button name="image1" />
             </div>
           </div>
           <input
@@ -333,7 +354,7 @@ export default function AddItem() {
             {/* {error && <p>File Not Supported</p>} */}
             <div style={{ display: imgPreview2 ? "block" : "none" }}>
               <img src={imgPreview2} alt="image2 placeholder" style={mystyle} />
-              <Button />
+              <Button name="image2" />
             </div>
           </div>
           <input
@@ -354,7 +375,7 @@ export default function AddItem() {
             {/* {error && <p>File Not Supported</p>} */}
             <div style={{ display: imgPreview3 ? "block" : "none" }}>
               <img src={imgPreview3} alt="image2 placeholder" style={mystyle} />
-              <Button />
+              <Button name="image3" />
             </div>
           </div>
           <input
@@ -377,7 +398,7 @@ export default function AddItem() {
           {/* {error && <p>File Not Supported</p>} */}
           <div style={{ display: imgPreview4 ? "block" : "none" }}>
             <img src={imgPreview4} alt="image2 placeholder" style={mystyle} />
-            <Button />
+            <Button name="image4" />
           </div>
         </div>
         <button

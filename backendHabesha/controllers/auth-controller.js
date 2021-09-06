@@ -17,12 +17,12 @@ const signToken = async (userId) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   //1)check if there is a user from session store
- console.log("inside of the protect middleware")
- console.log("the session value is ", req.session)
+  console.log("inside of the protect middleware");
+  console.log("the session value is ", req.session);
   const token = req.session.token;
-  const verify = await jwt.verify(token, process.env.SECRET)
+  const verify = await jwt.verify(token, process.env.SECRET);
 
-  const currentUser = await User.findById(verify.id); 
+  const currentUser = await User.findById(verify.id);
 
   if (!currentUser) {
     return next(
@@ -37,7 +37,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   //   return next(res.json({status:"fail",message:"user changed password! Login Again!"}));
 
   // }
-  console.log("user found")
+  console.log("user found");
   req.user = currentUser; //gives users info for next middle ware after protect lalew middlware yestewal
   next();
 });
@@ -47,8 +47,6 @@ exports.restrictTo = (...roles) => {
 
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      console.log(req.user.role);
-
       return next(
         res.json({ message: "you didnt have permission to this Action" })
       );
@@ -105,17 +103,24 @@ exports.logIn = catchAsync(async (req, res, next) => {
   // const user=await User.findOne({email}).select('+passwordHash'); //use this for password field select value to be false ...password:{select:false}
   const user = await User.findOne({ email });
   console.log(user);
-  const comp =
-    user.passwordHash ===
-    crypto.pbkdf2Sync(password, user.salt, 10000, 64, "sha512").toString("hex");
-  console.log("passhash", user.passwordHash);
-  console.log(
-    "new",
-    crypto.pbkdf2Sync(password, user.salt, 10000, 64, "sha512").toString("hex")
-  );
-  if (!user || !comp) {
+  if (user) {
+    const comp =
+      user.passwordHash ===
+      crypto
+        .pbkdf2Sync(password, user.salt, 10000, 64, "sha512")
+        .toString("hex");
+  } else {
     return res.json({ message: "invalid email or password" });
   }
+
+  // console.log("passhash", user.passwordHash);
+  // console.log(
+  //   "new",
+  //   crypto.pbkdf2Sync(password, user.salt, 10000, 64, "sha512").toString("hex")
+  // );
+  // if (!user || !comp) {
+
+  // }
 
   const token = await signToken(user._id);
   req.session.token = token; // Auto saves session data in mongo store

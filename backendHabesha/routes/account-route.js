@@ -60,7 +60,7 @@ router
   .patch(
     authController.protect,
     authController.restrictTo("classCustomer", "broker", "seller"),
-    upload.any("prfileImage"),
+    upload.any("profileImage"),
     accountController.updateProfile
   );
 

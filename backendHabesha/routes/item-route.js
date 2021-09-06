@@ -31,5 +31,14 @@ router
     authController.isSuspended,
     itemController.deleteItem
   );
+router
+  .route("/updateItem")
+  .patch(
+    authController.protect,
+    authController.restrictTo("seller", "broker"),
+    authController.isSuspended,
+    upload.any("itemImage"),
+    itemController.updateItem
+  );
 
 module.exports = router;

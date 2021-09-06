@@ -72,8 +72,65 @@ exports.addItem = catchAsync(async (req, res, next) => {
   await addedItem.save();
   res.status(200).json({ message: "Successfuly added !" });
 });
+exports.updateItem = catchAsync(async (req, res, next) => {
+  const {
+    itemId,
+    itemname,
+    category,
+    itemstatus,
+    itemtype,
+    description,
+    price,
+    quantity,
+    locationcity,
+    locationsubcity,
+    image1,
+    image2,
+    image3,
+    image4,
+  } = req.body;
 
-exports.deleteItem = (req, res, next) => {};
+  const obj = {
+    itemname,
+    category,
+    itemstatus,
+    itemtype,
+    description,
+    price,
+    quantity,
+    locationcity,
+    locationsubcity,
+  };
+  if (req.files[0]) {
+    obj.image1 = req.files[0].path;
+  }
+  if (req.files[1]) {
+    obj.image2 = req.files[1].path;
+  }
+  if (req.files[2]) {
+    obj.image3 = req.files[2].path;
+  }
+  if (req.files[3]) {
+    obj.image4 = req.files[3].path;
+  }
+  // obj.image1 = req.files[0].path;
+  // obj.image2 = req.files[1].path;
+  // obj.image3 = req.files[2].path;
+  // obj.image4 = req.files[3].path;
+  //const image = req.file.buffer;
+  obj.postedBy = req.user._id;
+
+  const updatedItem = await Item.findByIdAndUpdate(itemId, { obj });
+
+  res.status(200).json({ message: "Successfuly update your item !" });
+});
+exports.deleteItem = (req, res, next) => {
+  const itemId = req.params;
+  const deletedItem = await Item.findByIdAndDelete(itemId);
+  if (deletedItem) {
+    res.json({ status: "successful delete your item" });
+  }
+};
 
 exports.findItem = catchAsync(async (req, res, next) => {
   console.log(req.query);

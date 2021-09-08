@@ -1,14 +1,16 @@
 const express = require("express");
-const multer = require("multer");
+
 const User = require("../models/user");
-const userProfile = require("../models/user-profile");
 const UserProfile = require("../models/user-profile");
 const catchAsync = require("../utils/catchAsync");
+const AdvancedAccount = require("../models/advancedAccount");
 
 exports.deleteAccount = catchAsync(async (req, res, next) => {
   const { userIdToDelete } = req.body;
   const deleteUser = await User.findByIdAndDelete(userIdToDelete);
-  res.json({ message: "user Deleted Permanently from the system !" });
+  res
+    .status(200)
+    .json({ message: "user Deleted Permanently from the system !" });
 });
 
 exports.suspendAccount = catchAsync(async (req, res, next) => {
@@ -16,44 +18,34 @@ exports.suspendAccount = catchAsync(async (req, res, next) => {
   const suspendUser = await User.findByIdAndUpdate(userIdToBeSuspended, {
     isSuspended: true,
   });
-  res.json({ message: "user has been suspended." });
+  res.status(200).json({ message: "user has been suspended." });
 });
 exports.upgradeAccount = catchAsync(async (req, res, next) => {
-  const { userIdToBeUpgraded, roleType, description, location, idImage } =
-    req.body;
-  const upgradedUser = await User.findByIdAndUpdate(userIdToBeUpgraded, {
-    role: roleType,
-  });
-  res.json({ message: "Account has been Upgraded Successfuly", upgradedUser });
-});
+  const { userId, roleType, servingCategoryId } = req.body;
 
+  const upgradedUser = await User.findByIdAndUpdate(userId, { role: roleType });
+  const serveLike = roleType;
+
+  const createdAdvancedAccount = await new AdvancedAccount({
+    servingCategoryId,
+    serveLike,
+    userId,
+  });
+  const saved = await createdAdvancedAccount.save();
+  res
+    .status(200)
+    .json({ message: "Account has been Upgraded Successfuly", upgradedUser });
+});
 exports.getAccount = catchAsync(async (req, res, next) => {
-  console.log("inside getaccount");
   const { userIdForAccount } = req.body;
   const userDetail = await User.findById(userIdForAccount);
-  res.json(userDetail);
+  console.log("the searched user is ", userDetail);
+  res.status(200).json(userDetail);
 });
 
-exports.getProfile = catchAsync(async (req, res, next) => {
-  console.log("inside getprofile");
-  const { userIdForAccount } = req.user._id;
-  const userDetail = await userProfile.findOne(userIdForAccount);
-  res.json(userDetail);
-});
 // exports.getProfile=async(req,res,next)=>{
 
 // }
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(null, req.user._id + file.originalname);
-  },
-});
-
-const upload = multer({ storage: storage });
 
 exports.updateProfile = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
@@ -118,10 +110,15 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   await UserProfile.findOneAndUpdate(userId, obj);
   res.json({ message: "successfuly updated your account !!" });
 });
-// exports.updateProfilePicture=async(req,res,next)=>{
+exports.getProfile = catchAsync(async (req, res, next) => {
+  const userId = req.params;
+  const userProfile = userProfile.find({ userId });
+  if (userProfile) {
+    res.json({ status: "ok", data: userProfile });
+  }
+});
 
-// }
-(exports.updateProfilePicture = catchAsync(async (req, res, next) => {
+exports.updateProfilePicture = catchAsync(async (req, res, next) => {
   const userIdNo = req.user._id;
   const filter = { userId: userIdNo };
 
@@ -131,8 +128,4 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   // req.userProfile.avatar=req.file.buffer  //stores binary image in to user profile try to learn how to get user from session
 
   res.json({ message: "your picture has been set successfuly !" });
-})),
-  (error, req, res, next) => {
-    //to fuck errors and handle ezihu
-    res.status(400).send({ error: error.message });
-  };
+});

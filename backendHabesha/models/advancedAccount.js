@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const advancedAccountSchema=mongoose.model({
+const advancedAccountSchema=mongoose.Schema({
     servingCategoryId:{type:String},
     serveLike:{type:String,enum:['broker','seller']},
     userId:{type:String},
@@ -10,4 +10,4 @@ const advancedAccountSchema=mongoose.model({
     
 });
 
-module.exports=mongoose.model('AdvancedAccount',advancedAccountSchema);
+module.exports=mongoose.model("AdvancedAccount",advancedAccountSchema);

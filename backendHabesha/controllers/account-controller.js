@@ -19,7 +19,8 @@ exports.suspendAccount = catchAsync(async (req, res, next) => {
   res.json({ message: "user has been suspended." });
 });
 exports.upgradeAccount = catchAsync(async (req, res, next) => {
-  const { userIdToBeUpgraded, roleType } = req.body;
+  const { userIdToBeUpgraded, roleType, description, location, idImage } =
+    req.body;
   const upgradedUser = await User.findByIdAndUpdate(userIdToBeUpgraded, {
     role: roleType,
   });
@@ -73,7 +74,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   //   profilepicture,
   // } = req.body;
   console.log("the req.body value is ", req.body);
-  // let obj;
+  let obj = req.body;
   // if (firstName !== "") {
   //   obj.firstName = firstName;
   // }
@@ -107,14 +108,14 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   // if (whatsapplink !== "") {
   //   obj.whatsapplink = whatsapplink;
   // }
-  // if (req.files[0]) {
-  //   obj.legaldocument = req.files[0].path;
-  // }
-  // if (req.files[1]) {
-  //   obj.profilepicture = req.files[1].path;
-  // }
+  if (req.files[0]) {
+    obj.legaldocument = req.files[0].path;
+  }
+  if (req.files[1]) {
+    obj.profilepicture = req.files[1].path;
+  }
 
-  await UserProfile.findOneAndUpdate(userId, req.body);
+  await UserProfile.findOneAndUpdate(userId, obj);
   res.json({ message: "successfuly updated your account !!" });
 });
 // exports.updateProfilePicture=async(req,res,next)=>{

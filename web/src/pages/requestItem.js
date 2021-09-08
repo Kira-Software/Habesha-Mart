@@ -29,7 +29,7 @@ export default function RequestItems() {
                 <input
                   type="text"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="BMW car"
+                 // placeholder="BMW car"
                 />
               </div>
 
@@ -42,12 +42,29 @@ export default function RequestItems() {
                   Item Category
                 </label>
                 <select className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <option>car</option>
-                  <option>car</option>
-                  <option>car</option>
-                  <option>car</option>
-                  <option>other</option>
+                  <option value=""></option>
+
+                  <option>Electronics</option>
+                  <option>Cloth</option>
+                  <option>Car</option>
+                  <option>Home</option>
+                  <option>Accessory</option>
+                  <option>Shoes</option>
+                  <option>Other</option>
                 </select>
+              </div>
+              <div className="relative w-full mb-3">
+                <label
+                  className="block   text-blueGray-600 text-xs font-bold mb-2"
+                  htmlFor="grid-password"
+                >
+                  Description
+                </label>
+                <input
+                  type="text"
+                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  placeholder="request description"
+                />
               </div>
               {/* ______________________3______________ */}
               <div className="relative w-full mb-3">
@@ -55,12 +72,12 @@ export default function RequestItems() {
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email address
+                  Location
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="jesse@example.com"
+                  placeholder="searching area"
                 />
               </div>
               {/* _______________________________4______________ */}
@@ -69,10 +86,10 @@ export default function RequestItems() {
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email address
+                  Quantity
                 </label>
                 <input
-                  type="email"
+                  type="number"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   defaultValue="jesse@example.com"
                 />

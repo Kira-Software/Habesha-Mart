@@ -54,7 +54,7 @@ export default function Profile() {
         <div className="w-1/5"> </div>
         <div className="mt-4 w-4/5 ">
           <div className="text-xl font-bold text-primary">
-            {!loading? profile.firstName:null} {profile.lastName}
+            <span>{!loading ? profile.firstName : null}</span>
           </div>
           <div className="text-sm font-semibold text-gray-600">
             web designer and front end developer at my dorm

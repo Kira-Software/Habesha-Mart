@@ -2,22 +2,21 @@ const express = require("express");
 const User = require("./../models/user");
 const router = express.Router();
 const authController = require("../controllers/auth-controller");
+const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
-router.route("/signup").post((req, res, next) => {
-  console.log("something here...");
-  next();
-}, authController.signUp);
+router.route("/signup").post(authController.signUp);
 router.delete("/logout", authController.logout);
 router.route("/login").post(authController.logIn);
-router.route("forgetPassword").post(authController.forgetPassword);
+router.route("/forgetPassword").post(authController.forgetPassword);
 router
-  .route("resetPassword")
+  .route("/resetPassword")
   .post(
-    authController.restrictTo("classCustomer"),
+    authController.restrictTo("classCustomer,broker,seller"),
     authController.resetPassword
   );
-router.get("/isLoggedIn", async (req, res) => {
-  try {
+router.get(
+  "/isLoggedIn",
+  catchAsync(async (req, res) => {
     if (!req.session.token) {
       return res.json({
         status: "fail",
@@ -45,13 +44,7 @@ router.get("/isLoggedIn", async (req, res) => {
       user,
       isLoggedIn: true,
     });
-  } catch (err) {
-    res.json({
-      status: "fail",
-      user: null,
-      isLoggedIn: false,
-    });
-  }
-});
+  })
+);
 
 module.exports = router;

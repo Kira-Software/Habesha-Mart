@@ -3,7 +3,7 @@ const mongoose=require('mongoose');
 
 const requestSchema=mongoose.Schema({
 
-    requestFor:{type:[String]},//default role of user is broker
+    requestedFor:{type:[String]},//default role of user is broker
     requestedItem:{type:String},
     requestedItemCategory:{type:String}, //holding requested item category requeqst is dispatched to that category ddelala
     requestedBy:{type:String},

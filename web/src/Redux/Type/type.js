@@ -9,3 +9,5 @@ export const GET_ITEM = "GET_ITEM";
 export const GET_SELECTED_ITEM = "GET_SELECTED_ITEM"
 
 export const GET_SEARCH_ITEM = "GET_SEARCH_ITEM"
+
+export const GET_ACCOUNT = "GET_ACCOUNT"

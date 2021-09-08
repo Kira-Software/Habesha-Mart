@@ -17,13 +17,14 @@ export default function UpgradeAccount() {
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Item Name
+                  Your Job
                 </label>
-                <input
-                  type="text"
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="BMW car"
-                />
+                <select className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                 <option value=""></option>
+                 <option value="Seller">Seller</option>
+                 <option value="Broker">Broker</option>
+
+               </select>
               </div>
               {/* --------------------- */}
               <div className="relative w-full mb-3">
@@ -31,12 +32,12 @@ export default function UpgradeAccount() {
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email address
+                  Location
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="jesse@example.com"
+                  placeholder="availablity location"
                 />
               </div>
             </div>
@@ -47,13 +48,19 @@ export default function UpgradeAccount() {
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email address
+                  Prefered Category
                 </label>
-                <input
-                  type="email"
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="jesse@example.com"
-                />
+                <select className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                  <option value=""></option>
+
+                  <option>Electronics</option>
+                  <option>Cloth</option>
+                  <option>Car</option>
+                  <option>Home</option>
+                  <option>Accessory</option>
+                  <option>Shoes</option>
+                  <option>Other</option>
+                </select>
               </div>
               {/* --------------------- */}
               <div className="relative w-full mb-3">
@@ -61,17 +68,17 @@ export default function UpgradeAccount() {
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
                 >
-                  Email address
+                  Identification Card
                 </label>
                 <input
-                  type="email"
+                  type="file"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  defaultValue="jesse@example.com"
+                  //defaultValue="jesse@example.com"
                 />
               </div>
             </div>
             {/* ---------------------flex form three----------------- */}
-            <div className="flex space-x-4">
+            {/*<div className="flex space-x-4">
               <div className="relative w-full mb-3">
                 <label
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
@@ -85,7 +92,7 @@ export default function UpgradeAccount() {
                   defaultValue="jesse@example.com"
                 />
               </div>
-              {/* --------------------- */}
+               --------------------- 
               <div className="relative w-full mb-3">
                 <label
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
@@ -99,7 +106,7 @@ export default function UpgradeAccount() {
                   defaultValue="jesse@example.com"
                 />
               </div>
-            </div>
+            </div>*/}
             {/* ---------------------buttons--------------- */}
             <div className="space-x-6 flex justify-center">
               <button className=" shadow-md bg-primary text-white font-bold px-10 py-1 rounded-xl">

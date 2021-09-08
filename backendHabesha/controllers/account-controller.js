@@ -39,6 +39,7 @@ exports.upgradeAccount = catchAsync(async (req, res, next) => {
 exports.getAccount = catchAsync(async (req, res, next) => {
   const { userIdForAccount } = req.body;
   const userDetail = await User.findById(userIdForAccount);
+  console.log("the searched user is ", userDetail);
   res.status(200).json(userDetail);
 });
 
@@ -49,34 +50,64 @@ exports.getAccount = catchAsync(async (req, res, next) => {
 exports.updateProfile = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
-  const {
-    firstName,
-    lastName,
-    userName,
-    birthDate,
-    address,
-    gender,
-    phoneNo,
-    telegramlink,
-    facebooklink,
-    instagramlink,
-    whatsapplink,
-  } = req.body;
-  const profilePicture = req.files[0].path;
-  const updateUserProfile = await UserProfile.findOneAndUpdate(userId, {
-    firstName,
-    lastName,
-    userName,
-    birthDate,
-    address,
-    gender,
-    phoneNo,
-    profilePicture,
-    telegramlink,
-    facebooklink,
-    instagramlink,
-    whatsapplink,
-  });
+  // const {
+  //   firstName,
+  //   lastName,
+  //   userName,
+  //   birthDate,
+  //   address,
+  //   gender,
+  //   phoneNo,
+  //   telegramlink,
+  //   facebooklink,
+  //   instagramlink,
+  //   whatsapplink,
+  //   legaldocument,
+  //   profilepicture,
+  // } = req.body;
+  console.log("the req.body value is ", req.body);
+  let obj = req.body;
+  // if (firstName !== "") {
+  //   obj.firstName = firstName;
+  // }
+  // if (lastName !== "") {
+  //   obj.lastName = lastName;
+  // }
+  // if (userName !== "") {
+  //   obj.userName = userName;
+  // }
+  // if (birthDate !== "") {
+  //   obj.birthDate = birthDate;
+  // }
+  // if (address !== "") {
+  //   obj.address = address;
+  // }
+  // if (gender !== "") {
+  //   obj.gender = gender;
+  // }
+  // if (phoneNo !== "") {
+  //   obj.phoneNo = phoneNo;
+  // }
+  // if (telegramlink !== "") {
+  //   obj.telegramlink = telegramlink;
+  // }
+  // if (facebooklink !== "") {
+  //   obj.facebooklink = facebooklink;
+  // }
+  // if (instagramlink !== "") {
+  //   obj.instagramlink = instagramlink;
+  // }
+  // if (whatsapplink !== "") {
+  //   obj.whatsapplink = whatsapplink;
+  // }
+  if (req.files[0]) {
+    obj.legaldocument = req.files[0].path;
+  }
+  if (req.files[1]) {
+    obj.profilepicture = req.files[1].path;
+  }
+
+  await UserProfile.findOneAndUpdate(userId, obj);
   res.json({ message: "successfuly updated your account !!" });
 });
 exports.getProfile = catchAsync(async (req, res, next) => {

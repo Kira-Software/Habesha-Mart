@@ -7,7 +7,7 @@ import {
   PhoneIcon,
   MailIcon,
 } from "@heroicons/react/solid";
-import { SocialIcon } from "react-social-icons";
+
 import ItemLS from "../components/ItemLC";
 import Items from "../components/ItemS";
 import { getLoggedIn } from "../Redux/Action/authentication";
@@ -54,7 +54,7 @@ export default function Profile() {
         <div className="w-1/5"> </div>
         <div className="mt-4 w-4/5 ">
           <div className="text-xl font-bold text-primary">
-            {!loading? profile.firstName:null} {profile.lastName}
+            {!loading ? profile.firstName : null} {profile.lastName}
           </div>
           <div className="text-sm font-semibold text-gray-600">
             web designer and front end developer at my dorm
@@ -74,7 +74,7 @@ export default function Profile() {
             </div> */}
             <div className="flex items-center space-x-2">
               <PaperAirplaneIcon className="h-4 text-gray-500" />
-              <SocialIcon />
+
               <div className="text-sm text-gray-500 font-semibold">@nah_n1</div>
             </div>
             <div>

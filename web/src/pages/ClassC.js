@@ -168,7 +168,7 @@ export default function ClassC() {
         <div>
           <div>
             <div className="text-2xl text-gray-900 font-bold">Car</div>
-            <div className="flex justify-around py-4   space-x-3   ">
+            <div className="flex justify-around items-center py-4   space-x-3   ">
               {items.length !== 0 ? (
                 items.data.map((item, idx) => {
                   if (item.category === "Car" && carcount < 4) {
@@ -196,7 +196,7 @@ export default function ClassC() {
               </Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Home</div>
-            <div className="flex justify-around py-4   space-x-3   ">
+            <div className="flex justify-around items-center py-4   space-x-3   ">
               {items.length !== 0 ? (
                 items.data.map((item, idx) => {
                   if (item.category === "House" && housecount < 4) {
@@ -225,7 +225,7 @@ export default function ClassC() {
             </div>
 
             <div className="text-2xl text-gray-900 font-bold">Accessories</div>
-            <div className="flex justify-around py-4   space-x-3   ">
+            <div className="flex justify-around py-4 items-center   space-x-3   ">
               {items.length !== 0 ? (
                 items.data.map((item, idx) => {
                   if (item.category === "Accessory" && accessorycount < 4) {
@@ -253,7 +253,7 @@ export default function ClassC() {
               </Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Shoes</div>
-            <div className="flex justify-around py-4   space-x-3   ">
+            <div className="flex items-center justify-around py-4   space-x-3   ">
               {items.length !== 0 ? (
                 items.data.map((item, idx) => {
                   if (item.category === "Shoes" && shoescount < 4) {
@@ -281,7 +281,7 @@ export default function ClassC() {
               </Link>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Other</div>
-            <div className="flex justify-around py-4   space-x-3   ">
+            <div className="flex items-center justify-around py-4   space-x-3   ">
               {items.length !== 0 ? (
                 items.data.map((item, idx) => {
                   if (item.category === "Other" && othercount < 4) {

@@ -18,9 +18,8 @@ const ExploreDropdown = () => {
   };
   return (
     <>
-      <a
+      <button
         className="text-blueGray-500 block"
-        href="#pablo"
         ref={btnDropdownRef}
         onClick={(e) => {
           e.preventDefault();
@@ -31,7 +30,7 @@ const ExploreDropdown = () => {
           <MenuIcon className="h-6 mr-1 text-gray-800" />
           <span className="font-semibold">Explore</span>
         </div>
-      </a>
+      </button>
       <div
         ref={popoverDropdownRef}
         className={

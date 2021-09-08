@@ -52,7 +52,7 @@ export default function Register() {
   }, []);
   return (
     <div className="flex">
-      <div className="bg-secondry w-1/4 h-screen">
+      <div className="bg-secondary w-1/4 h-screen">
         <Link href="/">
           <img className="h-14 cursor-pointer" src="logo.png" alt="logo" />
         </Link>
@@ -70,50 +70,50 @@ export default function Register() {
         </div>
         <div className="flex justify-center items-center h-5/6 py-10">
           <div>
-            <div className="text-2xl font-bold text-green-600 mb-10">
+            <div className="text-2xl font-bold text-primary mb-10">
               Sign In to Habesha Mart
             </div>
-            <div>
-              <div className="text-sm font-bold text-green-600 mb-2">Email</div>
-              <div className="flex items-center bg-gray-100 rounded-sm px-2 py-1 mb-2">
+            <div className="space-y-4">
+              <div className="text-sm font-bold text-primary mb-2">Email</div>
+              <div className="border-0 flex items-center px-3 w-full py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  focus:ring   ease-linear transition-all duration-150">
                 <MailIcon className="h-6 text-gray-600 mr-2" />
                 <input
                   type="text"
                   placeholder="example@email.com"
-                  className="outline-none bg-gray-100"
+                  className="border-0 px-2 py-1 focus:outline-none w-96"
                   onChange={(e) => changer(e)}
                   name="email"
                   value={email}
                 />
               </div>
 
-              <div className="text-sm font-bold text-green-600 mb-2 ">
+              <div className="text-sm font-bold text-primary mb-2">
                 Password
               </div>
-              <div className="flex items-center bg-gray-100 rounded-sm px-2 py-1">
+              <div className="border-0 flex items-center px-3 w-full py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  focus:ring   ease-linear transition-all duration-150">
                 <LockClosedIcon className="h-6 text-gray-600 mr-2" />
                 <input
                   type={showPass ? "text" : "password"}
                   placeholder="********"
-                  className="outline-none bg-gray-100"
+                  className="border-0 px-2 py-1 focus:outline-none w-96"
                   onChange={(e) => changer(e)}
                   name="password"
                   value={password}
                 />
                 {showPass ? (
                   <EyeIcon
-                    className="h-6 text-gray-600  ml-6 "
+                    className="h-6 text-gray-600  ml-3 "
                     onClick={handleShowPass}
                   />
                 ) : (
                   <EyeOffIcon
-                    className="h-6 text-gray-600  ml-6 "
+                    className="h-6 text-gray-600  ml-3 "
                     onClick={handleShowPass}
                   />
                 )}
               </div>
               <button
-                className="text-center w-72 rounded-md text-white px-2 py-1 mt-6 font-semibold
+                className="text-center w-full  rounded-md text-white px-2 py-1 mt-6 font-semibold
                    bg-primary hover:bg-green-700"
                 onClick={handlesubmit}
               >

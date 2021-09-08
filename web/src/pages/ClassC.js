@@ -35,18 +35,30 @@ export default function ClassC() {
     <div>
       <Navbar />
       <div
-        className=" mt-14  flex  px-32 items-center border-t h-96 bg-gradient-to-tr  "
+        className=" mt-14  flex    px-32 items-center border-t h-96 bg-gradient-to-tr  "
         style={{
           backgroundImage: "url(img.webp)",
           backgroundBlendMode: "screen",
           backgroundSize: "cover",
-          backgroundColor: "#042a3d",
+          backgroundColor: "#040c1c",
         }}
       >
-        <div className="w-1/2">
-          <div className="text-7xl text-white font-bold">Intro Here..</div>
+        <div className="w-1/2 space-y-6">
+          <div className="text-6xl   font-bold text-gray-50">
+            <span>Sell digital products the easy way</span>
+          </div>
+          <div className="text-white font-semibold">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa earum,
+            enim impedit officiis possimus eveniet necessitatibus ipsam
+            consequatur doloremque ullam .
+          </div>
+          <button className="text-white px-16 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
+            <Link to="register">Get Started</Link>
+          </button>
         </div>
-        <div className="w-1/2">two</div>
+        <div className="w-1/2 flex items-end justify-center">
+          <img src="homebg.png" alt="sideimage" className="h-96 " />
+        </div>
       </div>
       <div className="mt-14 px-20">
         <div className="text-2xl  text-gray-900 font-bold">Electronics</div>

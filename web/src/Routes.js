@@ -20,6 +20,7 @@ import Admin from "./layouts/Admin.js";
 import Auth from "./layouts/Auth.js";
 import UpgradeAccount from "./pages/upgradeAccount";
 import RequestItems from "./pages/requestItem";
+import ReplyForRequest from "./pages/replyForRequest";
 //import ClassC from "./pages/ClassC";
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
@@ -79,6 +80,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/request-item">
         <RequestItems />
+      </Route>
+      <Route exact path="/reply-for-request">
+        <ReplyForRequest />
       </Route>
       <Route exact path="/item">
         <Item />

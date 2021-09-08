@@ -1,8 +1,10 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
-
+import { LogoutIcon } from "@heroicons/react/solid";
+import { useHistory } from "react-router-dom";
 const UserDropdown = () => {
   // dropdown props
+  const history = useHistory();
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
@@ -43,43 +45,39 @@ const UserDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
-          href="#pablo"
+        <button
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            "text-sm py-2 px-4 hover:bg-gray-50  font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+          }
+          onClick={(e) => {
+            history.push("/profile");
+          }}
+        >
+          Profile
+        </button>
+        <button
+          className={
+            "text-sm py-2 px-4  hover:bg-gray-50 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+          }
+          onClick={(e) => {
+            history.push("/item-list");
+          }}
+        >
+          My Items
+        </button>
+        <button
+          className={
+            "text-sm py-2 px-4    hover:bg-gray-50  font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
           onClick={(e) => e.preventDefault()}
         >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
-        <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Seprated link
-        </a>
+          <span className="flex justify-center w-full  space-x-2">
+            <span>
+              <LogoutIcon className="h-5 text-gray-500" f />
+            </span>
+            <span>Logout</span>
+          </span>
+        </button>
       </div>
     </>
   );

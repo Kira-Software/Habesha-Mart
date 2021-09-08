@@ -1,6 +1,8 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
-
+import NotificationItem from "../NotificationItem";
+import NotificationItemBroker from "../NotificationItemBroker";
+import ReplyCard from "../replyCard";
 const NotificationDropdown = () => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
@@ -18,9 +20,8 @@ const NotificationDropdown = () => {
   };
   return (
     <>
-      <a
-        className="text-blueGray-500 block py-1 px-3"
-        href="#pablo"
+      <button
+        className="text-blueGray-500 block py-1 px-3  "
         ref={btnDropdownRef}
         onClick={(e) => {
           e.preventDefault();
@@ -28,51 +29,23 @@ const NotificationDropdown = () => {
         }}
       >
         <i className="fas fa-bell"></i>
-      </a>
+      </button>
       <div
         ref={popoverDropdownRef}
         className={
           (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
+          "bg-white text-base z-50 float-left py-4 list-none text-left rounded shadow-lg mt-1 min-w-48 px-6 overflow-auto  "
         }
+        style={{ height: "550px" }}
       >
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a>
-        <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Seprated link
-        </a>
+        <div className="text-gray-900 text-2xl font-bold ">Notification</div>
+
+        <NotificationItemBroker />
+        <NotificationItem />
+        <NotificationItem />
+        <NotificationItem />
+        <NotificationItem />
+        <NotificationItem />
       </div>
     </>
   );

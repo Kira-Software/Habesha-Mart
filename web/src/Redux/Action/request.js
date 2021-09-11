@@ -1,4 +1,5 @@
 import axios from "axios";
+import { GET_REQUEST } from "../Type/type";
 
 export const sendrequest = (formdata) => async (dispatch) => {
   console.log("the coming formdata value is ", formdata);
@@ -22,23 +23,23 @@ export const sendrequest = (formdata) => async (dispatch) => {
   }
 };
 
-// export const getAccount = () => async (dispatch) => {
-//   console.log("i am in action get account function");
-//   // const getLoggedIn = useCallback(async () => {
-//   try {
-//     const res = await axios.get(
-//       "http://localhost:9000/api/user/account/getProfile",
-//       {
-//         withCredentials: true,
-//       }
-//     );
+export const getRequest = () => async (dispatch) => {
+  console.log("i am in action get account function");
+  // const getLoggedIn = useCallback(async () => {
+  try {
+    const res = await axios.get(
+      "http://localhost:9000/api/request/getItemRequest",
+      {
+        withCredentials: true,
+      }
+    );
 
-//     console.log("the value or res is", res);
-//     dispatch({
-//       type: GET_ACCOUNT,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     console.log("the problem error is ", err);
-//   }
-// };
+    console.log("the value of getting request res is", res);
+    dispatch({
+      type: GET_REQUEST,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log("the problem error is ", err);
+  }
+};

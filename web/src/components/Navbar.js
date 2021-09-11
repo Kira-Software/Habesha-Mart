@@ -37,10 +37,12 @@ export default function Navbar() {
           {!loading && user !== null ? (
             <>
               {" "}
-              <ul>
-                <NotificationDropdown />
-              </ul>
               {user.role === "broker" ? (
+                <ul>
+                  <NotificationDropdown />
+                </ul>
+              ) : null}
+              {user.role === "broker" || "seller" ? (
                 <>
                   <button onClick={() => history.push("/login")}>
                     <LockClosedIcon className="h-5 text-gray-500" />

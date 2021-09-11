@@ -103,7 +103,7 @@ export const getAccount = () => async (dispatch) => {
       "http://localhost:9000/api/user/account/getProfile",
       {
         withCredentials: true,
-      }
+      } 
     );
 
     console.log("the value or res is", res);

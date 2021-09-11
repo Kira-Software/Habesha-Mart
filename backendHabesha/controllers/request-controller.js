@@ -43,18 +43,23 @@ exports.sendItemRequest = catchAsync(async (req, res, next) => {
 });
 exports.getItemRequest = catchAsync(async (req, res, next) => {
   //find the broker Advanced Account
-  const brokerAdvancedAccount = await AdvancedAccount.find({
-    userId: req.user._id,
+  // const brokerAdvancedAccount = await AdvancedAccount.find({
+  //  userId: req.user._id,
+  // });
+
+  // const servingId = brokerAdvancedAccount[0].servingCategoryId;
+  let userId = req.user._id;
+  console.log("the userid is", userId);
+  const userinfo = await upgradeAccStore.findOne({ userId });
+  console.log("user info is", userinfo);
+  const requestToMe = await Request.find({
+    requestcategory: userinfo.category,
+    requestlocation: userinfo.location,
   });
 
-  const servingId = brokerAdvancedAccount[0].servingCategoryId;
+  console.log("the requestToMe is", requestToMe);
 
-  const requestToMe = await Request.find({ requestedItemCategory: servingId });
-
-  res.status(200).json({
-    message: "success",
-    data: requestToMe,
-  });
+  res.status(200).json(requestToMe);
 });
 exports.replyItemRequest = catchAsync(async (req, res, next) => {
   const repliedBy = req.user._id;

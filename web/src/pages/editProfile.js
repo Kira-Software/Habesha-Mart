@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { editProfile } from "../Redux/Action/profile";
 import { useDispatch, useSelector } from "react-redux";
+import { getAccount } from "../Redux/Action/profile";
 
 import {
   LightBulbIcon,
@@ -10,7 +11,8 @@ import {
 
 export default function EditProfile() {
   const dispatch = useDispatch();
-
+  const profile = useSelector((state) => state.authreducer.profile);
+  const loading = useSelector((state) => state.authreducer.loading);
   const [formdata, setformdata] = useState({
     firstName: "",
     lastName: "",
@@ -27,7 +29,9 @@ export default function EditProfile() {
     profilepicture: "",
   });
 
-  const [ppPreview, setppPreview] = useState(null);
+  const [ppPreview, setppPreview] = useState(
+    `http://localhost:9000/${profile.profilepicture}`
+  );
   const [legalDocumentPreview, setlegalDocumentPreview] = useState(null);
 
   const changer = (e) => {
@@ -78,6 +82,10 @@ export default function EditProfile() {
     dispatch(editProfile(formdata));
     // console.log("the file values are", legaldocument[0], legaldocument[1]);
   };
+
+  useEffect(() => {
+    dispatch(getAccount());
+  }, []);
 
   const mystyle = { height: 200, width: 300 };
 
@@ -153,7 +161,7 @@ export default function EditProfile() {
                     name="firstName"
                     value={firstName}
                     onChange={(e) => changer(e)}
-                    placeholder="first name here"
+                    placeholder={profile.firstName}
                     className="flex w-60 bg-gray-100 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -166,7 +174,7 @@ export default function EditProfile() {
                     name="lastName"
                     value={lastName}
                     onChange={(e) => changer(e)}
-                    placeholder="Last name here"
+                    placeholder={profile.lastName}
                     className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -179,7 +187,7 @@ export default function EditProfile() {
                     name="userName"
                     value={userName}
                     onChange={(e) => changer(e)}
-                    placeholder="User name here"
+                    placeholder={profile.userName}
                     className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -210,7 +218,7 @@ export default function EditProfile() {
                     name="phoneNo"
                     value={phoneNo}
                     onChange={(e) => changer(e)}
-                    placeholder="+251942104459"
+                    placeholder={profile.phoneNo}
                     className="flex  bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -226,7 +234,7 @@ export default function EditProfile() {
                     name="birthDate"
                     value={birthDate}
                     onChange={(e) => changer(e)}
-                    placeholder="04-11-1998"
+                    placeholder={profile.birthDate}
                     className="flex w-60 bg-gray-100 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -236,7 +244,7 @@ export default function EditProfile() {
                   </label>
                   <input
                     type="text"
-                    name="address"
+                    name={profile.address}
                     value={address}
                     onChange={(e) => changer(e)}
                     placeholder="Addis Ababa"
@@ -255,7 +263,7 @@ export default function EditProfile() {
                     name="telegramlink"
                     value={telegramlink}
                     onChange={(e) => changer(e)}
-                    placeholder="t.me/urlink"
+                    placeholder={profile.telegramlink}
                     className="flex w-60 bg-gray-100 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -268,7 +276,7 @@ export default function EditProfile() {
                     name="facebooklink"
                     value={facebooklink}
                     onChange={(e) => changer(e)}
-                    placeholder="www.facebook.com"
+                    placeholder={profile.facebooklink}
                     className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -283,7 +291,7 @@ export default function EditProfile() {
                     name="instagramlink"
                     value={instagramlink}
                     onChange={(e) => changer(e)}
-                    placeholder="www.instagram.com"
+                    placeholder={profile.instagramlink}
                     className="flex w-60 bg-gray-100 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -296,7 +304,7 @@ export default function EditProfile() {
                     name="whatsapplink"
                     value={whatsapplink}
                     onChange={(e) => changer(e)}
-                    placeholder="www.whatsapp.com"
+                    placeholder={profile.whatsapplink}
                     className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
                 </div>
@@ -324,13 +332,14 @@ export default function EditProfile() {
                     //multiple
                     className="flex bg-gray-100 w-60 outline-none px-2 py-1 rounded-md"
                   />
-                  <div style={{ display: legalDocumentPreview ? "block" : "none" }}>
+                  <div
+                    style={{ display: legalDocumentPreview ? "block" : "none" }}
+                  >
                     <img
                       src={legalDocumentPreview}
                       alt="image2 placeholder"
                       style={mystyle}
                     />
-                    
                   </div>
                 </div>
               </div>

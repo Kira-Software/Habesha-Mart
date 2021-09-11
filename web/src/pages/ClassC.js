@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getItem } from "../Redux/Action/itemstuff";
 import { getLoggedIn } from "../Redux/Action/authentication";
+import { getRequest } from "../Redux/Action/request";
 
 import { Link } from "react-router-dom";
 
@@ -13,6 +14,7 @@ export default function ClassC() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.item.items);
   const user = useSelector((state) => state.authreducer.user);
+  const loading = useSelector((state) => state.authreducer.loading);
 
   let clothcount = 0;
   let electronicscount = 0;
@@ -25,6 +27,7 @@ export default function ClassC() {
   useEffect(() => {
     dispatch(getLoggedIn());
     dispatch(getItem());
+   // dispatch(getRequest());
     console.log("the value of items is ", items);
   }, []);
 
@@ -263,6 +266,35 @@ export default function ClassC() {
                   <ArrowRightIcon className="h-5" />
                 </button>
               </Link>
+            </div>
+            <div
+              className="h-32 mt-6 px-32 flex items-center"
+              style={{
+                backgroundImage: "url(img.webp)",
+                backgroundBlendMode: "screen",
+                backgroundSize: "cover",
+                backgroundColor: "#040c1c",
+              }}
+            >
+              <div className="w-3/4 space-y-3">
+                <div className="text-4xl font-bold text-white">
+                  {user !== null && user.role === "classCustomer" ? (
+                    <div>
+                      Send Item Reques{" "}
+                      <div className="text-white text-sm font-semibold w-2/3">
+                        Submit your item request and wait for brokers reply
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-1/4 flex justify-center items-center">
+                <button className="text-white px-8 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
+                  {user !== null && user.role === "classCustomer" ? (
+                    <Link to="/request-item">Item Request</Link>
+                  ) : null}
+                </button>
+              </div>
             </div>
             <div className="text-2xl text-gray-900 font-bold">Shoes</div>
             <div className="flex items-center justify-around py-4   space-x-3   ">

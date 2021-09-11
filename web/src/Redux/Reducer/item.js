@@ -1,5 +1,6 @@
+import { getRequest } from "../Action/request";
 import {
-  GET_ITEM,GET_SELECTED_ITEM,GET_SEARCH_ITEM,GET_COMMENT
+  GET_ITEM,GET_SELECTED_ITEM,GET_SEARCH_ITEM,GET_COMMENT,GET_REQUEST
   } from "../Type/type";
   
   const initialstate = {
@@ -7,7 +8,8 @@ import {
     items: [],
     selectedItem: [],
     searchItem: [],
-    comment: []
+    comment: [],
+    request: []
   };
   
   export default function (state = initialstate, action) {
@@ -38,8 +40,12 @@ import {
           loadingitem: false,
           comment: payload,
         };
-    //   case LOGIN_FAIL:
-    //     return {};
+        case GET_REQUEST:
+          return {
+            ...state,
+            loadingitem: false,
+            request: payload,
+          };
       default:
         return state;
     }

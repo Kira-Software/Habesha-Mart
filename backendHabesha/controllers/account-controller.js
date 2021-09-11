@@ -34,13 +34,13 @@ exports.upgradeAccount = catchAsync(async (req, res, next) => {
     category,
     location,
     legalId: req.files[0].path,
+    userId,
   });
   const saved = await upgradeaccount.save();
   res
     .status(200)
     .json({ message: "Account has been Upgraded Successfuly", saved });
 });
-
 
 exports.getAccount = catchAsync(async (req, res, next) => {
   const { userIdForAccount } = req.body;
@@ -117,10 +117,13 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   res.json({ message: "successfuly updated your account !!" });
 });
 exports.getProfile = catchAsync(async (req, res, next) => {
-  const userId = req.params;
-  const userProfile = userProfile.find({ userId });
+  console.log("inside of the getprofile");
+  const userId = req.user._id;
+  const userProfile = await UserProfile.findOne({ userId });
+  console.log("the value of userprofile is", userProfile);
+
   if (userProfile) {
-    res.json({ status: "ok", data: userProfile });
+    res.json(userProfile);
   }
 });
 

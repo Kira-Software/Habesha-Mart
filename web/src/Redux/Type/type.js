@@ -16,4 +16,7 @@ export const GET_COMMENT = "GET_COMMENT"
 
 export const LOG_OUT = "LOG_OUT"
 
+export const GET_REQUEST = "GET_REQUEST"
+
+
 

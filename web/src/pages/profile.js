@@ -16,6 +16,8 @@ import { getAccount } from "../Redux/Action/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { getRequest } from "../Redux/Action/request";
+
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authreducer.user);
@@ -37,6 +39,9 @@ export default function Profile() {
     if (user !== null) {
       dispatch(getIndividualItem(user._id));
       dispatch(getAccount());
+    }
+    if (user !== null && user.role === "broker") {
+      dispatch(getRequest());
     }
   }, [user]);
 

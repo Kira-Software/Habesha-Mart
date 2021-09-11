@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getRequest } from "../Redux/Action/request";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useHistory } from "react-router-dom";
-export default function NotificationItem() {
+export default function NotificationItem(props) {
+  const dispatch = useDispatch();
+
+  const request = useSelector((state) => state.item.request);
+
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const handleSeeMore = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    dispatch(getRequest());
+  }, []);
   return (
     <div>
       <div>
@@ -20,12 +30,10 @@ export default function NotificationItem() {
           </span>
           <div className="w-96 space-y-1">
             <span className="w-full text-sm font-semibold  text-gray-800  block">
-              Lorem ipsum
+             {props.name}
             </span>
             <span className=" text-sm  text-gray-600  ">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem
-              nulla quasi beatae modi commodi praesentium, cumque dolorem
-              maiores odio{" "}
+            {props.description}
               <button className="text-blue-600" onClick={handleSeeMore}>
                 see more
               </button>
@@ -33,21 +41,18 @@ export default function NotificationItem() {
             <span className={open ? "block" : "hidden"}>
               <span className="block">
                 <span className="font-semibold text-sm text-gray-800 block">
-                  Category
+                  {props.category}
                 </span>
-                <span className="text-sm text-gray-600">House</span>
               </span>
               <span className="block">
                 <span className="font-semibold text-sm text-gray-800 block">
-                  Location
+                  {props.quantity}
                 </span>
-                <span className="text-sm text-gray-600">Bole, Addis Ababa</span>
               </span>
               <span className="block">
                 <span className="font-semibold text-sm text-gray-800 block">
-                  Quantity
+                  {props.location}
                 </span>
-                <span className="text-sm text-gray-600">2</span>
               </span>
             </span>
             <div className="space-x-4">

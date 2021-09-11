@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createPopper } from "@popperjs/core";
 import { LogoutIcon } from "@heroicons/react/solid";
 import { useHistory } from "react-router-dom";
 import { Logout } from "../../Redux/Action/authentication";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAccount } from "../../Redux/Action/profile";
+
+
 const UserDropdown = () => {
   const items = useSelector((state) => state.item.items);
   const user = useSelector((state) => state.authreducer.user);
+  const profile = useSelector((state) => state.authreducer.profile);
+  const loading = useSelector((state) => state.authreducer.loading);
   // dropdown props
 
   const dispatch = useDispatch();
@@ -28,6 +33,10 @@ const UserDropdown = () => {
     console.log("inside the logout function");
     dispatch(Logout());
   };
+
+  useEffect(() => {
+    dispatch(getAccount());
+  }, []);
   return (
     <>
       <a
@@ -44,7 +53,7 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("./../../assets/img/team-1-800x800.jpg").default}
+              src={`http://localhost:9000/${profile.profilepicture}`}
             />
           </span>
         </div>

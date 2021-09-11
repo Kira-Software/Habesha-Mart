@@ -3,7 +3,11 @@ import { createPopper } from "@popperjs/core";
 import NotificationItem from "../NotificationItem";
 import NotificationItemBroker from "../NotificationItemBroker";
 import ReplyCard from "../replyCard";
+import { useSelector, useDispatch } from "react-redux";
+
 const NotificationDropdown = () => {
+  const user = useSelector((state) => state.authreducer.user);
+  const loading = useSelector((state) => state.authreducer.loading);
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -39,13 +43,24 @@ const NotificationDropdown = () => {
         style={{ height: "550px" }}
       >
         <div className="text-gray-900 text-2xl font-bold ">Notification</div>
-
-        <NotificationItemBroker />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
+        {user.role === "classCustomer" ? (
+          <>
+            {" "}
+            <NotificationItem />
+            <NotificationItem />
+            <NotificationItem />
+            <NotificationItem />
+            <NotificationItem />{" "}
+          </>
+        ) : user.role === "broker" ? (
+          <>
+            {" "}
+            <NotificationItemBroker />
+            <NotificationItemBroker />
+            <NotificationItemBroker />
+            <NotificationItemBroker />{" "}
+          </>
+        ) : null}
       </div>
     </>
   );

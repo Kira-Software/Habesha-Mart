@@ -15,6 +15,7 @@ import { getIndividualItem } from "../Redux/Action/itemstuff";
 import { getAccount } from "../Redux/Action/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authreducer.user);
@@ -41,6 +42,7 @@ export default function Profile() {
 
   return (
     <div className="h-screen">
+      <Navbar />
       <img src="phones.jpg" alt="bg" className="w-full max-h-60" />
 
       <div className=" rounded-full w-36 flex container px-1 py-1 bg-white absolute top-40 left-28 items-center">

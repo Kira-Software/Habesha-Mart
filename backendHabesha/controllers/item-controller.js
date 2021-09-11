@@ -124,7 +124,7 @@ exports.updateItem = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ message: "Successfuly update your item !" });
 });
-exports.deleteItem = (req, res, next) => {
+exports.deleteItem = async(req, res, next) => {
   const itemId = req.params;
   const deletedItem = await Item.findByIdAndDelete(itemId);
   if (deletedItem) {

@@ -52,9 +52,17 @@ export default function ClassC() {
             enim impedit officiis possimus eveniet necessitatibus ipsam
             consequatur doloremque ullam .
           </div>
-          <button className="text-white px-16 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
-            <Link to="register">Get Started</Link>
-          </button>
+          {user === null ? (
+            <>
+              {" "}
+              <button className="text-white px-5 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
+                <Link to="register">Get Started</Link>
+              </button>
+              <button className="ml-10 text-white px-16 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
+                <Link to="login">Already have an Account</Link>
+              </button>{" "}
+            </>
+          ) : null}
         </div>
         <div className="w-1/2 flex items-end justify-center">
           <img src="homebg.png" alt="sideimage" className="h-96 " />
@@ -138,29 +146,33 @@ export default function ClassC() {
         <div className="w-3/4 space-y-3">
           <div className="text-4xl font-bold text-white">
             {user === null ? (
-              <>Sign Up Now</>
+              <div>
+                Sign Up Now{" "}
+                <div className="text-white text-sm font-semibold w-2/3">
+                  Sign Up and Unlock the features
+                </div>
+              </div>
+            ) : user.role === "classCustomer" ? (
+              <div>
+                Upgrade Your Account{" "}
+                <div className="text-white text-sm font-semibold w-2/3">
+                  Upgrade Your Acount and become a Seller or Broker
+                </div>
+              </div>
             ) : user.role === "seller" || "broker" ? (
-              <>Visit Your Profile</>
-            ) : (
-              <>Upgrade Your Account</>
-            )}
-          </div>
-          <div className="text-white text-sm font-semibold w-2/3">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod sequi
-            eum delectus rem, velit consequuntur vero tenetur iusto optio illum
-            provident id esse eius accusantium facilis deleniti sed, laudantium
-            corrupti!
+              <div>Visit Your Profile </div>
+            ) : null}
           </div>
         </div>
         <div className="w-1/4 flex justify-center items-center">
           <button className="text-white px-8 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
             {user === null ? (
-              <Link to="register">Sign Up</Link>
+              <Link to="/register">Sign Up</Link>
+            ) : user.role === "classCustomer" ? (
+              <Link to="/upgrade-account">Upgrade Account</Link>
             ) : user.role === "seller" || "broker" ? (
-              <Link to="profile">My Profile</Link>
-            ) : (
-              <>Upgrade</>
-            )}
+              <Link to="/profile">My Profile</Link>
+            ) : null}
           </button>
         </div>
       </div>

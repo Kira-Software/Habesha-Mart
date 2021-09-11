@@ -4,6 +4,7 @@ const User = require("../models/user");
 const UserProfile = require("../models/user-profile");
 const catchAsync = require("../utils/catchAsync");
 const AdvancedAccount = require("../models/advancedAccount");
+const UpgradeAccount = require("../models/upgradeAccStore");
 
 exports.deleteAccount = catchAsync(async (req, res, next) => {
   const { userIdToDelete } = req.body;
@@ -21,21 +22,26 @@ exports.suspendAccount = catchAsync(async (req, res, next) => {
   res.status(200).json({ message: "user has been suspended." });
 });
 exports.upgradeAccount = catchAsync(async (req, res, next) => {
-  const { userId, roleType, servingCategoryId } = req.body;
+  console.log("the req.body value is ", req.body);
+  const userId = req.user._id;
+  const { roleType, category, location, legalId } = req.body;
 
   const upgradedUser = await User.findByIdAndUpdate(userId, { role: roleType });
-  const serveLike = roleType;
+  // const serveLike = roleType;
 
-  const createdAdvancedAccount = await new AdvancedAccount({
-    servingCategoryId,
-    serveLike,
-    userId,
+  const upgradeaccount = new UpgradeAccount({
+    roleType,
+    category,
+    location,
+    legalId: req.files[0].path,
   });
-  const saved = await createdAdvancedAccount.save();
+  const saved = await upgradeaccount.save();
   res
     .status(200)
-    .json({ message: "Account has been Upgraded Successfuly", upgradedUser });
+    .json({ message: "Account has been Upgraded Successfuly", saved });
 });
+
+
 exports.getAccount = catchAsync(async (req, res, next) => {
   const { userIdForAccount } = req.body;
   const userDetail = await User.findById(userIdForAccount);

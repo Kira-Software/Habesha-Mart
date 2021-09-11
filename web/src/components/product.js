@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { getSelectedItem } from "../Redux/Action/itemstuff";
 import { Link } from "react-router-dom";
-
+import { getComment } from "../Redux/Action/comment";
 const handleItemChange = (id) => {
   localStorage.setItem("detailId", id);
   window.location.reload(false);
@@ -14,6 +14,8 @@ export default function Product(props) {
     dispatch(getSelectedItem(id));
     localStorage.setItem("S_Id", id);
     localStorage.setItem("Category", category);
+    window.scrollTo(0, 0);
+    dispatch(getComment(id));
   };
   return (
     <div className=" w-56 mt-6 hover:shadow-sm  flex justify-center">

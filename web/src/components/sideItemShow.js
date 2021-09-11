@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { getSelectedItem } from "../Redux/Action/itemstuff";
 import { useDispatch, useSelector } from "react-redux";
-
+import { getComment } from "../Redux/Action/comment";
 export default function SideItemShow(props) {
   const dispatch = useDispatch();
 
@@ -16,6 +16,7 @@ export default function SideItemShow(props) {
     dispatch(getSelectedItem(id));
     localStorage.setItem("S_Id", id);
     localStorage.setItem("Category", category);
+    dispatch(getComment(id));
     //window.location.reload(false);
     // window.onbeforeunload = function () {
     window.scrollTo(0, 0);

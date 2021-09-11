@@ -19,6 +19,8 @@ const reportRoute = require("./routes/report-route");
 const requestRoute = require("./routes/request-route");
 const accountRoute = require("./routes/account-route");
 const warningRoute = require("./routes/warning-route");
+const CommentRoute = require("./routes/comment-route");
+
 var cors = require("cors");
 
 app.use(
@@ -78,10 +80,12 @@ app.use("/api/rate", ratingRoute);
 app.use("/api/report", reportRoute);
 app.use("/api/request", requestRoute);
 app.use("/api/warning", warningRoute);
+app.use("/api/comment", CommentRoute);
+ 
 app.all("*", (req, res, next) => {
   next(new AppError(`can't find ${req.originalUrl} on this server `, 404));
 });
-
+ 
 // error handler middleware
 
 app.use(globalErrorHandler);

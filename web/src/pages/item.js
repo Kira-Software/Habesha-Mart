@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   LocationMarkerIcon,
@@ -17,6 +17,8 @@ import { getLoggedIn } from "../Redux/Action/authentication";
 import { getIndividualItem, getSelectedItem } from "../Redux/Action/itemstuff";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ReportDropdown from "../components/Dropdowns/reportDropDown";
+import { sendcomment, getComment } from "../Redux/Action/comment";
 
 export default function Item() {
   const dispatch = useDispatch();
@@ -25,10 +27,26 @@ export default function Item() {
   const isLoading = useSelector((state) => state.authreducer.isLoading);
   const selectedItem = useSelector((state) => state.item.selectedItem);
   const searchItem = useSelector((state) => state.item.searchItem);
+  const searchedcomment = useSelector((state) => state.item.comment);
+  const loadingitem = useSelector((state) => state.item.loadingitem);
+
+  const [comment, setComment] = useState("");
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const handleCommentPost = (comment, itemId) => {
+    console.log("the submitted comment is ", comment, itemId);
+    dispatch(sendcomment(comment, itemId));
+    dispatch(getComment(itemId));
+    window.location.reload(false);
+  };
 
   useEffect(() => {
     dispatch(getLoggedIn());
     dispatch(getSelectedItem(localStorage.getItem("S_Id")));
+    dispatch(getComment(localStorage.getItem("S_Id")));
     //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
     // dispatch(getIndividualItem(user._id))
   }, []);
@@ -144,6 +162,9 @@ export default function Item() {
                       </span>
                     </div>
                   </div>
+                  <ul>
+                    <ReportDropdown id={item._id} />
+                  </ul>
                 </div>
                 <div className="py-5 mt-2">
                   <div className="flex justify-between">
@@ -168,40 +189,59 @@ export default function Item() {
         <p>Loading...</p>
       )}
 
-      <div className="px-8 mb-10 flex">
-        {!isLoading && items.length !== 0 ? (
-          <div className="w-4/6">
-            <div className="w-full  flex  justify-center">
-              <div className="flex w-full ml-24 space-x-5">
-                <img
-                  src="pro3.jpg"
-                  alt="propic"
-                  className="h-14 w-14 rounded-full "
-                />
-                <div className="w-full">
-                  <textarea
-                    rows={3}
-                    placeholder="Write Comment..."
-                    className=" rounded-lg w-2/3 px-4 py-2 outline-none border-2   border-gray-300"
-                  />
-                  <button className="px-8 block py-1 text-white font-semibold mt-2 bg-primary rounded-3xl">
-                    Post comment
-                  </button>
+      <div className="px-8 mb-10 flex ">
+        {selectedItem.length !== 0 && !isLoading && user !== null ? (
+          selectedItem.data.map((item, idx) => {
+            return (
+              <div className="w-4/6">
+                <div className="w-full  flex  justify-center">
+                  <div className="flex w-full ml-24 space-x-5">
+                    <img
+                      src="pro3.jpg"
+                      alt="propic"
+                      className="h-14 w-14 rounded-full "
+                    />
+                    <div className="w-full">
+                      <textarea
+                        rows={3}
+                        placeholder="Write Comment..."
+                        className=" rounded-lg w-2/3 px-4 py-2 outline-none border-2   border-gray-300"
+                        onChange={handleCommentChange}
+                        value={comment}
+                      />
+                      <button
+                        className="px-8 block py-1 text-white font-semibold mt-2 bg-primary rounded-3xl"
+                        onClick={() => handleCommentPost(comment, item._id)}
+                      >
+                        Post comment
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-16">
+                  {searchedcomment.length !== 0 && !loadingitem
+                    ? searchedcomment.data.map((indcomment, idx) => {
+                        return (
+                          <Comment
+                            comment={indcomment.comment}
+                            date={indcomment.date}
+                          />
+                        );
+                      })
+                    : null}
+
+                  {/* <Comment />
+                    <Comment />
+                    <Comment /> */}
                 </div>
               </div>
-            </div>
-            <div className="px-16">
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-
-              <button className="px-12 py-1 mt-6 ml-72  bg-primary text-white font-semibold rounded-3xl">
-                more
-              </button>
-            </div>
+            );
+          })
+        ) : (
+          <div className="w-full  flex  justify-center">
+            <div className="flex w-full ml-24 space-x-5"> </div>{" "}
           </div>
-        ) : null}
+        )}
 
         <div className="w-2/6 px-4   rounded-l-xl">
           <div className="flex items-center space-x-4">
@@ -250,29 +290,33 @@ export default function Item() {
         <div className="w-3/4 space-y-3">
           <div className="text-4xl font-bold text-white">
             {user === null ? (
-              <>Sign Up Now</>
+              <div>
+                Sign Up Now{" "}
+                <div className="text-white text-sm font-semibold w-2/3">
+                  Sign Up and Unlock the features
+                </div>
+              </div>
+            ) : user.role === "classCustomer" ? (
+              <div>
+                Upgrade Your Account{" "}
+                <div className="text-white text-sm font-semibold w-2/3">
+                  Upgrade Your Acount and become a Seller or Broker
+                </div>
+              </div>
             ) : user.role === "seller" || "broker" ? (
-              <>Visit Your Profile </>
-            ) : (
-              <>Upgrade Your Account</>
-            )}
-          </div>
-          <div className="text-white text-sm font-semibold w-2/3">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod sequi
-            eum delectus rem, velit consequuntur vero tenetur iusto optio illum
-            provident id esse eius accusantium facilis deleniti sed, laudantium
-            corrupti!
+              <div>Visit Your Profile </div>
+            ) : null}
           </div>
         </div>
         <div className="w-1/4 flex justify-center items-center">
           <button className="text-white px-8 py-2 rounded-xl font-bold bg-gradient-to-tr from-red-500 to-yellow-400">
             {user === null ? (
-              <Link to="/register">Sign Up </Link>
+              <Link to="/register">Sign Up</Link>
+            ) : user.role === "classCustomer" ? (
+              <Link to="/upgrade-account">Upgrade Account</Link>
             ) : user.role === "seller" || "broker" ? (
-              <Link to="/profile">My Profile </Link>
-            ) : (
-              <>Upgrade Account</>
-            )}
+              <Link to="/profile">My Profile</Link>
+            ) : null}
           </button>
         </div>
       </div>

@@ -23,7 +23,8 @@ router
   .route("/upgradeAccount")
   .post(
     authController.protect,
-    authController.restrictTo("admin"),
+    authController.restrictTo("classCustomer"),
+    upload.any("legalIdImage"),
     accountController.upgradeAccount
   );
 

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getItem, getSearchItem } from "../Redux/Action/itemstuff";
 import { getSelectedItem } from "../Redux/Action/itemstuff";
-
+import { getComment } from "../Redux/Action/comment";
 import { Link } from "react-router-dom";
 
 export default function SearchResult() {
@@ -29,6 +29,7 @@ export default function SearchResult() {
     dispatch(getSelectedItem(id));
     localStorage.setItem("S_Id", id);
     localStorage.setItem("Category", category);
+
   };
 
   useEffect(() => {

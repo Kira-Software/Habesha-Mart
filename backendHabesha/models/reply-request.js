@@ -4,10 +4,12 @@ const replyRequestSchema = mongoose.Schema({
   requestId: { type: String },
   repliedBy: { type: String },
   itemFounded: { type: String },
-  itemAmount: { type: String },
-  itemPrice: { type: Number },
-  itemLocationCity: { type: String },
-  itemLocationSubCity: { type: String },
+  replyname: { type: String },
+  replycategory: { type: String },
+  replydescription: { type: String },
+  replyquantity: { type: Number },
+  replylocation: { type: String },
+  replyimage: { type: String },
   date: { type: Date, default: Date.now() },
 });
 module.exports = mongoose.model("ReplyRequest", replyRequestSchema);

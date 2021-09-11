@@ -2,8 +2,14 @@ import React from "react";
 import { createPopper } from "@popperjs/core";
 import { LogoutIcon } from "@heroicons/react/solid";
 import { useHistory } from "react-router-dom";
+import { Logout } from "../../Redux/Action/authentication";
+import { useDispatch,useSelector } from "react-redux";
 const UserDropdown = () => {
+  const items = useSelector((state) => state.item.items);
+  const user = useSelector((state) => state.authreducer.user);
   // dropdown props
+
+  const dispatch = useDispatch();
   const history = useHistory();
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -16,6 +22,11 @@ const UserDropdown = () => {
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
+  };
+
+  const handleLogout = () => {
+    console.log("inside the logout function");
+    dispatch(Logout());
   };
   return (
     <>
@@ -71,7 +82,10 @@ const UserDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          <span className="flex justify-center w-full  space-x-2">
+          <span
+            className="flex justify-center w-full  space-x-2"
+            onClick={handleLogout}
+          >
             <span>
               <LogoutIcon className="h-5 text-gray-500" f />
             </span>

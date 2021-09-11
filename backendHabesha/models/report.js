@@ -4,7 +4,8 @@ const reportSchema = mongoose.Schema({
   reportedFor: { type: String },
   reportedBy: { type: String },
   date: { type: Date, default: Date.now() },
-  reportType: { type: String },
+  reporttype: { type: String },
+  reportcontent: { type: String },
   isMeasureTaken: { type: Boolean, default: false },
 });
 

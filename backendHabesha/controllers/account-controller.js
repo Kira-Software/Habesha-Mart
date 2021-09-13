@@ -106,14 +106,23 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
   // if (whatsapplink !== "") {
   //   obj.whatsapplink = whatsapplink;
   // }
-  if (req.files[0]) {
+  console.log("the req.files value is", req.files);
+  if (obj.type === "both") {
+    console.log("the type is both");
+    obj.profilepicture = req.files[0].path;
+    obj.legaldocument = req.files[1].path;
+  } else if (obj.type === "profile") {
+    console.log("the type is profile");
+
+    obj.profilepicture = req.files[0].path;
+  } else if (obj.type === "legal") {
+    console.log("the type is legal");
+
     obj.legaldocument = req.files[0].path;
   }
-  if (req.files[1]) {
-    obj.profilepicture = req.files[1].path;
-  }
 
-  await UserProfile.findOneAndUpdate(userId, obj);
+  console.log("the userId value is ", userId);
+  await UserProfile.findOneAndUpdate({ userId }, { $set: obj, new: true });
   res.json({ message: "successfuly updated your account !!" });
 });
 exports.getProfile = catchAsync(async (req, res, next) => {

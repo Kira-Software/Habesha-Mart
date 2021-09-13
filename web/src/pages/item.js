@@ -14,12 +14,17 @@ import Navbar from "../components/Navbar";
 import Product from "../components/product";
 import SideItemShow from "../components/sideItemShow";
 import { getLoggedIn } from "../Redux/Action/authentication";
-import { getIndividualItem, getSelectedItem } from "../Redux/Action/itemstuff";
+import {
+  getcontact,
+  getIndividualItem,
+  getSelectedItem,
+} from "../Redux/Action/itemstuff";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ReportDropdown from "../components/Dropdowns/reportDropDown";
 import { sendcomment, getComment } from "../Redux/Action/comment";
 
+//import {facebookIcon} from "../../public/social/facebook.png"
 export default function Item() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authreducer.user);
@@ -31,7 +36,11 @@ export default function Item() {
   const loadingitem = useSelector((state) => state.item.loadingitem);
 
   const [comment, setComment] = useState("");
+  const [phonedisplay, setphonedisplay] = useState(false);
 
+  const handlePhoneDisplay = () => {
+    setphonedisplay(!phonedisplay);
+  };
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
@@ -42,7 +51,10 @@ export default function Item() {
     dispatch(getComment(itemId));
     window.location.reload(false);
   };
-
+  // const handleGetContact = () => {
+  //   console.log("inside item page method");
+  //   dispatch(getcontact());
+  // };
   useEffect(() => {
     dispatch(getLoggedIn());
     dispatch(getSelectedItem(localStorage.getItem("S_Id")));
@@ -59,6 +71,13 @@ export default function Item() {
   }, [user]);
 
   let relatedCount = 0;
+
+  let phonestyle = {
+    display: phonedisplay ? "block" : "none",
+    marginTop: 20,
+    fontSize: 20,
+    width: "50%",
+  };
 
   return (
     <div>
@@ -129,6 +148,14 @@ export default function Item() {
                     <div>{item.description}</div>
                     <div>{item.itemstatus}</div>
                     <div>{item.itemtype}</div>
+                    <div
+                      className="px-6 py-1 rounded-3xl text-white font-semibold bg-primary"
+                      // onClick={handleGetContact}
+                      style={phonestyle}
+                    >
+                      <span style={{ marginRight: 10 }}> Contact </span>{" "}
+                      {selectedItem.socialMedia.phoneNo}
+                    </div>
                   </div>
                 </div>
                 <div className="flex mt-5 pb-6 space-x-5 border-b items-center">
@@ -153,15 +180,15 @@ export default function Item() {
                       </span>
                     </div>
                   </div>
-                  <div className="space-y-1">
+                  {/*  <div className="space-y-1">
                     <div className="font-semibold text-gray-500">Color</div>
-                    <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
+                     <div className="flex items-center py-1 px-2 bg-gray-100 rounded-lg">
                       <ColorSwatchIcon className="h-5 text-gray-500" />{" "}
                       <span className="text-gray-500 font-semibold text-sm">
                         Original
                       </span>
-                    </div>
-                  </div>
+                    </div> 
+                  </div>*/}
                   <ul>
                     <ReportDropdown id={item._id} />
                   </ul>
@@ -172,9 +199,64 @@ export default function Item() {
                       Br. {item.price}
                     </div>
                     <div className="flex items-center space-x-5">
-                      <button className="px-6 py-1 rounded-3xl text-white font-semibold bg-primary">
-                        Get Contact
-                      </button>
+                      {selectedItem.socialMedia.phoneNo ? (
+                        <button onClick={handlePhoneDisplay}>
+                          <img
+                            src="./social/phone.jpg"
+                            alt="fb icon"
+                            style={{ width: 35, height: 35 }}
+                          />
+                        </button>
+                      ) : null}
+
+                      {selectedItem.socialMedia.facebooklink ? (
+                        <a
+                          href={selectedItem.socialMedia.facebooklink}
+                          target="_blank"
+                        >
+                          <img
+                            src="./social/facebook.png"
+                            alt="fb icon"
+                            style={{ width: 70, height: 40 }}
+                          />
+                        </a>
+                      ) : null}
+                      {selectedItem.socialMedia.instagramlink ? (
+                        <a
+                          href={selectedItem.socialMedia.instagramlink}
+                          target="_blank"
+                        >
+                          <img
+                            src="./social/instagram.png"
+                            alt="fb icon"
+                            style={{ width: 45, height: 45 }}
+                          />
+                        </a>
+                      ) : null}
+                      {selectedItem.socialMedia.telegramlink ? (
+                        <a
+                          href={selectedItem.socialMedia.telegramlink}
+                          target="_blank"
+                        >
+                          <img
+                            src="./social/telegram.png"
+                            alt="fb icon"
+                            style={{ width: 40, height: 40 }}
+                          />
+                        </a>
+                      ) : null}
+                      {selectedItem.socialMedia.whatsapplink ? (
+                        <a
+                          href={selectedItem.socialMedia.whatsapplink}
+                          target="_blank"
+                        >
+                          <img
+                            src="./social/whatsapp.png"
+                            alt="fb icon"
+                            style={{ width: 50, height: 50 }}
+                          />
+                        </a>
+                      ) : null}
                       <button className="px-1 py-1 rounded-lg border">
                         <HeartIcon className="h-5 text-gray-400" />
                       </button>

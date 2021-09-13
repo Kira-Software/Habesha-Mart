@@ -6,6 +6,7 @@ import {
   GET_ITEM,
   GET_SELECTED_ITEM,
   GET_SEARCH_ITEM,
+  GET_SOCIALMEDIA
 } from "../Type/type";
 
 import axios from "axios";
@@ -124,6 +125,11 @@ export const getSelectedItem = (id) => async (dispatch) => {
   dispatch({
     type: GET_SELECTED_ITEM,
     payload: res.data,
+  });
+
+  dispatch({
+    type: GET_SOCIALMEDIA,
+    payload: res.socialMedia,
   });
 };
 

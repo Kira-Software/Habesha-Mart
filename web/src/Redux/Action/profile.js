@@ -20,12 +20,29 @@ export const editProfile = (formdata) => async (dispatch) => {
   console.log("the comming datas are", formdata);
 
   const fd = new FormData();
+  let temptype;
+
+  if (legaldocument && profilepicture) {
+    temptype = "both";
+  } else if (legaldocument) {
+    temptype = "legal";
+  } else if (profilepicture) {
+    temptype = "profile";
+  } else {
+    temptype = "";
+  }
+
   if (legaldocument) {
     fd.append("profileImage", legaldocument, legaldocument.name);
   }
   if (profilepicture) {
     fd.append("profileImage", profilepicture, profilepicture.name);
   }
+  
+  if (temptype) {
+    fd.set("type", temptype);
+  }
+
   if (firstName) {
     fd.set("firstName", firstName);
   }
@@ -103,7 +120,7 @@ export const getAccount = () => async (dispatch) => {
       "http://localhost:9000/api/user/account/getProfile",
       {
         withCredentials: true,
-      } 
+      }
     );
 
     console.log("the value or res is", res);

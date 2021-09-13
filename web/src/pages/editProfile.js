@@ -17,7 +17,7 @@ export default function EditProfile() {
     firstName: "",
     lastName: "",
     userName: "",
-    gender: "Male",
+    gender: "",
     phoneNo: "",
     telegramlink: "",
     facebooklink: "",
@@ -30,7 +30,9 @@ export default function EditProfile() {
   });
 
   const [ppPreview, setppPreview] = useState(
-    `http://localhost:9000/${profile.profilepicture}`
+    profile.profilepicture
+      ? `http://localhost:9000/${profile.profilepicture}`
+      : "pro3.jpg"
   );
   const [legalDocumentPreview, setlegalDocumentPreview] = useState(null);
 
@@ -79,8 +81,26 @@ export default function EditProfile() {
 
   const handleSubmit = () => {
     console.log("the submitted formdata value is ", formdata);
+    console.log("the submitted profilepicture value is ", profilepicture);
+
     dispatch(editProfile(formdata));
     // console.log("the file values are", legaldocument[0], legaldocument[1]);
+
+    setformdata({
+      firstName: "",
+      lastName: "",
+      userName: "",
+      gender: "",
+      phoneNo: "",
+      telegramlink: "",
+      facebooklink: "",
+      instagramlink: "",
+      whatsapplink: "",
+      birthDate: "",
+      address: "",
+      legaldocument: "",
+      profilepicture: "",
+    });
   };
 
   useEffect(() => {
@@ -131,6 +151,8 @@ export default function EditProfile() {
                   src={ppPreview === null ? "pro3.jpg" : ppPreview}
                   alt="propic"
                   className="h-28 w-28 rounded-full"
+                  // onChange={(e) => changer(e)}
+                  // name="profilepicture"
                 />
               </div>
               <div className="relative left-20 bottom-9 ">
@@ -204,6 +226,7 @@ export default function EditProfile() {
                     value={gender}
                     onChange={(e) => changer(e)}
                   >
+                    <option value="">""</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>

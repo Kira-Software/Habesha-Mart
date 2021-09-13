@@ -13,7 +13,10 @@ import FooterAdmin from "./../components/Footers/FooterAdmin.js";
 import Dashboard from "./../pages/Dashboard.js";
 import Maps from "./../pages/Maps.js";
 import Settings from "./../pages/Settings.js";
-import Tables from "./../pages/Tables.js";
+import Tables from "../pages/AdminItems.js";
+import CardSellerPage from "../components/Cards/CardSellerPage.js";
+import CardBrokerPage from "../components/Cards/CardBrokerPage.js";
+import CardReportPage from "../components/Cards/CardReportPage.js";
 
 export default function Admin() {
   return (
@@ -28,7 +31,10 @@ export default function Admin() {
             <Route path="/admin/dashboard" exact component={Dashboard} />
             <Route path="/admin/maps" exact component={Maps} />
             <Route path="/admin/settings" exact component={Settings} />
-            <Route path="/admin/tables" exact component={Tables} />
+            <Route path="/admin/items" exact component={Tables} />
+            <Route path="/admin/sellers" exact component={CardSellerPage} />
+            <Route path="/admin/brokers" exact component={CardBrokerPage} />
+            <Route path="/admin/reports" exact component={CardReportPage} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
           <FooterAdmin />

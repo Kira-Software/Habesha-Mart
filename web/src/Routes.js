@@ -75,6 +75,8 @@ const Routes = () => {
       <Route exact path="/">
         <ClassC />
       </Route>
+      <Route path="/admin" component={Admin} />
+      <Route path="/auth" component={Auth} />
       <Route exact path="/upgrade-account">
         <UpgradeAccount />
       </Route>

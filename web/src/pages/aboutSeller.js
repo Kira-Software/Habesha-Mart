@@ -7,6 +7,7 @@ import {
 import ReportDropdown from "../components/Dropdowns/reportDropDown";
 
 import Navbar from "../components/Navbar";
+import RatingComponenet from "../components/ratingComponent";
 
 export default function AboutSeller() {
   return (
@@ -43,7 +44,7 @@ export default function AboutSeller() {
               <div className="flex items-center space-x-2 mt-2">
                 <div className="text-3xl text-gray-700 font-bold">4.5</div>
                 <div>
-                  <img src="star.png" alt="star" />
+                  <RatingComponenet />
                 </div>
               </div>
             </div>

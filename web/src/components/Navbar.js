@@ -11,7 +11,10 @@ export default function Navbar() {
     "
     >
       <div className="px-14 border    flex justify-between items-center">
-        <img src="newLogo.png" alt="logo" className="h-14" />
+        <a href="/">
+          <img src="newLogo.png" alt="logo" className="h-14" />
+        </a>
+
         <div className="flex space-x-4 items-center">
           <button
             className="outline-none"

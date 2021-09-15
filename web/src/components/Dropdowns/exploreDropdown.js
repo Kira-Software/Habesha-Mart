@@ -35,151 +35,56 @@ const ExploreDropdown = () => {
         ref={popoverDropdownRef}
         className={
           (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg"
+          "bg-white text-base z-50 float-left  py-2 list-none text-left px-2 rounded shadow-lg"
         }
-        style={{ width: "700px" }}
+        style={{ width: "500px" }}
       >
-        <div className="flex">
-          <div className="w-1/4 border-r-2  ">
-            <a
-              href="#pablo"
-              className={
-                " hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-              }
-              onClick={(e) => e.preventDefault()}
-            >
-              Car
-            </a>
-            <a
-              href="#pablo"
-              className={
-                " hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-              }
-              onClick={(e) => e.preventDefault()}
-            >
-              Home
-            </a>
-            <a
-              href="#pablo"
-              className={
-                " hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-              }
-              onClick={(e) => e.preventDefault()}
-            >
-              Tv
-            </a>
-            <div className="h-0 my-2 border border-solid border-blueGray-100" />
-            <a
-              href="#pablo"
-              className={
-                "hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-              }
-              onClick={(e) => e.preventDefault()}
-            >
-              Brokers
-            </a>
-          </div>
-          <div className="w-3/4 px-4">
-            <div className="flex justify-center item-center">
-              <img src="car_one.jpg" alt="cat-" className="h-48" />
-            </div>
-            <div className="text-sm font-tiny text-gray-500 px-16 text-center">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Dignissimos doloremque vero cupiditate temporibus porro nam
-            </div>
-            <div className="mt-10">
-              <div className="flex">
-                <a
-                  href="#pablo"
-                  className={
-                    "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  BMW
-                </a>
-                <a
-                  href="#pablo"
-                  className={
-                    "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  MWB
-                </a>
-                <a
-                  href="#pablo"
-                  className={
-                    "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  WBM
-                </a>
-              </div>
-              {/* ---------------------other________________ */}
-              <div className="flex">
-                <a
-                  href="#pablo"
-                  className={
-                    "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  BMW
-                </a>
-                <a
-                  href="#pablo"
-                  className={
-                    "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  MWB
-                </a>
-                <a
-                  href="#pablo"
-                  className={
-                    "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                  }
-                  onClick={(e) => e.preventDefault()}
-                >
-                  WBM
-                </a>
-              </div>
-            </div>
-            {/* __________________________other____________ */}
-            <div className="flex">
-              <a
-                href="#pablo"
-                className={
-                  "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                }
-                onClick={(e) => e.preventDefault()}
-              >
-                BMW
-              </a>
-              <a
-                href="#pablo"
-                className={
-                  "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                }
-                onClick={(e) => e.preventDefault()}
-              >
-                MWB
-              </a>
-              <a
-                href="#pablo"
-                className={
-                  "text-center hover:bg-gray-100 text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                }
-                onClick={(e) => e.preventDefault()}
-              >
-                WBM
-              </a>
-            </div>
-            {/* +______________________delete it if  you want__________----- */}
-          </div>
+        <div className="font-bold text-gray-800">Category</div>
+        <div className="flex flex-wrap justify-between space-y-3 px-4 py-4">
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <img src="car_one.jpg" alt="car" className="h-8" />
+            </span>
+            <span className="font-bold">Car</span>
+          </button>
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <img src="home_one.jpeg" alt="car" className="h-8" />
+            </span>
+            <span className="font-bold">Home</span>
+          </button>
+
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <img src="jacket.jpg" alt="car" className="h-8" />
+            </span>
+            <span className="font-bold">Cloth</span>
+          </button>
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <img src="phone.png" alt="car" className="h-8" />
+            </span>
+            <span className="font-bold">Phone</span>
+          </button>
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <img src="gun.jpg" alt="car" className="h-8" />
+            </span>
+            <span className="font-bold">gun</span>
+          </button>
+
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <img src="car_one.jpg" alt="car" className="h-8" />
+            </span>
+            <span className="font-bold">Car</span>
+          </button>
+          <button className="flex space-x-2 items-center ring-2 outline-none ring-gray-400 rounded-full px-4">
+            <span>
+              <i className="fas fa-paper-plane"></i>
+            </span>
+            <span className="font-bold">more</span>
+          </button>
         </div>
       </div>
     </>

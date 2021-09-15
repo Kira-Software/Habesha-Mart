@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import EditProfile from "./pages/editProfile";
 import EditItem from "./pages/editItem";
-
+import About from "./pages/about";
 import Admin from "./layouts/Admin.js";
 import Auth from "./layouts/Auth.js";
 import UpgradeAccount from "./pages/upgradeAccount";
@@ -76,6 +76,7 @@ const Routes = () => {
         <ClassC />
       </Route>
       <Route path="/admin" component={Admin} />
+      <Route path="/about" component={About} />
       <Route path="/auth" component={Auth} />
       <Route exact path="/upgrade-account">
         <UpgradeAccount />

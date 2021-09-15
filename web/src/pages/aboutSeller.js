@@ -8,7 +8,7 @@ import ReportDropdown from "../components/Dropdowns/reportDropDown";
 
 import Navbar from "../components/Navbar";
 import RatingComponenet from "../components/ratingComponent";
-
+import { R } from "@material-ui/core";
 export default function AboutSeller() {
   return (
     <div>
@@ -44,7 +44,8 @@ export default function AboutSeller() {
               <div className="flex items-center space-x-2 mt-2">
                 <div className="text-3xl text-gray-700 font-bold">4.5</div>
                 <div>
-                  <RatingComponenet />
+                  {/* <RatingComponenet /> */}
+                  {/* rating.... */}
                 </div>
               </div>
             </div>

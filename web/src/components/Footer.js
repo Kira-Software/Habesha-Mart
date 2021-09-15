@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <div
-      className="h-60  px-32 py-16"
+      className="h-72  px-32 py-10"
       style={{
         backgroundImage: "url(img.webp)",
         backgroundBlendMode: "screen",
@@ -34,8 +34,29 @@ export default function Footer() {
             <div className="text-white text-sm font-semibold">Lost</div>
           </div>
         </div>
-        <div className="text-white font-semibold text-5xl text-center">
-          <span className="text-yellow-400">ሐ</span>-mart
+        <div>
+          <div className="text-white font-semibold text-2xl text-center">
+            <span className="text-yellow-400">ሐ</span>-mart
+          </div>
+          <div className="space-y-2">
+            <div className="font-bold text-white text-xl">Contact Us</div>
+            <div className="relative w-full mb-3">
+              <input
+                type="text"
+                className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 z"
+                defaultValue="Email"
+              />
+            </div>
+            <div className="relative w-full mb-3">
+              <textarea
+                className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 z"
+                defaultValue="Your Message"
+              />
+            </div>
+            <button className="px-10 py-2 bg-primary text-white font-bold">
+              Send Message
+            </button>
+          </div>
         </div>
       </div>
       <hr className="mt-4 border-gray-400 " />

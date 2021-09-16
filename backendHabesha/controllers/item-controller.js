@@ -127,8 +127,9 @@ exports.updateItem = catchAsync(async (req, res, next) => {
   res.status(200).json({ message: "Successfuly update your item !" });
 });
 exports.deleteItem = async (req, res, next) => {
-  const itemId = req.params;
-  const deletedItem = await Item.findByIdAndDelete(itemId);
+  const {itemId} = req.query;
+  console.log("the itemId value is ", itemId);
+  const deletedItem = await Item.findByIdAndDelete({ _id: itemId });
   if (deletedItem) {
     res.json({ status: "successful delete your item" });
   }
@@ -136,6 +137,10 @@ exports.deleteItem = async (req, res, next) => {
 
 exports.findItem = catchAsync(async (req, res, next) => {
   console.log("the query value is", req.query);
+  if (req.query.itemname) {
+    const items = await Item.find({ itemname: req.query.itemname });
+    res.status(200).json({ status: "success", data: items });
+  }
   //BUILD A QUERY
   const queryObj = { ...req.query }; //creates object
   const excludedFields = ["page", "sort", "limit", "fields"];
@@ -177,17 +182,17 @@ exports.findItem = catchAsync(async (req, res, next) => {
   const item = await query;
 
   const adder = item[0].postedBy;
-  console.log(
-    "this item is posted byyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-    adder
-  );
+  // console.log(
+  //   "this item is posted byyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+  //   adder
+  // );
   const social = await UserProfile.findOne({ userId: adder }).select(
     "phoneNo telegramlink instagramlink facebooklink whatsapplink"
   );
-  console.log(
-    "the ader infooooooooooooooooooooooooooooooooooooooooooois",
-    social
-  );
+  // console.log(
+  //   "the ader infooooooooooooooooooooooooooooooooooooooooooois",
+  //   social
+  // );
   //SEND RESPONSE
   res.status(200).json({ status: "success", socialMedia: social, data: item });
 });

@@ -1,5 +1,5 @@
 import { LockClosedIcon, MenuIcon, BellIcon } from "@heroicons/react/solid";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ExploreDropdown from "./Dropdowns/exploreDropdown";
 import NotificationDropdown from "./Dropdowns/NotificationDropdown";
 import UserDropdown from "./Dropdowns/UserDropdown";
@@ -21,10 +21,15 @@ export default function Navbar() {
     "
     >
       <div className="px-14 border    flex justify-between items-center">
+<<<<<<< HEAD
         <a href="/">
           <img src="newLogo.png" alt="logo" className="h-14" />
         </a>
 
+=======
+        <Link to="/"> <img src="newLogo.png" alt="logo" className="h-14" /></Link>
+       
+>>>>>>> eca21ac4926c07d58bcebd96459de55111fcde7a
         <div className="flex space-x-4 items-center">
           <button
             className="outline-none"
@@ -45,7 +50,7 @@ export default function Navbar() {
                   <NotificationDropdown />
                 </ul>
               ) : null}
-              {user.role === "broker" || "seller" ? (
+              {user.role === "broker" || user.role ==="seller" ? (
                 <>
                   <button onClick={() => history.push("/login")}>
                     <LockClosedIcon className="h-5 text-gray-500" />

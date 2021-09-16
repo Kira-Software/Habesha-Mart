@@ -41,6 +41,12 @@ router
   .get(authController.protect, accountController.getProfile);
 
 router
+  .route("/getProfile/owner") 
+  .get(
+    //authController.protect, 
+    accountController.getOwner);
+
+router
   .route("/suspendAccount")
   .patch(
     authController.protect,

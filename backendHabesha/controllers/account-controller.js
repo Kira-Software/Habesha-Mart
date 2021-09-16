@@ -136,6 +136,17 @@ exports.getProfile = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.getOwner = catchAsync(async (req, res, next) => {
+  console.log("inside of the owner");
+   const {userId} = req.query;
+  const userProfile = await UserProfile.findOne({ userId });
+  console.log("the value of userprofile is", userProfile);
+
+  if (userProfile) { 
+    res.json(userProfile);
+  }
+});
+
 exports.updateProfilePicture = catchAsync(async (req, res, next) => {
   const userIdNo = req.user._id;
   const filter = { userId: userIdNo };

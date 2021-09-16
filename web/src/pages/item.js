@@ -23,7 +23,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ReportDropdown from "../components/Dropdowns/reportDropDown";
 import { sendcomment, getComment } from "../Redux/Action/comment";
-
+import { deleteItem } from "../Redux/Action/itemstuff";
+import { getOwnerAccount } from "../Redux/Action/profile";
 //import {facebookIcon} from "../../public/social/facebook.png"
 export default function Item() {
   const dispatch = useDispatch();
@@ -51,10 +52,17 @@ export default function Item() {
     dispatch(getComment(itemId));
     window.location.reload(false);
   };
-  // const handleGetContact = () => {
-  //   console.log("inside item page method");
-  //   dispatch(getcontact());
-  // };
+
+  const handleDelete = (id) => {
+    dispatch(deleteItem(id));
+    window.location.reload(true);
+  };
+
+  const handleGetowner = (id) => {
+    console.log("the poster id", id);
+    dispatch(getOwnerAccount(id));
+    // window.location.reload(true);
+  };
   useEffect(() => {
     dispatch(getLoggedIn());
     dispatch(getSelectedItem(localStorage.getItem("S_Id")));
@@ -189,9 +197,43 @@ export default function Item() {
                       </span>
                     </div> 
                   </div>*/}
-                  <ul>
-                    <ReportDropdown id={item._id} />
-                  </ul>
+                  {user !== null ? (
+                    <ul>
+                      <ReportDropdown id={item._id} />
+                    </ul>
+                  ) : null}
+
+                  {user !== null ? (
+                    item.postedBy === user._id ? (
+                      <>
+                        <button
+                          style={{
+                            backgroundColor: "red",
+                            color: "white",
+                            width: 100,
+                            borderRadius: 10,
+                          }}
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          Delete Item
+                        </button>
+                      </>
+                    ) : null
+                  ) : null}
+                  <Link to="/about-seller">
+                  <button
+                    style={{
+                      backgroundColor: "black",
+                      color: "white",
+                      width: 100,
+                      borderRadius: 10,
+                    }}
+                    to="/about-seller"
+                    onClick={() => handleGetowner(item.postedBy)}
+                  >
+                    Owner Profile
+                  </button>
+                  </Link>
                 </div>
                 <div className="py-5 mt-2">
                   <div className="flex justify-between">
@@ -257,9 +299,6 @@ export default function Item() {
                           />
                         </a>
                       ) : null}
-                      <button className="px-1 py-1 rounded-lg border">
-                        <HeartIcon className="h-5 text-gray-400" />
-                      </button>
                     </div>
                   </div>
                 </div>

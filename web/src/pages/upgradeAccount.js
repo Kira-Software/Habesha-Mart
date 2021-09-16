@@ -72,112 +72,118 @@ export default function UpgradeAccount() {
   return (
     <div>
       <Navbar />
-      <div className="pt-16 h-full bg-gray-50 flex justify-center items-center">
-        <div className="my-8 w-3/5 shadow-md rounded-lg bg-white  py-6 px-8 ">
-          {" "}
-          <div className="text-2xl mb-10 font-bold text-primary text-center">
-            Upgrade your Account
-          </div>
-          <div className="my-4 space-y-4">
-            <div className="flex space-x-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block   text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Your Job
-                </label>
-                <select
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 
+      <form onSubmit={handlesendrequest}>
+        <div className="pt-16 h-full bg-gray-50 flex justify-center items-center">
+          <div className="my-8 w-3/5 shadow-md rounded-lg bg-white  py-6 px-8 ">
+            {" "}
+            <div className="text-2xl mb-10 font-bold text-primary text-center">
+              Upgrade your Account
+            </div>
+            <div className="my-4 space-y-4">
+              <div className="flex space-x-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block   text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Your Job
+                  </label>
+                  <select
+                    className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 
                 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full 
                 ease-linear transition-all duration-150"
-                  value={roleType}
-                  onChange={(e) => changer(e)}
-                  name="roleType"
-                >
-                  <option value=""></option>
-                  <option value="seller">Seller</option>
-                  <option value="broker">Broker</option>
-                </select>
+                    value={roleType}
+                    onChange={(e) => changer(e)}
+                    name="roleType"
+                    required
+                  >
+                    <option value=""></option>
+                    <option value="seller">Seller</option>
+                    <option value="broker">Broker</option>
+                  </select>
+                </div>
+                {/* --------------------- */}
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block   text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder="availablity location"
+                    value={location}
+                    onChange={(e) => changer(e)}
+                    name="location"
+                    required
+                  />
+                </div>
               </div>
-              {/* --------------------- */}
-              <div className="relative w-full mb-3">
-                <label
-                  className="block   text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Location
-                </label>
-                <input
-                  type="text"
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  placeholder="availablity location"
-                  value={location}
-                  onChange={(e) => changer(e)}
-                  name="location"
-                />
-              </div>
-            </div>
-            {/* ---------------------flex form two----------------- */}
-            <div className="flex space-x-4">
-              <div className="relative w-full mb-3">
-                <label
-                  className="block   text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Prefered Category
-                </label>
-                <select
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 
+              {/* ---------------------flex form two----------------- */}
+              <div className="flex space-x-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block   text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Prefered Category
+                  </label>
+                  <select
+                    className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 
                 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full 
                 ease-linear transition-all duration-150"
-                  value={category}
-                  onChange={(e) => changer(e)}
-                  name="category"
-                >
-                  <option value=""></option>
+                    value={category}
+                    onChange={(e) => changer(e)}
+                    name="category"
+                    required
+                  >
+                    <option value=""></option>
 
-                  <option>Electronics</option>
-                  <option>Cloth</option>
-                  <option>Car</option>
-                  <option>Home</option>
-                  <option>Accessory</option>
-                  <option>Shoes</option>
-                  <option>Other</option>
-                </select>
+                    <option>Electronics</option>
+                    <option>Cloth</option>
+                    <option>Car</option>
+                    <option>Home</option>
+                    <option>Accessory</option>
+                    <option>Shoes</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                {/* --------------------- */}
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block   text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Identification Card
+                  </label>
+                  <input
+                    type="file"
+                    className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    // value={legalId}
+                    onChange={(e) => changer(e)}
+                    name="legalId"
+                    required
+                  />
+                </div>
               </div>
-              {/* --------------------- */}
-              <div className="relative w-full mb-3">
-                <label
-                  className="block   text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
-                >
-                  Identification Card
-                </label>
-                <input
-                  type="file"
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  // value={legalId}
-                  onChange={(e) => changer(e)}
-                  name="legalId"
-                />
-              </div>
-            </div>
 
-            <div className="space-x-6 flex justify-center">
-              <button
-                className=" shadow-md bg-primary text-white font-bold px-10 py-1 rounded-xl"
-                onClick={handlesendrequest}
-              >
-                Upgrade
-              </button>
-              <button className="shadow-md font-bold text-gray-800 px-10 py-1 hover:bg-gray-100 rounded-xl">
-                Cancel
-              </button>
+              <div className="space-x-6 flex justify-center">
+                <button
+                  className=" shadow-md bg-primary text-white font-bold px-10 py-1 rounded-xl"
+                  // onClick={handlesendrequest}
+                >
+                  Upgrade
+                </button>
+                <button className="shadow-md font-bold text-gray-800 px-10 py-1 hover:bg-gray-100 rounded-xl">
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
       <Footer />
     </div>
   );

@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   ChatIcon,
   LocationMarkerIcon,
@@ -10,6 +13,9 @@ import Navbar from "../components/Navbar";
 import RatingComponenet from "../components/ratingComponent";
 import { R } from "@material-ui/core";
 export default function AboutSeller() {
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.authreducer.profile);
+
   return (
     <div>
       <div>
@@ -17,7 +23,15 @@ export default function AboutSeller() {
         <div className="mt-14 py-14 px-12 flex">
           <div className="w-1/4  flex justify-center ">
             <div>
-              <img src="pro2.jpg" alt="pro" className="h-48 w-48 rounded-md" />
+              <img
+                src={
+                  profile.profilepicture
+                    ? `http://localhost:9000/${profile.profilepicture}`
+                    : "pro3.jpg"
+                }
+                alt="pro"
+                className="h-48 w-48 rounded-md"
+              />
               <div className="text-gray-600 text-sm mt-2 font-semibold">
                 NO BRAIN, NO PAIN
               </div>
@@ -26,7 +40,7 @@ export default function AboutSeller() {
           <div className="w-3/4 ">
             <div className="flex items-baseline space-x-3">
               <div className="text-xl font-semibold text-gray-500">
-                Nahom Balcha
+                {profile.firstName} {profile.lastName}
               </div>{" "}
               <div className="flex items-baseline space-x-1">
                 <LocationMarkerIcon className="h-4 text-gray-300" />{" "}
@@ -36,9 +50,9 @@ export default function AboutSeller() {
               </div>
             </div>
 
-            <div className="text-sm text-yellow-400 font-semibold">
+            {/* <div className="text-sm text-yellow-400 font-semibold">
               product manager
-            </div>
+            </div> */}
             <div className="mt-8">
               <div className="text-gray-500 font-semibold text-sm">Rating</div>
               <div className="flex items-center space-x-2 mt-2">
@@ -53,15 +67,10 @@ export default function AboutSeller() {
               <button className="flex px-8 hover:bg-yellow-100 py-1 border rounded-md space-x-2 items-center">
                 <StarIcon className="h-4 text-yellow-500" />{" "}
                 <span className="text-gray-500 font-semibold text-sm">
-                  Rate Nahom{" "}
+                  Rate {profile.userName}
                 </span>
               </button>
-              <button className="flex bg-yellow-50 px-8 py-1 border rounded-md space-x-2 items-center">
-                <ChatIcon className="h-4" />{" "}
-                <span className="text-gray-500 font-semibold text-sm">
-                  Rate Nahom{" "}
-                </span>
-              </button>
+
               {/* <button className="flex px-8 py-1  space-x-2 items-center">
                 <ShieldCheckIcon className="h-4 text-gray-400" />{" "}
                 <span className="text-gray-400 font-semibold text-sm">
@@ -80,24 +89,20 @@ export default function AboutSeller() {
                   <div className="">
                     <div className="space-y-5">
                       <div className="text-sm text-gray-600">Phone</div>
-                      <div className="text-sm text-gray-600">Addres</div>
+                      {/* <div className="text-sm text-gray-600">Addres</div> */}
                       <div className="text-sm text-gray-600">Email</div>
-                      <div className="text-sm text-gray-600">Phone</div>
                     </div>
                   </div>
                   <div className="">
                     <div className="space-y-5">
                       <div className="text-sm text-yellow-400 font-semibold">
-                        +251942104450
+                        {profile.phoneNo}
                       </div>{" "}
-                      <div className="text-sm text-gray-500 font-semibold">
+                      {/* <div className="text-sm text-gray-500 font-semibold">
                         E 4th street, Addis Ababa
-                      </div>
+                      </div> */}
                       <div className="text-sm text-gray-500 font-semibold">
-                        nahom.ssent@gmail.com
-                      </div>
-                      <div className="text-sm text-gray-500 font-semibold">
-                        +251942104450
+                        {profile.email}
                       </div>
                     </div>
                   </div>
@@ -116,10 +121,10 @@ export default function AboutSeller() {
                     <div className="">
                       <div className="space-y-5">
                         <div className="text-sm text-yellow-400 font-semibold">
-                          04-11-1998
+                          {profile.birthDate}
                         </div>{" "}
                         <div className="text-sm text-gray-500 font-semibold">
-                          Male
+                          {profile.gender}
                         </div>
                       </div>
                     </div>
@@ -129,7 +134,15 @@ export default function AboutSeller() {
               <div className="w-1/2">
                 <div className="font-semibold text-gray-600">My Document</div>
                 <div className="w-full  h-64 flex justify-center items-center">
-                  <img src="nodata.jpg" alt="no-data" className="h-52" />
+                  <img
+                    src={
+                      profile.legaldocument
+                        ? `http://localhost:9000/${profile.legaldocument}`
+                        : "pro3.jpg"
+                    }
+                    alt="no-data"
+                    className="h-52"
+                  />
                 </div>
               </div>
             </div>

@@ -14,7 +14,8 @@ exports.sendReport = catchAsync(async (req, res, next) => {
     reporttype,
     reportcontent,
     reportedBy: req.user._id,
-    reportedFor: item.postedBy,
+    reportedFor: item._id,
+    itemOwner: item.postedBy,
   });
   const reported = await newReport.save();
   if (reported) {

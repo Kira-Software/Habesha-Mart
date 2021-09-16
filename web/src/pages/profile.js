@@ -15,6 +15,9 @@ import { getIndividualItem } from "../Redux/Action/itemstuff";
 import { getAccount } from "../Redux/Action/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { getRequest } from "../Redux/Action/request";
+
 export default function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.authreducer.user);
@@ -37,16 +40,24 @@ export default function Profile() {
       dispatch(getIndividualItem(user._id));
       dispatch(getAccount());
     }
+    if (user !== null && user.role === "broker") {
+      dispatch(getRequest());
+    }
   }, [user]);
 
   return (
     <div className="h-screen">
+      <Navbar />
       <img src="phones.jpg" alt="bg" className="w-full max-h-60" />
 
       <div className=" rounded-full w-36 flex container px-1 py-1 bg-white absolute top-40 left-28 items-center">
         <img
-          src={`http://localhost:9000/${profile.profilepicture}`}
-          alt="propic"
+          src={
+            profile.profilepicture
+              ? `http://localhost:9000/${profile.profilepicture}`
+              : "pro3.jpg"
+          }
+          alt="pro3.jpg"
           className="h-36 w-36 rounded-full"
         />
       </div>
@@ -129,6 +140,14 @@ export default function Profile() {
               Add Item
             </Link>
           </div>
+          <div>
+            <Link
+              className="font-bold border rounded-md self-center px-2 py-1 hover:bg-gray-500 bg-gray-300 "
+              to="/edit-profile"
+            >
+              Update Profile
+            </Link>
+          </div>
         </div>
 
         <div className="w-2/5 mx-2 bg-white rounded-lg px-4 py-2 shadow-md ">
@@ -181,7 +200,15 @@ export default function Profile() {
           <div className="font-semibold text-lg text-gray-700">About Me</div>
           <div className="flex items-center justify-center h-full">
             <div className="font-semibold text-2xl text-gray-500">
-              no Content for now
+              <img
+                src={
+                  profile.legaldocument
+                    ? `http://localhost:9000/${profile.legaldocument}`
+                    : "pro3.jpg"
+                }
+                alt="pro3.jpg"
+                className="h-50 w-60 "
+              />
             </div>
           </div>
         </div>

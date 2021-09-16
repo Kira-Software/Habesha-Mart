@@ -3,8 +3,18 @@ import { useHistory } from "react-router-dom";
 import ExploreDropdown from "./Dropdowns/exploreDropdown";
 import NotificationDropdown from "./Dropdowns/NotificationDropdown";
 import UserDropdown from "./Dropdowns/UserDropdown";
+import { useSelector, useDispatch } from "react-redux";
+import { Logout } from "../Redux/Action/authentication";
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authreducer.user);
+  const loading = useSelector((state) => state.authreducer.loading);
   const history = useHistory();
+
+  const handleLogout = () => {
+    console.log("inside the logout function");
+    dispatch(Logout());
+  };
   return (
     <div
       className="fixed top-0 w-screen bg-white
@@ -25,17 +35,32 @@ export default function Navbar() {
             <i className="fas fa-search text-gray-500"></i>
           </button>
           <ul>
-            <NotificationDropdown />
-          </ul>
-          <ul>
             <ExploreDropdown />
           </ul>
-          <button onClick={() => history.push("/login")}>
-            <LockClosedIcon className="h-5 text-gray-500" />
-          </button>
-          <ul>
-            <UserDropdown />
-          </ul>
+          {!loading && user !== null ? (
+            <>
+              {" "}
+              {user.role === "broker" ? (
+                <ul>
+                  <NotificationDropdown />
+                </ul>
+              ) : null}
+              {user.role === "broker" || "seller" ? (
+                <>
+                  <button onClick={() => history.push("/login")}>
+                    <LockClosedIcon className="h-5 text-gray-500" />
+                  </button>
+                  <ul>
+                    <UserDropdown />
+                  </ul>{" "}
+                </>
+              ) : (
+                <span style={{ cursor: "pointer" }} onClick={handleLogout}>
+                  Logout
+                </span>
+              )}
+            </>
+          ) : null}
         </div>
       </div>
     </div>

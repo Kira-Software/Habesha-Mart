@@ -2,8 +2,10 @@ const experess = require("express");
 const Item = require("../models/item");
 const UserProfile = require("../models/user-profile");
 const Comment = require("../models/comment");
+const catchAsync = require("../utils/catchAsync");
 
 exports.giveCommentOnPerson = catchAsync(async (req, res, next) => {
+  console.log("the req.body is ", req.body);
   const { commentBody, commentFor } = req.body;
 
   const newComment = new Comment({
@@ -40,8 +42,12 @@ exports.giveCommentOnItem = catchAsync(async (req, res, next) => {
 });
 
 exports.getCommentOnItem = catchAsync(async (req, res, next) => {
-  const itemId = req.query;
-  const foundComment = await Comment.find({ itemId: itemId });
+  console.log("inside get comment on item");
+  const { itemId } = req.query;
+  console.log("the itemId value is ", itemId);
+  const foundComment = await Comment.find({ itemId: itemId }).sort({
+    date: -1,
+  });
   if (!foundComment) {
     res.status(200).json({ message: "no comment has been added!", data: "" });
   } else {

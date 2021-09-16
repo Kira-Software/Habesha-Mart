@@ -14,6 +14,9 @@ const userProfileSchema = mongoose.Schema({
   instagramlink: { type: String },
   whatsapplink: { type: String },
   profilepicture: { type: String },
+  legaldocument: { type: String },
+  type: { type: String },
+
 });
 
 module.exports = mongoose.model("UserProfile", userProfileSchema);

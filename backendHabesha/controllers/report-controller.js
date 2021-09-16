@@ -6,11 +6,13 @@ const catchAsync = require("../utils/catchAsync");
 const Report = require("../models/report");
 
 exports.sendReport = catchAsync(async (req, res, next) => {
-  const { reportType, itemId } = req.body;
+  console.log("the coming req.body is ", req.body);
+  const { id, reporttype, reportcontent } = req.body;
 
-  const item = await Item.findOne({ _id: itemId });
+  const item = await Item.findOne({ _id: id });
   const newReport = new Report({
-    reportType: reportType,
+    reporttype,
+    reportcontent,
     reportedBy: req.user._id,
     reportedFor: item.postedBy,
   });

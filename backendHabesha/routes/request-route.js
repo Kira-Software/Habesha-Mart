@@ -9,7 +9,7 @@ router
   .route("/sendItemRequest")
   .post(
     authController.protect,
-    authController.restrictTo("classCustomer"),
+   // authController.restrictTo("classCustomer"),
     requestController.sendItemRequest
   );
 // .delete(requestController.deleteItemRequest) //for classCustomers optional for implmentaion

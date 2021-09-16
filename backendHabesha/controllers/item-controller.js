@@ -1,6 +1,8 @@
 const express = require("express");
 
 const Item = require("../models/item");
+const UserProfile = require("../models/user-profile");
+
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const multer = require("multer");
@@ -124,7 +126,7 @@ exports.updateItem = catchAsync(async (req, res, next) => {
 
   res.status(200).json({ message: "Successfuly update your item !" });
 });
-exports.deleteItem = (req, res, next) => {
+exports.deleteItem = async (req, res, next) => {
   const itemId = req.params;
   const deletedItem = await Item.findByIdAndDelete(itemId);
   if (deletedItem) {
@@ -133,7 +135,7 @@ exports.deleteItem = (req, res, next) => {
 };
 
 exports.findItem = catchAsync(async (req, res, next) => {
-  console.log(req.query);
+  console.log("the query value is", req.query);
   //BUILD A QUERY
   const queryObj = { ...req.query }; //creates object
   const excludedFields = ["page", "sort", "limit", "fields"];
@@ -174,6 +176,18 @@ exports.findItem = catchAsync(async (req, res, next) => {
   //EXECUTE A QUERY
   const item = await query;
 
+  const adder = item[0].postedBy;
+  console.log(
+    "this item is posted byyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    adder
+  );
+  const social = await UserProfile.findOne({ userId: adder }).select(
+    "phoneNo telegramlink instagramlink facebooklink whatsapplink"
+  );
+  console.log(
+    "the ader infooooooooooooooooooooooooooooooooooooooooooois",
+    social
+  );
   //SEND RESPONSE
-  res.status(200).json({ status: "success", results: item.length, data: item });
+  res.status(200).json({ status: "success", socialMedia: social, data: item });
 });

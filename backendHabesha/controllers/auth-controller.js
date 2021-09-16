@@ -109,10 +109,20 @@ exports.logIn = catchAsync(async (req, res, next) => {
       crypto
         .pbkdf2Sync(password, user.salt, 10000, 64, "sha512")
         .toString("hex");
+    console.log("the value of comp is", comp);
+    if(comp){
+      const token = await signToken(user._id);
+      req.session.token = token; // Auto saves session data in mongo store
+    
+      res.status(200).json({ status: "success", user }); 
+    }
+    else {
+      return res.json({ message: "password doesn't match" });
+    } 
   } else {
-    return res.json({ message: "invalid email or password" });
-  }
-
+    return res.json({ message: "User Not found" });
+  } 
+ 
   // console.log("passhash", user.passwordHash);
   // console.log(
   //   "new",
@@ -122,10 +132,7 @@ exports.logIn = catchAsync(async (req, res, next) => {
 
   // }
 
-  const token = await signToken(user._id);
-  req.session.token = token; // Auto saves session data in mongo store
-
-  res.status(200).json({ status: "success", user }); // sends cookie with sessionID automatically in response
+  // sends cookie with sessionID automatically in response
 });
 
 exports.logout = catchAsync(async (req, res, next) => {

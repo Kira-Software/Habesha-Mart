@@ -3,9 +3,11 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOG_OUT,
 } from "../Type/type";
 import { getAccount } from "./profile";
 import axios from "axios";
+import { Redirect } from "react-router";
 
 export const register = (email, userName, password) => async (dispatch) => {
   console.log(
@@ -111,4 +113,24 @@ export const login = (email, password) => async (dispatch) => {
   //   } catch (err) {
   //       console.error("the error is ",err.message)
   //   }
+};
+
+export const Logout = () => async (dispatch) => {
+  console.log("inside of the action logout");
+  try {
+    axios
+      .delete("http://localhost:9000/api/auth/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        dispatch(getLoggedIn());
+      });
+    // <Redirect to="/login" />
+    dispatch({
+      type: LOG_OUT,
+      payload: null,
+    });
+  } catch (err) {
+    console.log("the error while logging out is ", err);
+  }
 };

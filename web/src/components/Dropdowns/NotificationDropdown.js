@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createPopper } from "@popperjs/core";
 import NotificationItem from "../NotificationItem";
 import NotificationItemBroker from "../NotificationItemBroker";
 import ReplyCard from "../replyCard";
+import { useSelector, useDispatch } from "react-redux";
+import { getRequest } from "../../Redux/Action/request";
+
 const NotificationDropdown = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authreducer.user);
+  const loading = useSelector((state) => state.authreducer.loading);
+  const request = useSelector((state) => state.item.request);
+
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -18,6 +26,10 @@ const NotificationDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  useEffect(() => {
+    dispatch(getRequest());
+  }, []);
   return (
     <>
       <button
@@ -39,13 +51,39 @@ const NotificationDropdown = () => {
         style={{ height: "550px" }}
       >
         <div className="text-gray-900 text-2xl font-bold ">Notification</div>
-
-        <NotificationItemBroker />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
-        <NotificationItem />
+        {user.role === "classCustomer" ? (
+          <>
+            {" "}
+            <NotificationItem />
+            <NotificationItem />
+            <NotificationItem />
+            <NotificationItem />
+            <NotificationItem />{" "}
+          </>
+        ) : user.role === "broker" ? (
+          <>
+            {request.length !== 0 ? (
+              request.map((item, idx) => {
+                return (
+                  <NotificationItemBroker
+                    name={item.requestname}
+                    category={item.requestcategory}
+                    quantity={item.requestquantity}
+                    location={item.requestlocation}
+                    description={item.requestdescription}
+                  />
+                );
+              })
+            ) : (
+              <> No Notification</>
+            )}
+            {/* {" "}
+            <NotificationItemBroker />
+            <NotificationItemBroker />
+            <NotificationItemBroker />
+            <NotificationItemBroker />{" "} */}
+          </>
+        ) : null}
       </div>
     </>
   );

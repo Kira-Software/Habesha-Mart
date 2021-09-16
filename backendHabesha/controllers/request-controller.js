@@ -9,70 +9,90 @@ const upgradeAccStore = require("../models/upgradeAccStore");
 const replyRequest = require("../models/reply-request");
 
 exports.sendItemRequest = catchAsync(async (req, res, next) => {
-  const { requestedItem, requestedItemCategory, validUpTo } = req.body;
-  const brokers = [];
-  const responsibleBrokersAccount = await AdvancedAccount.find({
-    serveLike: "broker",
-    servingCategoryId: requestedItemCategory,
-  });
-  console.log(responsibleBrokersAccount);
+  console.log("the req.body value is ", req.body);
+  const {
+    requestname,
+    requestcategory,
+    requestdescription,
+    requestlocation,
+    requestquantity,
+  } = req.body;
+  // const brokers = [];
+  // const responsibleBrokersAccount = await AdvancedAccount.find({
+  //   serveLike: "broker",
+  //   servingCategoryId: requestedItemCategory,
+  // });
+  // console.log(responsibleBrokersAccount);
 
-  responsibleBrokersAccount.map((broker, index) => {
-    brokers[index] = broker.userId;
-  }); //responsible broker accpunt wesst idiwenbecha
+  // responsibleBrokersAccount.map((broker, index) => {
+  //   brokers[index] = broker.userId;
+  // }); //responsible broker accpunt wesst idiwenbecha
   const requestedBy = req.user._id;
-  const requestedFor = brokers;
+  // const requestedFor = brokers;
   const request = await new Request({
-    requestedFor,
-    requestedItem,
-    requestedItemCategory,
+    requestname,
+    requestcategory,
+    requestdescription,
+    requestlocation,
+    requestquantity,
     requestedBy,
-    validUpTo, //validUpTo ccan be default 15 days
+    // validUpTo, //validUpTo ccan be default 15 days
   });
   const requestSaved = await request.save();
   res.status(200).json({ message: "Your request has been sent Successfully" });
 });
 exports.getItemRequest = catchAsync(async (req, res, next) => {
   //find the broker Advanced Account
-  const brokerAdvancedAccount = await AdvancedAccount.find({
-    userId: req.user._id,
+  // const brokerAdvancedAccount = await AdvancedAccount.find({
+  //  userId: req.user._id,
+  // });
+
+  // const servingId = brokerAdvancedAccount[0].servingCategoryId;
+  let userId = req.user._id;
+  console.log("the userid is", userId);
+  const userinfo = await upgradeAccStore.findOne({ userId });
+  console.log("user info is", userinfo);
+  const requestToMe = await Request.find({
+    requestcategory: userinfo.category,
+    requestlocation: userinfo.location,
   });
 
-  const servingId = brokerAdvancedAccount[0].servingCategoryId;
+  console.log("the requestToMe is", requestToMe);
 
-  const requestToMe = await Request.find({ requestedItemCategory: servingId });
-
-  res.status(200).json({
-    message: "success",
-    data: requestToMe,
-  });
+  res.status(200).json(requestToMe);
 });
 exports.replyItemRequest = catchAsync(async (req, res, next) => {
+  const repliedBy = req.user._id;
   const {
     requestId,
-    repliedBy,
-    itemFounded,
-    itemAmount,
-    itemPrice,
-    itemLocationCity,
-    itemLocationSubCity,
+    // repliedBy,
+    //  itemFounded,
+    replyname,
+    replycategory,
+    replydescription,
+    replyquantity,
+    replylocation,
   } = req.body;
   const replied = await new replyRequest({
     requestId,
     repliedBy,
-    itemFounded,
-    itemAmount,
-    itemPrice,
-    itemLocationCity,
-    itemLocationSubCity,
+    // itemFounded,
+    replyname,
+    replycategory,
+    replydescription,
+    replyquantity,
+    replylocation,
   });
 
   const repliedSaved = await replied.save();
-  const updateRequest = await Request.findByIdAndUpdate(requestId, {
-    isAccepted: true,
-  });
+  // const updateRequest = await Request.findByIdAndUpdate(requestId, {
+  //   isAccepted: true,
+  // });
 
-  if (repliedSaved && updateRequest) {
+  if (
+    repliedSaved
+    //  && updateRequest
+  ) {
     res.status
       .status(200)
       .json({ message: "you replied to the request successfuly" });

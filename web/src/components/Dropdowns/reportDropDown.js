@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { createPopper } from "@popperjs/core";
 import { MenuIcon, ShieldCheckIcon } from "@heroicons/react/solid";
-
-const ReportDropdown = () => {
+import { sendreport } from "../../Redux/Action/report";
+import { useDispatch } from "react-redux";
+const ReportDropdown = (props) => {
   // dropdown props
+  const dispatch = useDispatch();
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
@@ -15,6 +17,21 @@ const ReportDropdown = () => {
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
+  };
+
+  const [report, setreport] = useState({
+    reporttype: "",
+    reportcontent: "",
+  });
+
+  const { reporttype, reportcontent } = report;
+  const changer = (e) => {
+    setreport({ ...report, [e.target.name]: e.target.value });
+  };
+
+  const handleSendReport = () => {
+    console.log("inside of the sen report method");
+    dispatch(sendreport(report,props.id));
   };
   return (
     <>
@@ -52,11 +69,19 @@ const ReportDropdown = () => {
               >
                 Report Type
               </label>
-              <select className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                <option>betam metfo sw nw</option>
-                <option>endiw sayew yekefegnal</option>
-                <option>aswetaw aswetaw</option>
-                <option>ena other...</option>
+              <select
+                className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 
+              bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear 
+              transition-all duration-150"
+                name="reporttype"
+                value={reporttype}
+                onChange={(e) => changer(e)}
+              >
+                <option value="">{""}</option>
+                <option value="Racist">Racist</option>
+                <option value="Threat">Threat</option>
+                <option value="Sexual">Sexual</option>
+                <option value="Immoral">Immoral</option>
               </select>
             </div>
           </div>
@@ -66,20 +91,29 @@ const ReportDropdown = () => {
                 className="block   text-blueGray-600 text-xs font-bold mb-2 "
                 htmlFor="grid-password"
               >
-                Report Type
+                Report Content
               </label>
               <textarea
                 rows={4}
                 className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 defaultValue="say something"
+                name="reportcontent"
+                value={reportcontent}
+                onChange={(e) => changer(e)}
               ></textarea>
             </div>
           </div>
           <div className="flex justify-between">
-            <button className=" shadow-md bg-primary text-white font-bold px-6 py-1 rounded-xl">
-              Upgrade
+            <button
+              className=" shadow-md bg-primary text-white font-bold px-6 py-1 rounded-xl"
+              onClick={handleSendReport}
+            >
+              Send report
             </button>
-            <button className="shadow-md font-bold text-gray-800 px-6 py-1 hover:bg-gray-100 rounded-xl">
+            <button
+              className="shadow-md font-bold text-gray-800 px-6 py-1 hover:bg-gray-100 rounded-xl"
+              onClick={closeDropdownPopover}
+            >
               Cancel
             </button>
           </div>

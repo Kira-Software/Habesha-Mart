@@ -19,6 +19,8 @@ export default function ItemListSeller() {
   const user = useSelector((state) => state.authreducer.user);
   const items = useSelector((state) => state.item.items);
   const isLoading = useSelector((state) => state.authreducer.isLoading);
+  const profile = useSelector((state) => state.authreducer.profile);
+  const loading = useSelector((state) => state.authreducer.loading);
 
   let myitemcount = 0;
   let categoryarray = [];
@@ -47,7 +49,7 @@ export default function ItemListSeller() {
             <div className="flex justify-center">
               <div className="w-32 h-32 border-2 border-primary px-1 py-1 flex justify-center items-center overflow-hidden rounded-full  ">
                 <img
-                  src="pro2.jpg"
+                  src={`http://localhost:9000/${profile.profilepicture}`}
                   alt="propic"
                   className="w-28 h-28 rounded-full"
                 />
@@ -55,10 +57,10 @@ export default function ItemListSeller() {
             </div>
 
             <div className="text-lg text-primary  mt-2 font-bold text-center">
-              John Doe
+              {profile.firstName}
             </div>
             <div className="text-sm font-semibold text-gray-400  text-center  ">
-              @john-n
+              {user !== null ? user.email : null}
             </div>
             <div>
               <div className="w-60 text-center text-sm mt-2 text-gray-500">
@@ -70,7 +72,9 @@ export default function ItemListSeller() {
               <div className="mt-6 flex justify-between items-center">
                 <div className="text-sm">
                   {" "}
-                  <span className="font-bold">120</span> Posts
+                  <span className="font-bold">
+                    {items.length !== 0 ? <>{items.data.length} Posts</> : null}
+                  </span>{" "}
                 </div>
                 <div className="flex space-x-2 items-center">
                   <span className="text-xl font-bold text-primary">4.6</span>

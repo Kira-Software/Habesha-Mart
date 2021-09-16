@@ -27,18 +27,19 @@ function ProtectedRoute({ component: Component, ...restOfProps }) {
   const isAuthenticated = useSelector(
     (state) => state.authreducer.isAuthenticated
   );
-  const isLoading = useSelector((state) => state.authreducer.isLoading);
+  const user = useSelector((state) => state.authreducer.user);
+  const loading = useSelector((state) => state.authreducer.loading);
 
   //const { loggedInState } = useContext(authContext);
 
-  // if (isAuthenticated.isLoading) {
+  // if (isAuthenticated.loading) {
   //   return <div>Loading...</div>;
   // }
   return (
     <Route
       {...restOfProps}
       render={(props) =>
-        !isAuthenticated && !isLoading ? (
+        !isAuthenticated && !loading ? (
           <Redirect to="/login" />
         ) : (
           <Component {...props} />
@@ -52,7 +53,8 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
   const isAuthenticated = useSelector(
     (state) => state.authreducer.isAuthenticated
   );
-  const isLoading = useSelector((state) => state.authreducer.isLoading);
+  const loading = useSelector((state) => state.authreducer.loading);
+  const user = useSelector((state) => state.authreducer.user);
 
   //const { isAuthenticated } = useContext(authContext);
 
@@ -60,8 +62,14 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
     <Route
       {...restOfProps}
       render={(props) =>
-        isAuthenticated && !isLoading ? (
-          <Redirect to="/profile" />
+        isAuthenticated && !loading ? (
+          user.role === "admin" ? (
+            <Redirect to="/dashboard" />
+          ) : user.role === "classCustomer" ? (
+            <Redirect to="/" />
+          ) : user.role === "seller" || "broker" ? (
+            <Redirect to="/profile" />
+          ) : null
         ) : (
           <Component {...props} />
         )
@@ -70,10 +78,20 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
   );
 };
 const Routes = () => {
+  const loading = useSelector((state) => state.authreducer.loading);
+  const user = useSelector((state) => state.authreducer.user);
   return (
     <Switch>
-      <Route exact path="/">
+      {user !== null ? (
+        <ProtectedRoute exact path="/" component={ClassC} />
+      ) : (
+        <Route exact path="/">
+          <ClassC />
+        </Route>
+      )}
+      {/* <Route exact path="/">
         <ClassC />
+<<<<<<< HEAD
       </Route>
       <Route path="/admin" component={Admin} />
       <Route path="/about" component={About} />
@@ -81,6 +99,12 @@ const Routes = () => {
       <Route exact path="/upgrade-account">
         <UpgradeAccount />
       </Route>
+=======
+      </Route> */}
+      <ProtectedRoute exact path="/upgrade-account"  component={UpgradeAccount} />
+        
+    
+>>>>>>> 4874ba4fd52167dfb7a5fceacd71f20fe8f19742
       <Route exact path="/request-item">
         <RequestItems />
       </Route>
@@ -103,6 +127,7 @@ const Routes = () => {
       <Route exact path="/item-list">
         <ItemListSeller />
       </Route>
+      {/* <ProtectedRoute exact path="/dashboard" component={Dashboard} /> */}
       <Route exact path="/dashboard">
         <Dashboard />
       </Route>

@@ -9,7 +9,7 @@ router
   .route("/sendReport")
   .post(
     authController.protect,
-    authController.restrictTo("classCustomer"),
+   // authController.restrictTo("classCustomer"),
     reportController.sendReport
   );
 

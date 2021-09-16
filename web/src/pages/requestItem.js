@@ -1,7 +1,34 @@
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-
+import { sendrequest } from "../Redux/Action/request";
 export default function RequestItems() {
+  const dispatch = useDispatch();
+  const [formdata, setformdata] = useState({
+    requestname: "",
+    requestcategory: "",
+    requestdescription: "",
+    requestlocation: "",
+    requestquantity: "",
+  });
+
+  const {
+    requestname,
+    requestcategory,
+    requestdescription,
+    requestlocation,
+    requestquantity,
+  } = formdata;
+
+  const changer = (e) => {
+    setformdata({ ...formdata, [e.target.name]: e.target.value });
+  };
+
+  const handlesendrequest = () => {
+    dispatch(sendrequest(formdata));
+  };
   return (
     <div>
       <Navbar />
@@ -28,8 +55,12 @@ export default function RequestItems() {
                 </label>
                 <input
                   type="text"
-                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                 // placeholder="BMW car"
+                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white 
+                  rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  // placeholder="BMW car"
+                  name="requestname"
+                  onChange={(e) => changer(e)}
+                  value={requestname}
                 />
               </div>
 
@@ -38,19 +69,26 @@ export default function RequestItems() {
                 <label
                   className="block   text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password"
+                  //name="requestcategory"
                 >
                   Item Category
                 </label>
-                <select className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <select
+                  className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow
+                 focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  name="requestcategory"
+                  onChange={(e) => changer(e)}
+                  value={requestcategory}
+                >
                   <option value=""></option>
 
-                  <option>Electronics</option>
-                  <option>Cloth</option>
-                  <option>Car</option>
-                  <option>Home</option>
-                  <option>Accessory</option>
-                  <option>Shoes</option>
-                  <option>Other</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Cloth">Cloth</option>
+                  <option value="Car">Car</option>
+                  <option value="Home">Home</option>
+                  <option value="Accessory">Accessory</option>
+                  <option value="Shoes">Shoes</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
               <div className="relative w-full mb-3">
@@ -64,6 +102,9 @@ export default function RequestItems() {
                   type="text"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="request description"
+                  name="requestdescription"
+                  onChange={(e) => changer(e)}
+                  value={requestdescription}
                 />
               </div>
               {/* ______________________3______________ */}
@@ -78,6 +119,9 @@ export default function RequestItems() {
                   type="text"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="searching area"
+                  name="requestlocation"
+                  onChange={(e) => changer(e)}
+                  value={requestlocation}
                 />
               </div>
               {/* _______________________________4______________ */}
@@ -92,11 +136,17 @@ export default function RequestItems() {
                   type="number"
                   className="border-0 px-3 py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   defaultValue="jesse@example.com"
+                  name="requestquantity"
+                  onChange={(e) => changer(e)}
+                  value={requestquantity}
                 />
               </div>
               {/* _____________________button___________-- */}
               <div className="space-x-4 flex justify-center">
-                <button className=" shadow-md bg-primary text-white font-bold px-10 py-1 rounded-xl">
+                <button
+                  className=" shadow-md bg-primary text-white font-bold px-10 py-1 rounded-xl"
+                  onClick={handlesendrequest}
+                >
                   Send Request
                 </button>
                 <button className="shadow-md font-bold text-gray-800 px-10 py-1 hover:bg-gray-100 rounded-xl">

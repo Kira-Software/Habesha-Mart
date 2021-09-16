@@ -4,7 +4,11 @@ import Items from "../components/ItemS";
 import Product from "../components/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getItem, getSearchItem } from "../Redux/Action/itemstuff";
+import {
+  getItem,
+  getMainSearchItems,
+  getSearchItem,
+} from "../Redux/Action/itemstuff";
 import { getSelectedItem } from "../Redux/Action/itemstuff";
 import { getComment } from "../Redux/Action/comment";
 import { Link } from "react-router-dom";
@@ -12,7 +16,11 @@ import { Link } from "react-router-dom";
 export default function SearchResult() {
   const dispatch = useDispatch();
   const searchItem = useSelector((state) => state.item.searchItem);
+  const usersearch = useSelector((state) => state.item.usersearch);
+
   const [searchWord, setSearchWord] = useState("");
+  const [searchopen, setsearchopen] = useState(false);
+  const [filteropen, setfilteropen] = useState(true);
 
   const changer = (e) => {
     setSearchWord(e.target.value);
@@ -23,18 +31,38 @@ export default function SearchResult() {
     setSearchWord("");
   };
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    console.log("the searchword is ", searchWord);
+    setsearchopen(true);
+    setfilteropen(false);
+    dispatch(getMainSearchItems(searchWord));
+  };
 
   const setId = (id, category) => {
     dispatch(getSelectedItem(id));
     localStorage.setItem("S_Id", id);
     localStorage.setItem("Category", category);
+  };
 
+  const handleFilter = (e) => {
+    console.log("the item is checking  and the value is", e.target.value);
+    localStorage.setItem("moreCategory", "");
+
+    dispatch(getSearchItem(e.target.value));
+    localStorage.setItem("moreCategory", e.target.value);
+    // window.location.reload(true)
   };
 
   useEffect(() => {
     dispatch(getSearchItem(localStorage.getItem("moreCategory")));
   }, []);
+
+  let searchstyle = {
+    display: searchopen ? "block" : "none",
+  };
+
+  let filterstyle = filteropen ? "block" : "none";
+
   return (
     <div className="h-screen ">
       <Navbar />
@@ -45,42 +73,87 @@ export default function SearchResult() {
             <div className="font-semibold text-gray-700">Categories</div>
             <ul>
               <li className="mt-2 px-2 flex items-center ">
-                <input type="checkbox" className="mr-2 " />
+                <input
+                  type="radio"
+                  className="mr-2"
+                  name="category"
+                  onChange={handleFilter}
+                  value="Electronics"
+                />
                 <span className="text-sm text-gray-500 font-semibold">
-                  Gardening
+                  Electronics
                 </span>
               </li>
               <li className="mt-2 px-2">
-                <input type="checkbox" className="mr-2 " />
+                <input
+                  type="radio"
+                  className="mr-2 "
+                  name="category"
+                  onChange={handleFilter}
+                  value="Cloth"
+                />
                 <span className="text-sm text-gray-500 font-semibold">
-                  Plant
+                  Cloth
                 </span>
               </li>
               <li className="mt-2 px-2">
-                <input type="checkbox" checked className="mr-2 text-gray-900" />
+                <input
+                  type="radio"
+                  // checked
+                  className="mr-2 text-gray-900"
+                  name="category"
+                  onChange={handleFilter}
+                  value="Car"
+                />
+                <span className="text-sm text-gray-500 font-semibold">Car</span>
+              </li>
+              <li className="mt-2 px-2">
+                <input
+                  type="radio"
+                  className="mr-2 "
+                  name="category"
+                  onChange={handleFilter}
+                  value="House"
+                />
                 <span className="text-sm text-gray-500 font-semibold">
-                  seeds
+                  House
                 </span>
               </li>
               <li className="mt-2 px-2">
-                <input type="checkbox" className="mr-2 " />
+                <input
+                  type="radio"
+                  className="mr-2 "
+                  name="category"
+                  onChange={handleFilter}
+                  value="Accessory"
+                />
                 <span className="text-sm text-gray-500 font-semibold">
-                  Bulbs
+                  Accessories
                 </span>
               </li>
               <li className="mt-2 px-2">
-                <input type="checkbox" className="mr-2 " />
+                <input
+                  type="radio"
+                  className="mr-2 "
+                  name="category"
+                  onChange={handleFilter}
+                  value="Shoes"
+                />
                 <span className="text-sm text-gray-500 font-semibold">
-                  Planters
+                  Shoes
                 </span>
               </li>
-              <li className=" pl-10 mt-3 ">
-                <div className="flex items-baseline">
-                  <span className="text-gray-500 text-sm font-semibold">
-                    Others
-                  </span>
-                  <ArrowDownIcon className="h-4 ml-2 text-gray-500" />
-                </div>
+              <li className="mt-2 px-2">
+                <input
+                  type="radio"
+                  className="mr-2 "
+                  name="category"
+                  onChange={handleFilter}
+                  value="Other"
+                />
+                <span className="text-sm text-gray-500 font-semibold">
+                  Other
+                </span>
               </li>
             </ul>
           </div>
@@ -108,7 +181,11 @@ export default function SearchResult() {
               value={searchWord}
               onChange={(e) => changer(e)}
             />
-            <SearchIcon className="h-5 text-gray-400 mr-4" />
+            <SearchIcon
+              className="h-5 text-gray-400 mr-4"
+              onClick={handleSearch}
+              style={{ cursor: "pointer" }}
+            />
             <XIcon className="h-5 text-gray-400" onClick={clearSearch} />
           </div>
           <div className="my-2 text-sm font-semibold text-gray-300">
@@ -126,27 +203,50 @@ export default function SearchResult() {
               Popular
             </button>
           </div>
-          <div className="flex flex-wrap justify-between">
-            {searchItem.length !== 0
-              ? searchItem.data.map((item, idx) => {
-                  if (item.category === localStorage.getItem("moreCategory")) {
+          <div style={searchstyle}>
+            <div className="flex flex-wrap justify-between">
+              {usersearch.length !== 0
+                ? usersearch.data.map((item, idx) => {
                     return (
-                      <Product
-                        img={`http://localhost:9000/${item.image1}`}
-                        name={item.itemname}
-                        id={item._id}
-                        category={item.category}
-                      />
+                      <>
+                        {idx === 0 ? <h3>Search results</h3> : null}
+                        <Product
+                          img={`http://localhost:9000/${item.image1}`}
+                          name={item.itemname}
+                          id={item._id}
+                          category={item.category}
+                        />
+                      </>
                     );
-                  }
-                })
-              : null}
-            {/* <Product img="j_one.jpg" />
+                  })
+                : null}
+            </div>
+          </div>
+          <div style={{ display: filterstyle }}>
+            <div className="flex flex-wrap justify-between">
+              {searchItem.length !== 0
+                ? searchItem.data.map((item, idx) => {
+                    if (
+                      item.category === localStorage.getItem("moreCategory")
+                    ) {
+                      return (
+                        <Product
+                          img={`http://localhost:9000/${item.image1}`}
+                          name={item.itemname}
+                          id={item._id}
+                          category={item.category}
+                        />
+                      );
+                    }
+                  })
+                : null}
+              {/* <Product img="j_one.jpg" />
             <Product img="j_two.jpg" />
             <Product img="j_three.jpg" />
             <Product img="j_four.jpg" />
             <Product img="j_five.jpg" />
             <Product img="j_six.jpg" /> */}
+            </div>
           </div>
         </div>
         <div

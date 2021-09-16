@@ -38,7 +38,7 @@ export const editProfile = (formdata) => async (dispatch) => {
   if (profilepicture) {
     fd.append("profileImage", profilepicture, profilepicture.name);
   }
-  
+
   if (temptype) {
     fd.set("type", temptype);
   }
@@ -118,6 +118,27 @@ export const getAccount = () => async (dispatch) => {
   try {
     const res = await axios.get(
       "http://localhost:9000/api/user/account/getProfile",
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log("the value or res is", res);
+    dispatch({
+      type: GET_ACCOUNT,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log("the problem error is ", err);
+  }
+};
+
+export const getOwnerAccount = (id) => async (dispatch) => {
+  console.log("i am in action get owner account function");
+  // const getLoggedIn = useCallback(async () => {
+  try {
+    const res = await axios.get(
+      `http://localhost:9000/api/user/account/getProfile/owner?userId=${id}`,
       {
         withCredentials: true,
       }

@@ -6,7 +6,8 @@ import {
   GET_ITEM,
   GET_SELECTED_ITEM,
   GET_SEARCH_ITEM,
-  GET_SOCIALMEDIA
+  GET_SOCIALMEDIA,
+  USER_SEARCH,
 } from "../Type/type";
 
 import axios from "axios";
@@ -151,20 +152,32 @@ export const getSearchItem = (category) => async (dispatch) => {
   });
 };
 
-export const getMainSearchItems = (category) => async (dispatch) => {
+export const getMainSearchItems = (searchword) => async (dispatch) => {
   // console.log("i am in get individual function");
   // const getLoggedIn = useCallback(async () => {
   const res = await axios.get(
-    `http://localhost:9000/api/item?category=${category}`,
+    `http://localhost:9000/api/item?itemname=${searchword}`,
     {
       withCredentials: true,
     }
   );
 
-  // console.log("inside the getindividual item the res.data value is ", res.data);
+  console.log("searching action the value is ", res.data);
 
   dispatch({
-    type: GET_SEARCH_ITEM,
+    type: USER_SEARCH,
     payload: res.data,
   });
+};
+
+export const deleteItem = (id) => async (dispatch) => {
+  console.log("the coming item id is",id)
+  // console.log("i am in get individual function");
+  // const getLoggedIn = useCallback(async () => {
+  const res = await axios.delete(`http://localhost:9000/api/item?itemId=${id}`, {
+    withCredentials: true,
+  });
+
+  console.log("data is deleted successfully ", res.data);
+
 };

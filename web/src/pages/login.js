@@ -11,6 +11,7 @@ import authContext from "../context/authContext";
 import axios from "axios";
 import { login, getLoggedIn } from "../Redux/Action/authentication";
 import { useDispatch } from "react-redux";
+import Alert from "../components/layout/alert"
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -73,6 +74,9 @@ export default function Register() {
             <div className="text-2xl font-bold text-primary mb-10">
               Sign In to Habesha Mart
             </div>
+
+            {/* <Alert /> */}
+
             <div className="space-y-4">
               <div className="text-sm font-bold text-primary mb-2">Email</div>
               <div className="border-0 flex items-center px-3 w-full py-1 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow  focus:ring   ease-linear transition-all duration-150">
@@ -84,6 +88,7 @@ export default function Register() {
                   onChange={(e) => changer(e)}
                   name="email"
                   value={email}
+                  required
                 />
               </div>
 
@@ -99,6 +104,7 @@ export default function Register() {
                   onChange={(e) => changer(e)}
                   name="password"
                   value={password}
+                  required
                 />
                 {showPass ? (
                   <EyeIcon

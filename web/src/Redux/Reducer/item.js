@@ -6,6 +6,7 @@ import {
   GET_COMMENT,
   GET_REQUEST,
   GET_SOCIALMEDIA,
+  USER_SEARCH
 } from "../Type/type";
 
 const initialstate = {
@@ -16,6 +17,7 @@ const initialstate = {
   comment: [],
   request: [],
   socialmedia: [],
+  usersearch: []
 };
 
 export default function (state = initialstate, action) {
@@ -58,6 +60,12 @@ export default function (state = initialstate, action) {
         loadingitem: false,
         socialmedia: payload,
       };
+      case  USER_SEARCH :
+        return {
+          ...state,
+          loadingitem: false,
+          usersearch: payload,
+        };
     default:
       return state;
   }

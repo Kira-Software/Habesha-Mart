@@ -8,6 +8,7 @@ import {
 import { getAccount } from "./profile";
 import axios from "axios";
 import { Redirect } from "react-router";
+import setalert from "./alert";
 
 export const register = (email, userName, password) => async (dispatch) => {
   console.log(
@@ -38,8 +39,13 @@ export const register = (email, userName, password) => async (dispatch) => {
       .then((res) => {
         dispatch(getLoggedIn());
       });
+
+      dispatch(setalert("err.msg", "danger"));
+
   } catch (err) {
     console.log("the error is ", err);
+   // dispatch(setalert("err.msg", "danger"));
+
   }
 
   //   try {

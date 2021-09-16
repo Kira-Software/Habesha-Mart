@@ -197,7 +197,13 @@ export default function Profile() {
           </div>
         </div>
         <div className="w-2/5 mx-2 bg-white rounded-lg px-4 py-2 shadow-md h-56">
-          <div className="font-semibold text-lg text-gray-700">About Me</div>
+         
+          <Link
+            className="font-bold border rounded-md self-center px-2 py-1 hover:bg-gray-500 bg-gray-300 "
+            to="/about-seller"
+          >
+            About Me
+          </Link>
           <div className="flex items-center justify-center h-full">
             <div className="font-semibold text-2xl text-gray-500">
               <img

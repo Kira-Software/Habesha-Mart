@@ -20,6 +20,10 @@ export const GET_REQUEST = "GET_REQUEST"
 
 export const GET_SOCIALMEDIA = "GET_SOCIALMEDIA"
 
+export const USER_SEARCH = "USER_SEARCH"
+
+export const SET_ALERT = "SET_ALERT"
+export const REMOVE_ALERT = "REMOVE_ALERT"
 
 
 

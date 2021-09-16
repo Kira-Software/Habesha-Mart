@@ -6,10 +6,9 @@
     "@craco/craco": "^6.2.0",
     "@fortawesome/fontawesome-free": "5.15.3",
     "@heroicons/react": "^1.0.2",
-<<<<<<< HEAD
     "@material-ui/core": "^4.12.3",
-=======
->>>>>>> 4874ba4fd52167dfb7a5fceacd71f20fe8f19742
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@material-ui/styles": "^4.11.4",
     "@popperjs/core": "2.9.1",
     "@tailwindcss/forms": "0.2.1",
     "@testing-library/jest-dom": "^5.11.4",
@@ -20,10 +19,7 @@
     "formik": "^2.2.9",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
-<<<<<<< HEAD
-=======
     "moment": "^2.29.1",
->>>>>>> 4874ba4fd52167dfb7a5fceacd71f20fe8f19742
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

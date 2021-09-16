@@ -136,13 +136,24 @@ exports.getProfile = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.getAllProfile = catchAsync(async (req, res, next) => {
+  console.log("inside of the All getprofile");
+  // const userId = req.user._id;
+  const allprofile = await UserProfile.find();
+  console.log("the value of All profile is", allprofile);
+
+  if (allprofile) {
+    res.json({ data: allprofile });
+  }
+});
+
 exports.getOwner = catchAsync(async (req, res, next) => {
   console.log("inside of the owner");
-   const {userId} = req.query;
+  const { userId } = req.query;
   const userProfile = await UserProfile.findOne({ userId });
   console.log("the value of userprofile is", userProfile);
 
-  if (userProfile) { 
+  if (userProfile) {
     res.json(userProfile);
   }
 });

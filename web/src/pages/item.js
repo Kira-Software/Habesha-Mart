@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import axios from "axios";
 import {
   LocationMarkerIcon,
   StarIcon,
@@ -25,6 +25,8 @@ import ReportDropdown from "../components/Dropdowns/reportDropDown";
 import { sendcomment, getComment } from "../Redux/Action/comment";
 import { deleteItem } from "../Redux/Action/itemstuff";
 import { getOwnerAccount } from "../Redux/Action/profile";
+import { Rating } from "@material-ui/lab";
+import { rateItem, getRatting } from "../Redux/Action/rating";
 //import {facebookIcon} from "../../public/social/facebook.png"
 export default function Item() {
   const dispatch = useDispatch();
@@ -35,9 +37,16 @@ export default function Item() {
   const searchItem = useSelector((state) => state.item.searchItem);
   const searchedcomment = useSelector((state) => state.item.comment);
   const loadingitem = useSelector((state) => state.item.loadingitem);
+  const rate = useSelector((state) => state.item.rate);
 
   const [comment, setComment] = useState("");
   const [phonedisplay, setphonedisplay] = useState(false);
+
+  const [value, setValue] = useState(0);
+
+  // const handleRatting = (rateFor, rattingAmount) => {
+  //   dispatch(rateItem(rateFor, rattingAmount));
+  // };
 
   const handlePhoneDisplay = () => {
     setphonedisplay(!phonedisplay);
@@ -67,6 +76,8 @@ export default function Item() {
     dispatch(getLoggedIn());
     dispatch(getSelectedItem(localStorage.getItem("S_Id")));
     dispatch(getComment(localStorage.getItem("S_Id")));
+    dispatch(getRatting(localStorage.getItem("S_Id")));
+
     //   .then(res =>  dispatch(getIndividualItem(res.data.user._id)));
     // dispatch(getIndividualItem(user._id))
   }, []);
@@ -142,7 +153,9 @@ export default function Item() {
                     <div className="flex items-center px-2 py-1 bg-yellow-500 rounded-lg">
                       <StarIcon className="h-4 text-white " />{" "}
                       <span className="text-white text-sm font-semibold">
-                        4.6
+                        {rate.length !== 0
+                          ? rate.data[0].avgRate.toFixed(1)
+                          : null}
                       </span>
                     </div>
                     <div className="text-sm text-gray-400 font-semibold">
@@ -156,6 +169,21 @@ export default function Item() {
                     <div>{item.description}</div>
                     <div>{item.itemstatus}</div>
                     <div>{item.itemtype}</div>
+                    <br />
+                    <br />{" "}
+                    {user !== null ? (
+                      <Rating
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                          dispatch(rateItem(item._id, newValue));
+                          dispatch(getRatting(item._id));
+
+                          // console.log("the value of newvalue is ", newValue);
+                        }}
+                      />
+                    ) : null}
                     <div
                       className="px-6 py-1 rounded-3xl text-white font-semibold bg-primary"
                       // onClick={handleGetContact}
@@ -221,18 +249,18 @@ export default function Item() {
                     ) : null
                   ) : null}
                   <Link to="/about-seller">
-                  <button
-                    style={{
-                      backgroundColor: "black",
-                      color: "white",
-                      width: 100,
-                      borderRadius: 10,
-                    }}
-                    to="/about-seller"
-                    onClick={() => handleGetowner(item.postedBy)}
-                  >
-                    Owner Profile
-                  </button>
+                    <button
+                      style={{
+                        backgroundColor: "black",
+                        color: "white",
+                        width: 100,
+                        borderRadius: 10,
+                      }}
+                      to="/about-seller"
+                      onClick={() => handleGetowner(item.postedBy)}
+                    >
+                      Owner Profile
+                    </button>
                   </Link>
                 </div>
                 <div className="py-5 mt-2">

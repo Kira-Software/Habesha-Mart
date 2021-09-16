@@ -4,6 +4,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOG_OUT,
+  GET_ALL_USER,
 } from "../Type/type";
 import { getAccount } from "./profile";
 import axios from "axios";
@@ -40,12 +41,10 @@ export const register = (email, userName, password) => async (dispatch) => {
         dispatch(getLoggedIn());
       });
 
-      dispatch(setalert("err.msg", "danger"));
-
+    dispatch(setalert("err.msg", "danger"));
   } catch (err) {
     console.log("the error is ", err);
-   // dispatch(setalert("err.msg", "danger"));
-
+    // dispatch(setalert("err.msg", "danger"));
   }
 
   //   try {
@@ -139,4 +138,21 @@ export const Logout = () => async (dispatch) => {
   } catch (err) {
     console.log("the error while logging out is ", err);
   }
+};
+
+export const getAllUser = () => async (dispatch) => {
+  console.log("all userrrrrrrrrrrrrrr");
+
+  const allusers = await axios.get(
+    "http://localhost:9000/api/auth/getAllUser",
+    { withCredentials: true }
+  );
+
+  console.log("the all users value is ", allusers);
+
+  dispatch({
+    type: GET_ALL_USER,
+    payload: allusers.data,
+  });
+
 };

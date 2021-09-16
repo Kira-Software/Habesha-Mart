@@ -64,7 +64,7 @@ const RedirectWhenLoggedIn = ({ component: Component, ...restOfProps }) => {
       render={(props) =>
         isAuthenticated && !loading ? (
           user.role === "admin" ? (
-            <Redirect to="/dashboard" />
+            <Redirect to="/admin" />
           ) : user.role === "classCustomer" ? (
             <Redirect to="/" />
           ) : user.role === "seller" || "broker" ? (
@@ -91,7 +91,7 @@ const Routes = () => {
       )}
       {/* <Route exact path="/">
         <ClassC />
-<<<<<<< HEAD
+
       </Route>
       <Route path="/admin" component={Admin} />
       <Route path="/about" component={About} />
@@ -99,12 +99,17 @@ const Routes = () => {
       <Route exact path="/upgrade-account">
         <UpgradeAccount />
       </Route>
-=======
+
       </Route> */}
-      <ProtectedRoute exact path="/upgrade-account"  component={UpgradeAccount} />
-        
-    
->>>>>>> 4874ba4fd52167dfb7a5fceacd71f20fe8f19742
+      <Route path="/about" component={About} />
+      <ProtectedRoute path="/admin" component={Admin} />
+
+      <ProtectedRoute
+        exact
+        path="/upgrade-account"
+        component={UpgradeAccount}
+      />
+
       <Route exact path="/request-item">
         <RequestItems />
       </Route>

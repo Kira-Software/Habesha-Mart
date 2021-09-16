@@ -5,10 +5,10 @@ import { useDispatch } from "react-redux";
 export default function ItemLS(props) {
   const dispatch = useDispatch();
 
-  const handleId = (id,category) => {
+  const handleId = (id, category) => {
     dispatch(getSelectedItem(id));
     localStorage.setItem("S_Id", id);
-    localStorage.setItem("Category",category)
+    localStorage.setItem("Category", category);
   };
   return (
     <div class="w-56 h-56 my-4  mx-2   relative">
@@ -28,7 +28,7 @@ export default function ItemLS(props) {
               <div className="text-xl font-bold text-white">4.6</div>
               <StarIcon className="h-6 text-yellow-300" />
             </div>
-            <button onClick={() => handleId(props.id,props.category)}>
+            <button onClick={() => handleId(props.id, props.category)}>
               <Link
                 to="/item"
                 className="hover:bg-gray-100 hover:bg-opacity-50 text-white font-semibold rounded-3xl border px-4 py-1"

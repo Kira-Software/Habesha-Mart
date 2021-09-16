@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ACCOUNT } from "../Type/type";
+import { GET_ACCOUNT, GET_ALL_PROFILE } from "../Type/type";
 
 export const editProfile = (formdata) => async (dispatch) => {
   const {
@@ -152,4 +152,21 @@ export const getOwnerAccount = (id) => async (dispatch) => {
   } catch (err) {
     console.log("the problem error is ", err);
   }
+};
+
+export const getAllProfile = () => async (dispatch) => {
+  console.log("all profileeeee");
+
+  const allprofile = await axios.get(
+    `http://localhost:9000/api/user/account/getAllProfile`,
+    { withCredentials: true }
+  );
+
+  console.log("the all users value is ", allprofile);
+
+  dispatch({
+    type: GET_ALL_PROFILE,
+    payload: allprofile.data,
+  });
+
 };

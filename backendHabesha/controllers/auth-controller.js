@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const userProfile = require("../models/user-profile");
+const { userInfo } = require("os");
 
 const signToken = async (userId) => {
   return await jwt.sign({ id: userId }, process.env.SECRET, {
@@ -110,19 +111,18 @@ exports.logIn = catchAsync(async (req, res, next) => {
         .pbkdf2Sync(password, user.salt, 10000, 64, "sha512")
         .toString("hex");
     console.log("the value of comp is", comp);
-    if(comp){
+    if (comp) {
       const token = await signToken(user._id);
       req.session.token = token; // Auto saves session data in mongo store
-    
-      res.status(200).json({ status: "success", user }); 
-    }
-    else {
+
+      res.status(200).json({ status: "success", user });
+    } else {
       return res.json({ message: "password doesn't match" });
-    } 
+    }
   } else {
     return res.json({ message: "User Not found" });
-  } 
- 
+  }
+
   // console.log("passhash", user.passwordHash);
   // console.log(
   //   "new",
@@ -144,6 +144,21 @@ exports.logout = catchAsync(async (req, res, next) => {
     res.send("Logged out successfully");
     console.log("delchalew");
   });
+});
+
+exports.getAllUser = catchAsync(async (req, res, next) => {
+  //console.log("i am searching get all userrrrrrrrrrrrrrrr");
+  const userlist = await User.find();
+  const sellerlist = await User.find({ role: "seller" });
+  const brokerlist = await User.find({ role: "broker" });
+  const classCustomerlist = await User.find({ role: "classCustomer" });
+
+  console.log("the userlist value is ", userlist);
+  if (userlist) {
+    res
+      .status(200)
+      .json({ data: userlist, sellerlist, brokerlist, classCustomerlist });
+  }
 });
 
 exports.forgetPassword = async (req, res, next) => {};

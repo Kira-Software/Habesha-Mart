@@ -27,7 +27,7 @@ export default function ClassC() {
   useEffect(() => {
     dispatch(getLoggedIn());
     dispatch(getItem());
-   // dispatch(getRequest());
+    // dispatch(getRequest());
     console.log("the value of items is ", items);
   }, []);
 
@@ -84,6 +84,7 @@ export default function ClassC() {
                     name={item.itemname}
                     description={item.description}
                     itemtype={item.itemtype}
+                    rate={item.rate}
                   />
                 );
               }
@@ -116,6 +117,7 @@ export default function ClassC() {
                     name={item.itemname}
                     description={item.description}
                     itemtype={item.itemtype}
+                    rate={item.rate}
                   />
                 );
               }
@@ -194,6 +196,7 @@ export default function ClassC() {
                         name={item.itemname}
                         description={item.description}
                         itemtype={item.itemtype}
+                        rate={item.rate}
                       />
                     );
                   }
@@ -222,6 +225,7 @@ export default function ClassC() {
                         name={item.itemname}
                         description={item.description}
                         itemtype={item.itemtype}
+                        rate={item.rate}
                       />
                     );
                   }
@@ -251,6 +255,7 @@ export default function ClassC() {
                         name={item.itemname}
                         description={item.description}
                         itemtype={item.itemtype}
+                        rate={item.rate}
                       />
                     );
                   }
@@ -308,6 +313,7 @@ export default function ClassC() {
                         name={item.itemname}
                         description={item.description}
                         itemtype={item.itemtype}
+                        rate={item.rate}
                       />
                     );
                   }
@@ -336,6 +342,7 @@ export default function ClassC() {
                         name={item.itemname}
                         description={item.description}
                         itemtype={item.itemtype}
+                        rate={item.rate}
                       />
                     );
                   }

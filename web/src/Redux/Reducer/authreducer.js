@@ -5,6 +5,8 @@ import {
   REGISTER_FAIL,
   GET_ACCOUNT,
   LOG_OUT,
+  GET_ALL_USER,
+  GET_ALL_PROFILE,
 } from "../Type/type";
 
 const initialstate = {
@@ -12,6 +14,8 @@ const initialstate = {
   user: null,
   isAuthenticated: false,
   profile: [],
+  alluser: [],
+  allprofile: [],
 };
 
 export default function (state = initialstate, action) {
@@ -46,6 +50,20 @@ export default function (state = initialstate, action) {
         ...state,
         loading: false,
         profile: payload,
+      };
+
+    case GET_ALL_USER:
+      return {
+        ...state,
+        loading: false,
+        alluser: payload,
+      };
+
+    case GET_ALL_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        allprofile: payload,
       };
     default:
       return state;

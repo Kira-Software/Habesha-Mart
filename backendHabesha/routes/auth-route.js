@@ -14,6 +14,10 @@ router
     authController.restrictTo("classCustomer,broker,seller"),
     authController.resetPassword
   );
+router.route("/getAllUser").get(
+  //authController.restrictTo("admin"),
+  authController.getAllUser
+);
 router.get(
   "/isLoggedIn",
   catchAsync(async (req, res) => {

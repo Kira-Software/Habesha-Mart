@@ -1,7 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSelectedItem } from "../Redux/Action/itemstuff";
 import { Link } from "react-router-dom";
 import { getComment } from "../Redux/Action/comment";
+import stylles from "@material-ui/styles";
+
+import Rating from "@material-ui/lab/Rating";
+
 const handleItemChange = (id) => {
   localStorage.setItem("detailId", id);
   window.location.reload(false);
@@ -9,6 +13,7 @@ const handleItemChange = (id) => {
 
 export default function Product(props) {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.authreducer.user);
 
   const setId = (id, category) => {
     dispatch(getSelectedItem(id));
@@ -48,8 +53,12 @@ export default function Product(props) {
             </Link>
           ) : null}
           <div className="flex justify-center">
-            {" "}
-            <img src="star.png" alt="star" />
+            <Rating
+              name="read-only"
+              value={props.rate}
+              readOnly
+              precision={0.5}
+            />
           </div>
         </div>
       </div>

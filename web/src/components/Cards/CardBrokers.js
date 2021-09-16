@@ -1,8 +1,26 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUser } from "../../Redux/Action/authentication";
+import { getAllProfile } from "../../Redux/Action/profile";
+import { Link } from "react-router-dom";
 // components
 
 export default function CardBrokers() {
+  const dispatch = useDispatch();
+  const alluser = useSelector((state) => state.authreducer.alluser);
+  const loading = useSelector((state) => state.authreducer.loading);
+  const allprofile = useSelector((state) => state.authreducer.allprofile);
+
+  useEffect(() => {
+    //  dispatch(getLoggedIn());
+    //dispatch(getItem());
+    dispatch(getAllUser());
+    dispatch(getAllProfile());
+
+    // dispatch(getRequest());
+    //console.log("the value of items is ", items);
+  }, []);
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -38,101 +56,36 @@ export default function CardBrokers() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Nahom
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  1,480
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-3-800x800.jpg").default
+              {!loading
+                ? alluser.brokerlist.map((broker, idx) => {
+                    return allprofile.data.map((profile, idx2) => {
+                      if (broker._id === profile.userId) {
+                        console.log("they are equal", broker);
+                        return (
+                          <tr>
+                            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                              {broker.userName}
+                            </th>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              {broker.email}
+                            </td>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              <div className="flex items-center">
+                                <Link to="about-seller">
+                                  <img
+                                    alt="..."
+                                    src={`http://localhost:9000/${profile.profilepicture}`}
+                                    className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
+                                  />
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        );
                       }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  kira
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  5,480
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-3-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Miki
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  4,807
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-1-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Mussie
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  3,678
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-2-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Mila
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  2,645
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-2-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
+                    });
+                  })
+                : null}
             </tbody>
           </table>
         </div>

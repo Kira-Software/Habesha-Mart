@@ -6,7 +6,8 @@ import {
   GET_COMMENT,
   GET_REQUEST,
   GET_SOCIALMEDIA,
-  USER_SEARCH
+  USER_SEARCH,
+  GET_RATTING,
 } from "../Type/type";
 
 const initialstate = {
@@ -17,7 +18,8 @@ const initialstate = {
   comment: [],
   request: [],
   socialmedia: [],
-  usersearch: []
+  usersearch: [],
+  rate: [],
 };
 
 export default function (state = initialstate, action) {
@@ -60,12 +62,19 @@ export default function (state = initialstate, action) {
         loadingitem: false,
         socialmedia: payload,
       };
-      case  USER_SEARCH :
-        return {
-          ...state,
-          loadingitem: false,
-          usersearch: payload,
-        };
+    case USER_SEARCH:
+      return {
+        ...state,
+        loadingitem: false,
+        usersearch: payload,
+      };
+
+    case GET_RATTING:
+      return {
+        ...state,
+        loadingitem: false,
+        rate: payload,
+      };
     default:
       return state;
   }

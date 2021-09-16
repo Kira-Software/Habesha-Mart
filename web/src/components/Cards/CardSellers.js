@@ -1,8 +1,25 @@
-import React from "react";
-
-// components
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUser } from "../../Redux/Action/authentication";
+import { getAllProfile } from "../../Redux/Action/profile";
+import { Link } from "react-router-dom";
 export default function CardSellers() {
+  const dispatch = useDispatch();
+
+  const alluser = useSelector((state) => state.authreducer.alluser);
+  const loading = useSelector((state) => state.authreducer.loading);
+  const allprofile = useSelector((state) => state.authreducer.allprofile);
+
+  useEffect(() => {
+    //  dispatch(getLoggedIn());
+    //dispatch(getItem());
+    dispatch(getAllUser());
+    dispatch(getAllProfile());
+
+    // dispatch(getRequest());
+    //console.log("the value of items is ", items);
+  }, []);
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -29,110 +46,47 @@ export default function CardSellers() {
             <thead className="thead-light">
               <tr>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  name
+                  Name
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  items
+                  Email
                 </th>
-                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"></th>
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px">
+                  Photo
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Nahom
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  1,480
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-3-800x800.jpg").default
+              {!loading
+                ? alluser.sellerlist.map((seller, idx) => {
+                    return allprofile.data.map((profile, idx2) => {
+                      if (seller._id === profile.userId) {
+                        console.log("they are equal", seller);
+                        return (
+                          <tr>
+                            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                              {seller.userName}
+                            </th>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              {seller.email}
+                            </td>
+                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                              <div className="flex items-center">
+                                <Link to="about-seller">
+                                  <img
+                                    alt="..."
+                                    src={`http://localhost:9000/${profile.profilepicture}`}
+                                    className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
+                                  />
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        );
                       }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  kira
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  5,480
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-3-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Miki
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  4,807
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-1-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Mussie
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  3,678
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-2-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                  Mila
-                </th>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  2,645
-                </td>
-                <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  <div className="flex items-center">
-                    <img
-                      alt="..."
-                      src={
-                        require("./../../assets/img/team-2-800x800.jpg").default
-                      }
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute   w-10"
-                    />
-                  </div>
-                </td>
-              </tr>
+                    });
+                  })
+                : null}
             </tbody>
           </table>
         </div>

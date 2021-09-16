@@ -40,6 +40,10 @@ router
   .route("/getProfile")
   .get(authController.protect, accountController.getProfile);
 
+  router
+  .route("/getAllProfile")
+  .get(authController.protect, accountController.getAllProfile);
+
 router
   .route("/getProfile/owner") 
   .get(

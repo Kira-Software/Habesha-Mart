@@ -21,15 +21,8 @@ export default function Navbar() {
     "
     >
       <div className="px-14 border    flex justify-between items-center">
-<<<<<<< HEAD
-        <a href="/">
-          <img src="newLogo.png" alt="logo" className="h-14" />
-        </a>
-
-=======
         <Link to="/"> <img src="newLogo.png" alt="logo" className="h-14" /></Link>
        
->>>>>>> eca21ac4926c07d58bcebd96459de55111fcde7a
         <div className="flex space-x-4 items-center">
           <button
             className="outline-none"
